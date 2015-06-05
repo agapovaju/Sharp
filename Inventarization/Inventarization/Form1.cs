@@ -14,6 +14,7 @@ using System.Management;
 using System.Management.Instrumentation;
 using System.Xml;
 using System.IO;
+using System.ServiceProcess;
 
 namespace Inventarization
 {
@@ -50,11 +51,12 @@ namespace Inventarization
             sp = "";
             gpu = "";            
             err_path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Inventarization_log.txt";
-            err_mass = System.IO.File.ReadAllLines(err_path, Encoding.UTF8);
+            
             if (System.IO.File.Exists(err_path) == false)
             {
                 System.IO.File.WriteAllText(err_path, "", Encoding.UTF8);
             }
+            err_mass = System.IO.File.ReadAllLines(err_path, Encoding.UTF8);
             err_count = err_mass.Length;            
             dataGridView_comps_information.Rows.Clear();
             dataGridView_comps_information.RowHeadersVisible = false;
@@ -73,6 +75,8 @@ namespace Inventarization
             dataGridView_comps_information.Columns[4].Width = 250;
             dataGridView_comps_information.Columns[5].Width = 180;
             dataGridView_comps_information.Width = 1150;
+            //ServiceController sc = new ServiceController("Steam Client Service","tolik_pc");
+            //sc.Stop();
         }
 
         public string get_CPU(string address)
