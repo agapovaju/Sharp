@@ -567,7 +567,7 @@ namespace Inventarization
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Программа была создана при помощи кривых рук и воспаленного сознания ведущего инженера-программиста службы информационных технологий Агапова А.Ю.");
+            MessageBox.Show("Программа была создана при помощи кривых рук и воспаленного сознания ведущего инженера-программиста службы информационных технологий Агапова А.Ю.1111");
         }
 
         private void какПользоватьсяToolStripMenuItem_Click(object sender, EventArgs e)

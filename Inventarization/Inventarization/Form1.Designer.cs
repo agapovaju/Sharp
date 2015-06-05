@@ -48,6 +48,8 @@
             this.listbox_comp_list = new System.Windows.Forms.ListBox();
             this.label_comp_list = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label_offline_comps = new System.Windows.Forms.Label();
+            this.listbox_offline_comps = new System.Windows.Forms.ListBox();
             this.button_report = new System.Windows.Forms.Button();
             this.dataGridView_comps_information = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -65,8 +67,6 @@
             this.label_curr_comp = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.listbox_offline_comps = new System.Windows.Forms.ListBox();
-            this.label_offline_comps = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -266,6 +266,23 @@
             this.tabPage2.Text = "All comps information";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label_offline_comps
+            // 
+            this.label_offline_comps.AutoSize = true;
+            this.label_offline_comps.Location = new System.Drawing.Point(1152, 16);
+            this.label_offline_comps.Name = "label_offline_comps";
+            this.label_offline_comps.Size = new System.Drawing.Size(140, 13);
+            this.label_offline_comps.TabIndex = 3;
+            this.label_offline_comps.Text = "Компьютеры в офф-лайне";
+            // 
+            // listbox_offline_comps
+            // 
+            this.listbox_offline_comps.FormattingEnabled = true;
+            this.listbox_offline_comps.Location = new System.Drawing.Point(1152, 36);
+            this.listbox_offline_comps.Name = "listbox_offline_comps";
+            this.listbox_offline_comps.Size = new System.Drawing.Size(232, 524);
+            this.listbox_offline_comps.TabIndex = 2;
+            // 
             // button_report
             // 
             this.button_report.Location = new System.Drawing.Point(7, 7);
@@ -394,23 +411,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // listbox_offline_comps
-            // 
-            this.listbox_offline_comps.FormattingEnabled = true;
-            this.listbox_offline_comps.Location = new System.Drawing.Point(1152, 36);
-            this.listbox_offline_comps.Name = "listbox_offline_comps";
-            this.listbox_offline_comps.Size = new System.Drawing.Size(232, 524);
-            this.listbox_offline_comps.TabIndex = 2;
-            // 
-            // label_offline_comps
-            // 
-            this.label_offline_comps.AutoSize = true;
-            this.label_offline_comps.Location = new System.Drawing.Point(1152, 16);
-            this.label_offline_comps.Name = "label_offline_comps";
-            this.label_offline_comps.Size = new System.Drawing.Size(140, 13);
-            this.label_offline_comps.TabIndex = 3;
-            this.label_offline_comps.Text = "Компьютеры в офф-лайне";
             // 
             // inventarization
             // 
