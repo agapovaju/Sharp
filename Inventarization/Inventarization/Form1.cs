@@ -49,9 +49,10 @@ namespace Inventarization
             ram = "";
             os = "";
             sp = "";
-            gpu = "";            
-            err_path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Inventarization_log.txt";
-            
+            gpu = "";
+            //err_path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Inventarization_log.txt";
+            err_path = @"\\file01-omg\its\Проги в помощь\Инвентаризация\Inventarization_log.txt";
+
             if (System.IO.File.Exists(err_path) == false)
             {
                 System.IO.File.WriteAllText(err_path, "", Encoding.UTF8);
@@ -100,7 +101,8 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_CPU говорит WMIException при опросе " + address + ": " + em.Message);
-                    
+                    cpu = "";
+
                 }
             }
             catch (System.NullReferenceException en)
@@ -109,6 +111,7 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_CPU говорит упс, кажется вернулось значение NULL при опросе " + address + ": " + en.Message);
+                    cpu = "";
 
                 }
             }
@@ -118,6 +121,7 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_CPU говорит ComException при опросе " + address + ": " + ec.Message);
+                    cpu = "";
 
                 }
             }
@@ -146,7 +150,7 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_RAM говорит WMIException при опросе " + address + ": " + em.Message);
-
+                    ram = "";
                 }
             }
             catch (System.NullReferenceException en)
@@ -155,7 +159,7 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_RAM говорит упс, кажется вернулось значение NULL при опросе " + address + ": " + en.Message);
-
+                    ram = "";
                 }
             }
             catch (System.Runtime.InteropServices.COMException ec)
@@ -164,7 +168,7 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_RAM говорит ComException при опросе " + address + ": " + ec.Message);
-
+                    ram = "";
                 }
             }
             return ram;
@@ -191,7 +195,7 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_GPU говорит WMIException при опросе " + address + ": " + em.Message);
-
+                    gpu = "";
                 }
             }
             catch (System.NullReferenceException en)
@@ -200,7 +204,7 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_GPU говорит упс, кажется вернулось значение NULL при опросе " + address + ": " + en.Message);
-
+                    gpu = "";
                 }
             }
             catch (System.Runtime.InteropServices.COMException ec)
@@ -209,13 +213,13 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_GPU говорит ComException при опросе " + address + ": " + ec.Message);
-
+                    gpu = "";
                 }
             }
             return gpu;
         }
 
-        public void get_OS_SP(string address)
+        public string get_OS(string address)
         {
             try
             {
@@ -228,6 +232,52 @@ namespace Inventarization
                 foreach (ManagementObject queryObj in searcher.Get())
                 {
                     os = queryObj["Caption"].ToString();
+                    //sp = queryObj["csdVersion"].ToString();
+                }
+            }
+            catch (ManagementException em)
+            {
+                err_count++;
+                using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
+                {
+                    sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_OS говорит WMIException при опросе " + address + ": " + em.Message);
+                    os = "";
+                }
+            }
+            catch (System.NullReferenceException en)
+            {
+                err_count++;
+                using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
+                {
+                    sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_OS говорит упс, кажется вернулось значение NULL при опросе " + address + ": " + en.Message);
+                    os = "";
+                }
+            }
+            catch (System.Runtime.InteropServices.COMException ec)
+            {
+                err_count++;
+                using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
+                {
+                    sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_OS говорит ComException при опросе " + address + ": " + ec.Message);
+                    os = "";
+                }
+            }
+            return os;
+        }
+
+        public string get_SP(string address)
+        {
+            try
+            {
+                ManagementScope scope = new ManagementScope("\\\\" + address + "\\root\\cimv2");
+                scope.Connect();
+                ObjectQuery query = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
+
+                ManagementObjectCollection queryCollection = searcher.Get();
+                foreach (ManagementObject queryObj in searcher.Get())
+                {
+                    //os = queryObj["Caption"].ToString();
                     sp = queryObj["csdVersion"].ToString();
                 }
             }
@@ -236,8 +286,8 @@ namespace Inventarization
                 err_count++;
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
-                    sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_OS_SP говорит WMIException при опросе " + address + ": " + em.Message);
-
+                    sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_SP говорит WMIException при опросе " + address + ": " + em.Message);
+                    sp = "";
                 }
             }
             catch (System.NullReferenceException en)
@@ -245,8 +295,8 @@ namespace Inventarization
                 err_count++;
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
-                    sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_OS_SP говорит упс, кажется вернулось значение NULL при опросе " + address + ": " + en.Message);
-
+                    sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_SP говорит упс, кажется вернулось значение NULL при опросе " + address + ": " + en.Message);
+                    sp = "";
                 }
             }
             catch (System.Runtime.InteropServices.COMException ec)
@@ -254,10 +304,11 @@ namespace Inventarization
                 err_count++;
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
-                    sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_OS_SP говорит ComException при опросе " + address + ": " + ec.Message);
-
+                    sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_SP говорит ComException при опросе " + address + ": " + ec.Message);
+                    sp = "";
                 }
             }
+            return sp;
         }
 
         public void get_services(string address)
@@ -282,7 +333,7 @@ namespace Inventarization
                 using (StreamWriter sw = new StreamWriter(err_path, true, Encoding.UTF8))
                 {
                     sw.WriteLine(err_count + "  " + DateTime.Today.ToString() + " Метод get_services говорит WMIException при опросе " + address + ": " + em.Message);
-
+                    
                 }
             }
             catch (System.NullReferenceException en)
@@ -349,8 +400,9 @@ namespace Inventarization
                         get_GPU(address);
                         label_gpu_val.Text = gpu;
                         progress_bar.Value = 80;
-                        get_OS_SP(address);
+                        get_OS(address);
                         label_os_val.Text = os;
+                        get_SP(address);
                         label_sp_val.Text = sp;
                         progress_bar.Value = 100;
                         get_services(address);
@@ -385,7 +437,7 @@ namespace Inventarization
                         " Проверьте существует ли запись в DNS");
                     }
                     
-                    progress_bar.Value = 0;
+                    progress_bar.Value = 0;                    
                     label_status_val.ForeColor = Color.Red;
                     label_status_val.Text = "Нет соединения";
                     label_cpu_val.Text = "";
@@ -422,7 +474,8 @@ namespace Inventarization
                         {
                             get_CPU(address);
                             get_GPU(address);
-                            get_OS_SP(address);
+                            get_OS(address);
+                            get_SP(address);
                             get_RAM(address);
                             dataGridView_comps_information.Rows.Add(new object[] { address, cpu, ram, gpu, os, sp });
                         }
@@ -518,7 +571,8 @@ namespace Inventarization
                             {
                                 get_CPU(address);
                                 get_GPU(address);
-                                get_OS_SP(address);
+                                get_OS(address);
+                                get_SP(address);
                                 get_RAM(address);
 
                                 comp_info =
