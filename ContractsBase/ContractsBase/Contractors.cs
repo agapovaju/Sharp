@@ -93,7 +93,7 @@ namespace ContractsBase
 
         private void dgvContractors_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex == 0) return;
+            if (e.ColumnIndex == 0 || e.RowIndex < 0) return;
             ContractorDetails form = new ContractorDetails(connection, UserParams,
                 Convert.ToInt32(dgvContractors.CurrentRow.Cells["Id_contractor"].Value));
             form.ShowDialog();
