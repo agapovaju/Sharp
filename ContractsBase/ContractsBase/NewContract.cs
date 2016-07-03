@@ -173,9 +173,9 @@ namespace ContractsBase
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (cmbBxKind.SelectedItem == null) MessageBox.Show("Необходимо заполнить поле 'Тип договора'.", "АСКИД");
-            else if (cmbBxType.SelectedItem == null) MessageBox.Show("Необходимо заполнить поле 'Типовой контракт'.", "АСКИД");
-            else if (new Regex("[\\|/:*?\"<>]+").Replace(txtBxName.Text, "") != txtBxName.Text) MessageBox.Show("Поле 'Номер контракта' не может содержать \\/:*?\"<>|.", "АСКИД");
-            else if (txtBxName.Text == "") MessageBox.Show("Необходимо заполнить поле 'Номер контракта'.", "АСКИД");
+            else if (cmbBxType.SelectedItem == null) MessageBox.Show("Необходимо заполнить поле 'Типовой договор'.", "АСКИД");
+            else if (new Regex("[\\|/:*?\"<>]+").Replace(txtBxName.Text, "") != txtBxName.Text) MessageBox.Show("Поле 'Номер договора' не может содержать \\/:*?\"<>|.", "АСКИД");
+            else if (txtBxName.Text == "") MessageBox.Show("Необходимо заполнить поле 'Номер договора'.", "АСКИД");
             else if (txtBxSubject.Text == "") MessageBox.Show("Необходимо заполнить поле 'Предмет договора'.", "АСКИД");
             else if (new Regex("[0-9]+").Replace(txtBxNumber.Text, "") != "") MessageBox.Show("Поле 'Объем (количество)' может содержать только цифры", "АСКИД");
             else if (txtBxOkdp.Text == "") MessageBox.Show("Необходимо заполнить поле 'ОКДП'.", "АСКИД");
@@ -189,7 +189,7 @@ namespace ContractsBase
                     connection.Open();
 
                     // ******************************************
-                    // данные в таблицу контрактов
+                    // данные в таблицу договоров
                     SqlCommand command = new SqlCommand(String.Format(
                         "INSERT INTO Contracts(Name, Date_add, Date_start, Date_end, Date_start_work, Date_end_work, " +
                             "Date_start_fact, Date_end_fact, Id_type, Id_kind, Id_staff, Subject, Cost, Number, Okdp)" +
@@ -227,12 +227,12 @@ namespace ContractsBase
 
 
                     // ******************************************
-                    // создаем папку контракта, копируем файл
+                    // создаем папку договора, копируем файл
                     // из конфига тянем путь к файловому серверу
                     string contrPath = File.ReadAllLines("config.txt").Where(s => s.StartsWith("FileServer=")).First();
                     contrPath = contrPath.Substring(11);
 
-                    // вытаскиваем название отдела, где зарегистрировали контракт и номер контракта
+                    // вытаскиваем название отдела, где зарегистрировали договор и номер договора
                     reader = new SqlCommand(String.Format(
                         "SELECT Blocks.Block, Contracts.Name FROM Contracts " +
                         "INNER JOIN Staff ON Contracts.Id_staff = Staff.Id_staff " +
@@ -322,7 +322,7 @@ namespace ContractsBase
                     connection.Close();
                     Success = true;
 
-                    // отправка письма с сообщением о создании новго контракта
+                    // отправка письма с сообщением о создании нового договора
                     emailText = Environment.NewLine + "\t" + "Добрый день." + Environment.NewLine + Environment.NewLine + emailText + Environment.NewLine +
                         "\t" + "Письмо сформировано автоматически, просьба на него не отвечать.";
                     Program.SendMail(emailText);

@@ -123,9 +123,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(295, 24);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(98, 13);
+            this.label5.Size = new System.Drawing.Size(93, 13);
             this.label5.TabIndex = 8;
-            this.label5.Text = "Нач. по контракту";
+            this.label5.Text = "Нач. по договору";
             // 
             // label4
             // 
@@ -168,9 +168,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(283, 76);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(110, 13);
+            this.label7.Size = new System.Drawing.Size(105, 13);
             this.label7.TabIndex = 12;
-            this.label7.Text = "Оконч. по контракту";
+            this.label7.Text = "Оконч. по договору";
             // 
             // label8
             // 
@@ -241,9 +241,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(28, 102);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(118, 13);
+            this.label2.Size = new System.Drawing.Size(115, 13);
             this.label2.TabIndex = 37;
-            this.label2.Text = "Контракт дейсвует до";
+            this.label2.Text = "Договор дейсвует до";
             // 
             // txtBxDateAdd
             // 

@@ -47,7 +47,7 @@ namespace ContractsBase
             
             if (IdCont != null)
             {
-                // вытаскиваем название отдела, где зарегистрировали контракт и номер контракта
+                // вытаскиваем название отдела, где зарегистрировали договор и номер договора
                 string contrPath = File.ReadAllLines("config.txt").Where(s => s.StartsWith("FileServer=")).First();
                 contrPath = contrPath.Substring(11);
                 connection.Open();
@@ -107,7 +107,7 @@ namespace ContractsBase
                     KindId = (cmbBxKind.SelectedItem as CmbItem).Id;
                     Dir = cmbBxFolders.Visible ? cmbBxFolders.SelectedItem.ToString() : "Docs";
 
-                    // если вызвали из формы уже созданного контракта,то сразу копируем файлы в папку контракта
+                    // если вызвали из формы уже созданного договора,то сразу копируем файлы в папку договора
                     if (IdCont != null)
                     {
                         // если файл не в основной папке, то вносится ее название
@@ -127,7 +127,7 @@ namespace ContractsBase
                         string contrPath = File.ReadAllLines("config.txt").Where(s => s.StartsWith("FileServer=")).First();
                         contrPath = contrPath.Substring(11);
 
-                        // вытаскиваем название отдела, где зарегистрировали контракт и номер контракта
+                        // вытаскиваем название отдела, где зарегистрировали договор и номер договора
                         connection.Open();
                         SqlDataReader reader = new SqlCommand(String.Format(
                             "SELECT Blocks.Block, Contracts.Name FROM Contracts " +

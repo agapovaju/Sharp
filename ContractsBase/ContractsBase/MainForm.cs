@@ -83,7 +83,7 @@ namespace ContractsBase
                 // скрываем для непосвещенных сводку по документам
                 if (UserParams.AccessType != 1) groupBoxSummary.Visible = false;
 
-                // запрос на заполнение таблицы контрактов
+                // запрос на заполнение таблицы договоров
                 string strCommand = "SELECT Contracts.Name as CName, " +
                     "Contracts.Date_start, " +
                     "CONVERT(nvarchar(10), Contracts.Date_add, 104) AS Date_add, " +
@@ -109,7 +109,7 @@ namespace ContractsBase
                 adapter = new SqlDataAdapter(new SqlCommand(strCommand, connection));
 
                 dgvConts.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_cont", Name = "Id_cont" });
-                dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "CName", HeaderText = "№ контракта", Name = "CName" });
+                dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "CName", HeaderText = "№ договора", Name = "CName" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "Date_start", HeaderText = "Дата заключения", Name = "Date_start" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "Date_add", HeaderText = "Дата внесения", Name = "Date_add" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "Date_end", HeaderText = "Дата завершения", Name = "Date_end" });
@@ -123,7 +123,7 @@ namespace ContractsBase
 
                 dgvConts.RowHeadersWidth = 10;
 
-                // выделяем цветом просроченные контракты
+                // выделяем цветом просроченные договора
                 ColoredRows();
 
             }
@@ -146,7 +146,7 @@ namespace ContractsBase
 
         private void ColoredRows()
         {
-            // запрос на список контрактов, где есть просроченные документы
+            // запрос на список договоров, где есть просроченные документы
             Dictionary<int, bool> coloredContrs = new Dictionary<int, bool>();
             try
             {
@@ -183,8 +183,8 @@ namespace ContractsBase
             NewContract form = new NewContract(connection, UserParams);
             form.ShowDialog();
 
-            // если контракт был добавлен, то обновить таблицу контрктов
-            if(form.Success)
+            // если договор был добавлен, то обновить таблицу договор
+            if (form.Success)
             {
                 int selRowIndex = dgvConts.CurrentRow.Index;
 

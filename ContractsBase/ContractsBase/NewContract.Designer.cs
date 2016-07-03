@@ -154,7 +154,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(113, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Оконч. по контракту:";
+            this.label4.Text = "Оконч. по договору:";
             // 
             // dtpDateEndWork
             // 

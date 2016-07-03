@@ -23,8 +23,8 @@ namespace ContractsBase
             connection = conn;
             IdPay = idPay;
 
-            // запрос для данны по контракту
-            connection.Open();
+                // запрос для данны по договору
+                connection.Open();
             SqlDataReader reader = new SqlCommand(String.Format(
                 "SELECT Pay_no, Date_pay, Date_add, Invoice, Name, Ins_docs " +
                 "FROM Payments INNER JOIN Staff ON Payments.Id_staff = Staff.Id_staff " +

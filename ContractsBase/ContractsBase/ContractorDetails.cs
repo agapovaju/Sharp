@@ -49,7 +49,7 @@ namespace ContractsBase
                 reader.Close();
                 connection.Close();
 
-                // запрос для данных контрактов, заключенных с контрагентом
+                // запрос для данных договоров, заключенных с контрагентом
                 SqlDataAdapter adapter = new SqlDataAdapter(new SqlCommand(String.Format(
                     "SELECT Contracts.Id_cont, Contracts.Name As ContName, Contracts.Date_start, " +
                         "Contracts.Date_end, Contracts.Cost, Staff.Name AS StaffName, Staff.Id_block " +
@@ -63,7 +63,7 @@ namespace ContractsBase
                 BindingSource bindSource = new BindingSource();
                 bindSource.DataSource = dataTable;
 
-                dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { HeaderText = "№ контракта", DataPropertyName = "ContName", Name = "ContName" });
+                dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { HeaderText = "№ договора", DataPropertyName = "ContName", Name = "ContName" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { HeaderText = "Дата начала", DataPropertyName = "Date_start", Name = "Date_start" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { HeaderText = "Дата окончания", DataPropertyName = "Date_end", Name = "Date_end" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { HeaderText = "Стоимость", DataPropertyName = "Cost", Name = "Cost" });
@@ -91,7 +91,7 @@ namespace ContractsBase
         {
             if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
             if (UserParams.AccessType != 1 && UserParams.IdBlock != Convert.ToInt32(dgvConts.CurrentRow.Cells["Id_block"].Value))
-                MessageBox.Show("Увас нет прав просматривать детали контракта, зарегистрированного другим отделом.", "АСКИД", MessageBoxButtons.OK);
+                MessageBox.Show("Увас нет прав просматривать детали договора, зарегистрированного другим отделом.", "АСКИД", MessageBoxButtons.OK);
             else
             {
                 ContractDetails form = new ContractDetails(connection, Convert.ToInt32(dgvConts.CurrentRow.Cells["Id_cont"].Value), UserParams);

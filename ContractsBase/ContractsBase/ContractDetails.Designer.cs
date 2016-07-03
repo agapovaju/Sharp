@@ -158,7 +158,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(96, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Номер контракта";
+            this.label3.Text = "Номер договора";
             // 
             // label4
             // 
@@ -348,7 +348,7 @@
             this.groupBox2.Size = new System.Drawing.Size(554, 189);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Детали контракта";
+            this.groupBox2.Text = "Детали договора";
             // 
             // dtpDateStart
             // 
@@ -870,7 +870,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "ContractDetails";
-            this.Text = "Контракт";
+            this.Text = "Договор";
             this.Load += new System.EventHandler(this.ContractDetails_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
