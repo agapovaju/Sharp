@@ -72,12 +72,13 @@ namespace ContractsBase
                 adapterAgrs = new SqlDataAdapter(new SqlCommand(String.Format(
                     "SELECT Agreements.Name AS AgrName, " +
                         "Agreements.Date_add, " +
-                        "Agreements.Cost, " +
+                        "CONVERT(varchar(10), CONVERT(money, Agreements.Cost), 0) AS Cost, " +
                         "Staff.Name AS StaffName, " +
                         "Agreements.Date_create, " +
                         "Agreements.Ins_docs, " +
                         "Agreements.Id_agr, " +
-                        "IIF(Agreements.Diss = 'False', 'Нет', 'Да') as ADiss " +
+                        "IIF(Agreements.Diss = 'False', 'Нет', 'Да') as ADiss, " +
+                        "Agreements.Filename " +
                     "FROM Agreements " +
                     "INNER JOIN Staff ON Agreements.Id_staff = Staff.Id_staff " +
                     "WHERE Agreements.Id_cont = {0} " +
@@ -92,11 +93,13 @@ namespace ContractsBase
                 dgvAgrs.Columns.Add(new DataGridViewTextBoxColumn { Name = "StaffName", DataPropertyName = "StaffName", HeaderText = "Ответственный" });
                 dgvAgrs.Columns.Add(new DataGridViewTextBoxColumn { Name = "ADiss", DataPropertyName = "ADiss", HeaderText = "СОР" });
                 dgvAgrs.Columns.Add(new DataGridViewTextBoxColumn { Name = "Id_agr", DataPropertyName = "Id_agr", HeaderText = "Id_agr" });
+                dgvAgrs.Columns.Add(new DataGridViewTextBoxColumn { Name = "Filename", DataPropertyName = "Filename", HeaderText = "Filename" });
 
                 dgvAgrs.DataSource = dataTable;
                 dgvAgrs.Columns["Id_agr"].Visible = false;
                 dgvAgrs.Columns["Ins_docs"].Visible = false;
                 dgvAgrs.Columns["Date_create"].Visible = false;
+                dgvAgrs.Columns["Filename"].Visible = false;
 
                 // выделяем цветом просроченные
                 ColoredRows(3, dgvAgrs, "Date_create", "Date_add");
@@ -286,7 +289,12 @@ namespace ContractsBase
                         "ContKinds.Kind, " +
                         "Contracts.Date_add, " +
                         "ISNULL(Contracts.Cost, '')," +
-                        "ISNULL(Agreements.Cost, ISNULL(Contracts.Cost, '')) AS CostResult, " +
+                        "CASE " +
+                          "WHEN Contracts.Cost IS NULL AND Agreements.Cost IS NULL THEN '' " +
+                          "WHEN Contracts.Cost IS NOT NULL AND Agreements.Cost IS NULL THEN Contracts.Cost " +
+                          "WHEN Contracts.Cost IS NULL AND Agreements.Cost IS NOT NULL THEN Agreements.Cost " +
+                          "WHEN Contracts.Cost IS NOT NULL AND Agreements.Cost IS NOT NULL THEN Contracts.Cost + Agreements.Cost " +
+                       "END, " +
                         "Staff.Name AS SName, " +
                         "Contracts.Date_start, " +
                         "Contracts.Date_end, " +
@@ -304,7 +312,7 @@ namespace ContractsBase
                         "INNER JOIN ContTypes ON Contracts.Id_type = ContTypes.Id_type  " +
                         "INNER JOIN ContKinds ON Contracts.Id_kind = ContKinds.Id_kind  " +
                         "INNER JOIN Staff ON Contracts.Id_staff = Staff.Id_staff " +
-                        "LEFT OUTER JOIN Agreements ON Staff.Id_staff = Agreements.Id_staff AND Agreements.Id_cont = Contracts.Id_cont " +
+                        "LEFT OUTER JOIN Agreements ON Agreements.Id_cont = Contracts.Id_cont " +
                     "WHERE ((Agreements.Last = 'True') OR (Agreements.Last IS NULL)) AND (Contracts.Id_cont = {0})", IdCont), connection).ExecuteReader();
 
                 // выносим данные на форму
@@ -352,7 +360,11 @@ namespace ContractsBase
         {
             NewAgreement form = new NewAgreement(connection, UserParams, IdCont);
             form.ShowDialog();
-            if (form.Success) RefreshDgv(dgvAgrs, adapterAgrs);
+            if (form.Success)
+            {
+                RefreshDgv(dgvAgrs, adapterAgrs);
+                SelectContractDetails();
+            }
         }
 
         private void dgvAgrs_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -370,11 +382,12 @@ namespace ContractsBase
             }
 
             RefreshDgv(dgvAgrs, adapterAgrs);
+            SelectContractDetails();
         }
 
         private void btnAddDoc_Click(object sender, EventArgs e)
         {
-            NewDoc form = new NewDoc(connection, UserParams.IdStaff, IdCont);
+            NewDoc form = new NewDoc(connection, UserParams.IdStaff, null, IdCont);
             form.ShowDialog();
 
             if (form.Success) RefreshDgv(dgvDocs, adapterDocs);
@@ -492,9 +505,31 @@ namespace ContractsBase
                 SqlCommand command = new SqlCommand(String.Format("DELETE FROM Agreements WHERE Id_agr = {0}",
                     Convert.ToInt32(dgvAgrs.CurrentRow.Cells["Id_agr"].Value)), connection);
                 command.ExecuteNonQuery();
+                // устанавливаем в качестве последнего самый поздний ДС
+                command = new SqlCommand(String.Format("UPDATE Agreements SET Last= 'True' WHERE Id_cont = {0} AND Date_add = (SELECT MAX(Date_add) FROM Agreements)", 
+                    IdCont), connection);
+                command.ExecuteNonQuery();
                 connection.Close();
 
+                // текущее расположение файла
+                string filePath = Path.Combine(GetContractDirPath(), "ДС");
+                string fileName = dgvAgrs.CurrentRow.Cells["Filename"].Value.ToString();
+                if (!File.Exists(Path.Combine(filePath, fileName))) MessageBox.Show("Файл '" + Path.Combine(filePath, fileName) + "' не найден!", "АСКИД");
+                else
+                {
+                    string newFileName = Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("ddMMyyyyHHmmss") + Path.GetExtension(fileName);
+
+                    // из конфига тянем путь к файловому серверу
+                    string trashPath = File.ReadAllLines("config.txt").Where(s => s.StartsWith("FileServer=")).First();
+                    trashPath = Path.Combine(trashPath.Substring(11), "Trash");
+
+                    if (!Directory.Exists(trashPath)) Directory.CreateDirectory(trashPath);
+                    File.Move(Path.Combine(filePath, fileName), Path.Combine(trashPath, newFileName));
+                }
+
+
                 RefreshDgv(dgvAgrs, adapterAgrs);
+                SelectContractDetails();
             }
         }
 

@@ -19,11 +19,12 @@ namespace ContractsBase
         public string Path;
         public string Kind;
         public int KindId;
+        public string Dir;
         public bool Success;
         int? IdCont;
         int IdStaff;
 
-        public NewDoc(SqlConnection conn, int idStaff, int? idContract)
+        public NewDoc(SqlConnection conn, int idStaff, List<string> newPaysDirs, int? idContract)
         {
             Success = false;
             InitializeComponent();
@@ -41,8 +42,9 @@ namespace ContractsBase
             cmbBxKind.DisplayMember = "Name";
             cmbBxKind.ValueMember = "Id";
 
-
             // список папок
+            List<string> dirs = new List<string>();
+            
             if (IdCont != null)
             {
                 // вытаскиваем название отдела, где зарегистрировали контракт и номер контракта
@@ -57,8 +59,14 @@ namespace ContractsBase
                 reader.Read();
                 contrPath = System.IO.Path.Combine(contrPath, reader.GetString(0), reader.GetString(1), "Docs");
                 connection.Close();
-                List<string> dirs = new List<string>();
                 foreach (string dir in Directory.GetDirectories(contrPath)) dirs.Add(new DirectoryInfo(dir).Name);
+                cmbBxFolders.Items.Add("Docs");
+                cmbBxFolders.Items.AddRange(dirs.ToArray());
+                cmbBxFolders.SelectedIndex = 0;
+            }
+            else if(newPaysDirs != null && newPaysDirs.Count != 0)
+            {
+                foreach (string dir in newPaysDirs) dirs.Add(new DirectoryInfo(dir).Name);
                 cmbBxFolders.Items.Add("Docs");
                 cmbBxFolders.Items.AddRange(dirs.ToArray());
                 cmbBxFolders.SelectedIndex = 0;
@@ -97,9 +105,10 @@ namespace ContractsBase
                     Path = openFileDialog.FileName;
                     Kind = (cmbBxKind.SelectedItem as CmbItem).Name;
                     KindId = (cmbBxKind.SelectedItem as CmbItem).Id;
+                    Dir = cmbBxFolders.Visible ? cmbBxFolders.SelectedItem.ToString() : "Docs";
 
                     // если вызвали из формы уже созданного контракта,то сразу копируем файлы в папку контракта
-                    if(IdCont != null)
+                    if (IdCont != null)
                     {
                         // если файл не в основной папке, то вносится ее название
                         string filePath = cmbBxFolders.SelectedItem.ToString() == "Docs" ? System.IO.Path.GetFileName(Path) :
@@ -136,9 +145,12 @@ namespace ContractsBase
                             MessageBox.Show("Папка не найдена и создана.", "АКСИД");
                             Directory.CreateDirectory(contrPath);
                         }
-                        //if(File.Exists(System.IO.Path.Combine(contrPath, System.IO.Path.GetFileName(Path))))
-                        //    MessageBox.Show("Файл перезаписан.", "АКСИД");
-                        File.Copy(Path, System.IO.Path.Combine(contrPath, System.IO.Path.GetFileName(Path)), true);
+
+                        if (File.Exists(System.IO.Path.Combine(contrPath, System.IO.Path.GetFileName(Path))) &&
+                        MessageBox.Show("В папке уже существует файл '" + System.IO.Path.GetFileName(Path) + "'. Заменить его?", "АСКИД", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            File.Copy(Path, System.IO.Path.Combine(contrPath, System.IO.Path.GetFileName(Path)), true);
+                        else File.Copy(Path, System.IO.Path.Combine(contrPath, System.IO.Path.GetFileName(Path)));
+                        
 
                     }
 

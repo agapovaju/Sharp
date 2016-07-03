@@ -132,8 +132,8 @@ namespace ContractsBase
                 {
                     
                     if (txtBxName.Text == "") MessageBox.Show("Необходимо заполнить поле 'Номер ДС'.", "АСКИД");
-                    else if (new Regex(@"[0-9\-\+\.]*").Replace(txtBxCost.Text, "").Length != 0 ||
-                        new Regex(@"[0-9\-\+\.]*").Replace(txtBxNumber.Text, "").Length != 0)
+                    else if (new Regex(@"[0-9\-\+\.\,]*").Replace(txtBxCost.Text, "").Length != 0 ||
+                        new Regex(@"[0-9\-\+]*").Replace(txtBxNumber.Text, "").Length != 0)
                         MessageBox.Show("В поле 'Сумма' и 'Объем (количество)' могут содержаться только цифры.", "АСКИД");
                     else if (txtBxFilePath.Text == "") MessageBox.Show("Необходимо заполнить поле 'Расположение'.", "АСКИД");
                     else if (!File.Exists(txtBxFilePath.Text)) MessageBox.Show("Необходимо заполнить поле 'Указанный файл не существует'.", "АСКИД");
@@ -149,16 +149,17 @@ namespace ContractsBase
                         // вносим новый ДС
                         command = new SqlCommand(String.Format(
                             "INSERT INTO Agreements(Id_cont, Name, Date_create, Date_add, " +
-                            "Date_end, Date_start_work, Date_start_fact, Date_end_work, Date_end_fact, Cost, Number, Id_staff, Last, Diss) " +
-                            "VALUES({0},N'{1}','{2}','{3}',{4},{5},{6},{7},{8},{9},{10},{11},'True','{12}')",
-                            IdCont, txtBxName.Text, dtpDateCreate.Value.ToShortDateString(), DateTime.Now.ToShortDateString(),
+                            "Date_end, Date_start_work, Date_start_fact, Date_end_work, Date_end_fact, Cost, Number, Id_staff, Last, Diss, Filename) " +
+                            "VALUES({0},N'{1}','{2}','{3}',{4},{5},{6},{7},{8},{9},{10},{11},'True','{12}', N'{13}')",
+                            IdCont, txtBxName.Text, dtpDateCreate.Value.ToShortDateString(), DateTime.Now,
                             dtpDateEnd.Checked ? "'" + dtpDateEnd.Value.ToShortDateString() + "'" : "NULL",
                             dtpDateStartWork.Checked ? "'" + dtpDateStartWork.Value.ToShortDateString() + "'" : "NULL",
                             dtpDateStartFact.Checked ? "'" + dtpDateStartFact.Value.ToShortDateString() + "'" : "NULL",
                             dtpDateEndWork.Checked ? "'" + dtpDateEndWork.Value.ToShortDateString() + "'" : "NULL",
                             dtpDateEndFact.Checked ? "'" + dtpDateEndFact.Value.ToShortDateString() + "'" : "NULL",
-                            txtBxCost.Text == "" ? "NULL" : new Regex(@" *[\,\.] *").Replace(txtBxCost.Text, ""),
-                            txtBxNumber.Text == "" ? "NULL" : txtBxNumber.Text, UserParams.IdStaff, chkBxDiss.Checked), connection);
+                            txtBxCost.Text == "" ? "NULL" : new Regex(@" *[\,\.] *").Replace(txtBxCost.Text, "."),
+                            txtBxNumber.Text == "" ? "NULL" : txtBxNumber.Text, UserParams.IdStaff, chkBxDiss.Checked,
+                            Path.GetFileName(txtBxFilePath.Text) ), connection);
 
                         command.ExecuteNonQuery();
                         connection.Close();
@@ -182,8 +183,10 @@ namespace ContractsBase
 
                         if (!Directory.Exists(contrPath)) Directory.CreateDirectory(contrPath);
                         string filePath = txtBxFilePath.Text;
-                        File.Copy(filePath, Path.Combine(contrPath, Path.GetFileName(filePath)));
-
+                        if (File.Exists(Path.Combine(contrPath, Path.GetFileName(filePath))) &&
+                        MessageBox.Show("В папке уже существует файл '" + Path.GetFileName(filePath) + "'. Заменить его?", "АСКИД", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            File.Copy(filePath, Path.Combine(contrPath, Path.GetFileName(filePath)), true);
+                        else File.Copy(filePath, Path.Combine(contrPath, Path.GetFileName(filePath)));
 
                         // отправка письма с сообщением о создании новго ДС
                         string emailText = Environment.NewLine + "\t" + "Добрый день." + Environment.NewLine + Environment.NewLine + 

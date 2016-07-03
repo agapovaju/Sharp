@@ -88,14 +88,23 @@ namespace ContractsBase
                     "Contracts.Date_start, " +
                     "CONVERT(nvarchar(10), Contracts.Date_add, 104) AS Date_add, " +
                     "Contracts.Date_end, " +
-                    "CONVERT(varchar(10), CONVERT(money, Contracts.Cost), 0) AS Cost, " +
+                    //"CONVERT(varchar(10), CONVERT(money, Contracts.Cost), 0) AS Cost, " +
+                    "CONVERT(varchar(10), CONVERT(money, " +
+                        "CASE " +
+                              "WHEN Contracts.Cost IS NULL AND Agreements.Cost IS NULL THEN '' " +
+                              "WHEN Contracts.Cost IS NOT NULL AND Agreements.Cost IS NULL THEN Contracts.Cost " +
+                              "WHEN Contracts.Cost IS NULL AND Agreements.Cost IS NOT NULL THEN Agreements.Cost " +
+                              "WHEN Contracts.Cost IS NOT NULL AND Agreements.Cost IS NOT NULL THEN Contracts.Cost + Agreements.Cost " +
+                           "END), 0) AS Cost, " +
                     "Staff.Name as SName, " +
                     "Contracts.Ins_docs, " +
                     "Contracts.Id_cont " +
                 "FROM Contracts INNER JOIN Staff ON Contracts.Id_staff = Staff.Id_staff " +
-                    "INNER JOIN Blocks ON Staff.Id_block = Blocks.Id_block ";
+                    "INNER JOIN Blocks ON Staff.Id_block = Blocks.Id_block " +
+                    "LEFT OUTER JOIN Agreements ON Agreements.Id_cont = Contracts.Id_cont " +
+                "WHERE ((Agreements.Last = 'True') OR (Agreements.Last IS NULL))";
 
-                if (UserParams.AccessType != 1) strCommand += "WHERE Blocks.Id_block = " + UserParams.IdBlock;
+                if (UserParams.AccessType != 1) strCommand += " AND Blocks.Id_block = " + UserParams.IdBlock;
 
                 adapter = new SqlDataAdapter(new SqlCommand(strCommand, connection));
 

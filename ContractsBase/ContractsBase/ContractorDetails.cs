@@ -52,7 +52,7 @@ namespace ContractsBase
                 // запрос для данных контрактов, заключенных с контрагентом
                 SqlDataAdapter adapter = new SqlDataAdapter(new SqlCommand(String.Format(
                     "SELECT Contracts.Id_cont, Contracts.Name As ContName, Contracts.Date_start, " +
-                        "Contracts.Date_end, Contracts.Cost, Staff.Name AS StaffName " +
+                        "Contracts.Date_end, Contracts.Cost, Staff.Name AS StaffName, Staff.Id_block " +
                     "FROM Contractors_Cont " +
                         "INNER JOIN Contracts ON Contractors_Cont.Id_cont = Contracts.Id_cont " +
                         "INNER JOIN Staff ON Contracts.Id_staff = Staff.Id_staff " +
@@ -69,7 +69,9 @@ namespace ContractsBase
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { HeaderText = "Стоимость", DataPropertyName = "Cost", Name = "Cost" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { HeaderText = "Ответственный", DataPropertyName = "StaffName", Name = "StaffName" });
                 dgvConts.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_cont", Name = "Id_cont" });
+                dgvConts.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_block", Name = "Id_block" });
                 dgvConts.Columns["Id_cont"].Visible = false;
+                dgvConts.Columns["Id_block"].Visible = false;
                 dgvConts.RowHeadersWidth = 5;
 
                 dgvConts.DataSource = bindSource;
@@ -87,9 +89,14 @@ namespace ContractsBase
 
         private void dgvConts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex < 0 || e.RowIndex < 0 || UserParams.AccessType != 1) return;
-            ContractDetails form = new ContractDetails(connection, Convert.ToInt32(dgvConts.CurrentRow.Cells["Id_cont"].Value), UserParams);
-            form.ShowDialog();
+            if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
+            if (UserParams.AccessType != 1 && UserParams.IdBlock != Convert.ToInt32(dgvConts.CurrentRow.Cells["Id_block"].Value))
+                MessageBox.Show("Увас нет прав просматривать детали контракта, зарегистрированного другим отделом.", "АСКИД", MessageBoxButtons.OK);
+            else
+            {
+                ContractDetails form = new ContractDetails(connection, Convert.ToInt32(dgvConts.CurrentRow.Cells["Id_cont"].Value), UserParams);
+                form.ShowDialog();
+            }
         }
     }
 }

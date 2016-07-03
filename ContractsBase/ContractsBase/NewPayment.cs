@@ -157,7 +157,7 @@ namespace ContractsBase
                         connection.Open();
                         SqlCommand command = new SqlCommand(String.Format(
                             "INSERT INTO Payments(Id_cont, Pay_no, Date_pay, Date_add, Invoice, Id_staff, Filename) VALUES ({0}, N'{1}', '{2}', '{3}', N'{4}', {5}, N'{6}')",
-                            IdCont, PayNo, PayDate, DateTime.Now.ToShortDateString(), Invoice, UserParams.IdStaff, Path.GetFileName(fileName)), connection);
+                            IdCont, PayNo, PayDate, DateTime.Now, Invoice, UserParams.IdStaff, Path.GetFileName(fileName)), connection);
                         command.ExecuteNonQuery();
                         connection.Close();
 

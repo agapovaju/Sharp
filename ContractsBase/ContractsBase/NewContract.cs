@@ -79,7 +79,11 @@ namespace ContractsBase
 
         private void btnAddFile_Click(object sender, EventArgs e)
         {
-            NewDoc form = new NewDoc(connection, UserParams.IdStaff, null);
+            // список новых платежек, для которых еще не созданы папки
+            List<string> newPaysDirs = new List<string>();
+            foreach (ListViewItem item in listViewPayments.Items) newPaysDirs.Add(item.SubItems[2].Text);
+
+            NewDoc form = new NewDoc(connection, UserParams.IdStaff, newPaysDirs, null);
             form.ShowDialog();
 
             if (form.Success)
@@ -90,6 +94,7 @@ namespace ContractsBase
                 item.SubItems.Add(form.Kind);
                 item.SubItems.Add(form.Path);
                 item.SubItems.Add(form.KindId.ToString());
+                item.SubItems.Add(form.Dir);
                 listViewFiles.Items.Add(item);
 
                 listViewFiles.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -196,7 +201,7 @@ namespace ContractsBase
                         dtpDateStartFact.Checked ? "'" + dtpDateStartFact.Value.ToShortDateString() + "'" : "NULL",
                         dtpDateEndFact.Checked ? "'" + dtpDateEndFact.Value.ToShortDateString() + "'" : "NULL",
                         (cmbBxType.SelectedItem as CmbItem).Id, (cmbBxKind.SelectedItem as CmbItem).Id, UserParams.IdStaff,
-                        txtBxSubject.Text, txtBxCost.Text == "" ? "NULL" : new Regex(@" *[\,\.] *").Replace(txtBxCost.Text, ""),
+                        txtBxSubject.Text, txtBxCost.Text == "" ? "NULL" : new Regex(@" *[\,\.] *").Replace(txtBxCost.Text, "."),
                         txtBxNumber.Text == "" ? "NULL" : txtBxNumber.Text, txtBxOkdp.Text), connection);
                     command.ExecuteNonQuery();
 
@@ -237,33 +242,13 @@ namespace ContractsBase
                     reader.Close();
                     if (!Directory.Exists(contrPath)) Directory.CreateDirectory(contrPath);
                     string filePath = txtBxFilePath.Text;
-                    File.Copy(filePath, Path.Combine(contrPath, Path.GetFileName(filePath)));
+                    if(File.Exists(Path.Combine(contrPath, Path.GetFileName(filePath))) && 
+                        MessageBox.Show("В папке уже существует файл '" + Path.GetFileName(filePath) + "'. Заменить его?", "АСКИД", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        File.Copy(filePath, Path.Combine(contrPath, Path.GetFileName(filePath)), true);
+                    else File.Copy(filePath, Path.Combine(contrPath, Path.GetFileName(filePath)));
                     contrPath = System.IO.Path.Combine(contrPath, "Docs");
                     if (!Directory.Exists(contrPath)) Directory.CreateDirectory(contrPath);
                     
-
-
-                    // ******************************************
-                    // данные файлов
-                    if (listViewFiles.Items.Count != 0)
-                    {
-                        strCommand = "INSERT INTO Docs(Id_kind, Name, Date_add, Id_staff, Id_cont) VALUES ";
-                        emailText += Environment.NewLine + "\t" + "Документы:" + Environment.NewLine;
-                        foreach (ListViewItem item in listViewFiles.Items)
-                        {
-                            strCommand += String.Format("({0}, N'{1}', '{2}', {3}, {4}), ", item.SubItems[3].Text, Path.GetFileName(item.SubItems[2].Text),
-                               DateTime.Now.ToShortDateString(), UserParams.IdStaff, idCont);
-                            emailText += "\t\t" + item.SubItems[1].Text + " (" + Path.GetFileName(item.SubItems[2].Text) + ")" + Environment.NewLine;
-
-                            File.Copy(item.SubItems[2].Text, Path.Combine(contrPath, Path.GetFileName(item.SubItems[2].Text)));
-                        }
-                        strCommand = strCommand.Substring(0, strCommand.Length - 2);
-
-                        command = new SqlCommand(strCommand, connection);
-                        command.ExecuteNonQuery();
-                        emailText += Environment.NewLine;
-                       
-                    }
 
                     // ******************************************
                     // данные платежных поручений
@@ -279,12 +264,17 @@ namespace ContractsBase
                                DateTime.Now, item.SubItems[2].Text, UserParams.IdStaff, item.SubItems[3].Text);
                             // для каждого платежного поручения создаем папку
                             string invoice = item.SubItems[2].Text;
-                            if (!Directory.Exists(Path.Combine(contrPath, invoice))) contrPath = Path.Combine(contrPath, invoice);
-                            else contrPath = Path.Combine(contrPath, invoice + "_" +
+                            string invoicePath = "";
+                            if (!Directory.Exists(Path.Combine(contrPath, invoice))) invoicePath = Path.Combine(contrPath, invoice);
+                            else invoicePath = Path.Combine(contrPath, invoice + "_" +
                                     (Directory.GetDirectories(contrPath, invoice + "*").Count() + 1));
-                            Directory.CreateDirectory(contrPath);
+                            Directory.CreateDirectory(invoicePath);
 
-                            File.Copy(item.SubItems[3].Text, Path.Combine(contrPath, Path.GetFileName(item.SubItems[3].Text)));
+                            if (File.Exists(Path.Combine(invoicePath, Path.GetFileName(item.SubItems[3].Text))) &&
+                                MessageBox.Show("В папке уже существует файл '" + Path.GetFileName(item.SubItems[3].Text) + "'. Заменить его?", "АСКИД", 
+                                MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                File.Copy(item.SubItems[3].Text, Path.Combine(invoicePath, Path.GetFileName(item.SubItems[3].Text)), true);
+                            else File.Copy(item.SubItems[3].Text, Path.Combine(invoicePath, Path.GetFileName(item.SubItems[3].Text)));
 
                             emailText += "\t\t" + item.Text + Environment.NewLine;
                         }
@@ -295,6 +285,37 @@ namespace ContractsBase
 
                         emailText += Environment.NewLine;
                     }
+
+
+                    // ******************************************
+                    // данные файлов
+                    if (listViewFiles.Items.Count != 0)
+                    {
+                        strCommand = "INSERT INTO Docs(Id_kind, Name, Date_add, Id_staff, Id_cont) VALUES ";
+                        emailText += Environment.NewLine + "\t" + "Документы:" + Environment.NewLine;
+                        foreach (ListViewItem item in listViewFiles.Items)
+                        {
+                            strCommand += String.Format("({0}, N'{1}', '{2}', {3}, {4}), ", item.SubItems[3].Text, Path.GetFileName(item.SubItems[2].Text),
+                               DateTime.Now.ToShortDateString(), UserParams.IdStaff, idCont);
+                            emailText += "\t\t" + item.SubItems[1].Text + " (" + Path.GetFileName(item.SubItems[2].Text) + ")" + Environment.NewLine;
+
+                            string newPath = contrPath;
+                            if (item.SubItems[4].Text != "Docs") newPath = Path.Combine(newPath, item.SubItems[4].Text);
+
+                            if (File.Exists(Path.Combine(newPath, Path.GetFileName(item.SubItems[2].Text))) &&
+                                MessageBox.Show("В папке уже существует файл '" + Path.GetFileName(item.SubItems[2].Text) + "'. Заменить его?", 
+                                "АСКИД", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                File.Copy(item.SubItems[2].Text, Path.Combine(newPath, Path.GetFileName(item.SubItems[2].Text)), true);
+                            else File.Copy(item.SubItems[2].Text, Path.Combine(newPath, Path.GetFileName(item.SubItems[2].Text)));
+                        }
+                        strCommand = strCommand.Substring(0, strCommand.Length - 2);
+
+                        command = new SqlCommand(strCommand, connection);
+                        command.ExecuteNonQuery();
+                        emailText += Environment.NewLine;
+
+                    }
+
 
 
                     connection.Close();
@@ -315,7 +336,7 @@ namespace ContractsBase
             }
         }
 
-        private void AddPayment_Click(object sender, EventArgs e)
+        private void btnAddPayment_Click(object sender, EventArgs e)
         {
             NewPayment form = new NewPayment(connection, UserParams, null, null);
 
@@ -360,6 +381,6 @@ namespace ContractsBase
             }
         }
 
-        
+       
     }
 }

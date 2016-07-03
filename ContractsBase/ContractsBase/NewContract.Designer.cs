@@ -534,7 +534,7 @@
             this.btnAddPayment.Size = new System.Drawing.Size(25, 25);
             this.btnAddPayment.TabIndex = 35;
             this.btnAddPayment.UseVisualStyleBackColor = true;
-            this.btnAddPayment.Click += new System.EventHandler(this.AddPayment_Click);
+            this.btnAddPayment.Click += new System.EventHandler(this.btnAddPayment_Click);
             // 
             // label16
             // 
