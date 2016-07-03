@@ -132,9 +132,9 @@ namespace ContractsBase
                 {
                     
                     if (txtBxName.Text == "") MessageBox.Show("Необходимо заполнить поле 'Номер ДС'.", "АСКИД");
-                    else if (new Regex(@"[0-9\-\+\.\,]*").Replace(txtBxCost.Text, "").Length != 0 ||
-                        new Regex(@"[0-9\-\+]*").Replace(txtBxNumber.Text, "").Length != 0)
-                        MessageBox.Show("В поле 'Сумма' и 'Объем (количество)' могут содержаться только цифры.", "АСКИД");
+                    else if (new Regex(@"[0-9\-\+\.\,]*").Replace(txtBxCost.Text, "").Length != 0)
+                        MessageBox.Show("В поле 'Сумма' могут содержаться только цифры, '.' или ','.", "АСКИД");
+                    else if (new Regex("[0-9]+").Replace(txtBxNumber.Text, "") != "") MessageBox.Show("Поле 'Объем (количество)' может содержать только цифры", "АСКИД");
                     else if (txtBxFilePath.Text == "") MessageBox.Show("Необходимо заполнить поле 'Расположение'.", "АСКИД");
                     else if (!File.Exists(txtBxFilePath.Text)) MessageBox.Show("Необходимо заполнить поле 'Указанный файл не существует'.", "АСКИД");
                     else
@@ -188,10 +188,20 @@ namespace ContractsBase
                             File.Copy(filePath, Path.Combine(contrPath, Path.GetFileName(filePath)), true);
                         else File.Copy(filePath, Path.Combine(contrPath, Path.GetFileName(filePath)));
 
+                        // название договора, к которому добавляется новый ДС
+                        connection.Open();
+                        reader = new SqlCommand(String.Format(
+                            "SELECT Contracts.Name FROM Contracts WHERE(Contracts.Id_cont = {0})", 
+                            IdCont), connection).ExecuteReader();
+                        reader.Read();
+                        string emailText = Environment.NewLine + "\t" + "Добрый день." + Environment.NewLine + Environment.NewLine +
+                            "\t" + "Пользователь " + UserParams.Name + " внес новое дополнительное соглашение \"" + txtBxName.Text + 
+                            "\" к основному документу \"" + reader.GetString(0) + "\"." + Environment.NewLine +
+                            Environment.NewLine + "\t" + "Письмо сформировано автоматически, просьба на него не отвечать.";
+                        reader.Close();
+                        connection.Close();
+
                         // отправка письма с сообщением о создании новго ДС
-                        string emailText = Environment.NewLine + "\t" + "Добрый день." + Environment.NewLine + Environment.NewLine + 
-                            "\t" + "Пользователь " + UserParams.Name + " внес новое дополнительное соглашение \"" + txtBxName.Text + "\"" + Environment.NewLine + 
-                            Environment.NewLine + "\t" + "Письмо фсормировано автоматически, просьба на него не отвечать.";
                         Program.SendMail(emailText);
                         
                         Success = true;
@@ -201,6 +211,12 @@ namespace ContractsBase
                 // если правим существующее
                 else
                 {
+                    if (new Regex("[0-9]+").Replace(txtBxNumber.Text, "") != "")
+                    {
+                        MessageBox.Show("Поле 'Объем (количество)' может содержать только цифры", "АСКИД");
+                        return;
+                    }
+
                     connection.Open();
                     SqlCommand command = new SqlCommand(String.Format(
                         "UPDATE Agreements SET Name = N'{0}', Date_create ='{1}', Date_end ={2}, Date_start_work ={3}, " +

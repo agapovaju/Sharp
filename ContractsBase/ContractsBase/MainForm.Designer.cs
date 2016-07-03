@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvConts = new System.Windows.Forms.DataGridView();
             this.dtpDateStart = new System.Windows.Forms.DateTimePicker();
             this.dtpDateEnd = new System.Windows.Forms.DateTimePicker();
@@ -62,8 +62,8 @@
             // dgvConts
             // 
             this.dgvConts.AllowUserToAddRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Ivory;
-            this.dgvConts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Ivory;
+            this.dgvConts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvConts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -72,8 +72,10 @@
             this.dgvConts.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dgvConts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvConts.Location = new System.Drawing.Point(12, 130);
+            this.dgvConts.MultiSelect = false;
             this.dgvConts.Name = "dgvConts";
             this.dgvConts.ReadOnly = true;
+            this.dgvConts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvConts.Size = new System.Drawing.Size(612, 235);
             this.dgvConts.TabIndex = 0;
             this.dgvConts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvConts_CellDoubleClick);

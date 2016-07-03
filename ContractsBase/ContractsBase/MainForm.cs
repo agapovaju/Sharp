@@ -186,12 +186,22 @@ namespace ContractsBase
             // если контракт был добавлен, то обновить таблицу контрктов
             if(form.Success)
             {
+                int selRowIndex = dgvConts.CurrentRow.Index;
+
                 SData.DataTable dataTable = new SData.DataTable("Contracts");
                 adapter.Fill(dataTable);
                 BindingSource bindingSource = new BindingSource();
                 bindingSource.DataSource = dataTable;
                 dgvConts.DataSource = bindingSource;
+
+                if (dgvConts.Rows.Count >= selRowIndex)
+                {
+                    dgvConts.Rows[selRowIndex].Selected = true;
+                    dgvConts.FirstDisplayedScrollingRowIndex = selRowIndex;
+                }
             }
+
+
         }
 
         private void btnContractors_Click(object sender, EventArgs e)
@@ -218,10 +228,18 @@ namespace ContractsBase
         private void dgvConts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
+            int selRowIndex = dgvConts.CurrentRow.Index;
+
             ContractDetails form = new ContractDetails(connection, 
                 Convert.ToInt32(dgvConts.CurrentRow.Cells["Id_cont"].Value), UserParams);
             form.ShowDialog();
             RefreshDgv();
+
+            if (dgvConts.Rows.Count >= selRowIndex)
+            {
+                dgvConts.Rows[selRowIndex].Selected = true;
+                dgvConts.FirstDisplayedScrollingRowIndex = selRowIndex;
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -450,7 +468,7 @@ namespace ContractsBase
 
 
                 stopWatch.Stop();
-                MessageBox.Show(stopWatch.ElapsedMilliseconds.ToString() + " мс.", "АСКИД");
+                //MessageBox.Show(stopWatch.ElapsedMilliseconds.ToString() + " мс.", "АСКИД");
 
             }
             catch (Exception ex)

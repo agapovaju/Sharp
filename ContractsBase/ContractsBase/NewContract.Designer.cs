@@ -376,6 +376,7 @@
             this.txtBxNumber.Name = "txtBxNumber";
             this.txtBxNumber.Size = new System.Drawing.Size(119, 20);
             this.txtBxNumber.TabIndex = 26;
+            this.txtBxNumber.Visible = false;
             // 
             // label14
             // 
@@ -385,6 +386,7 @@
             this.label14.Size = new System.Drawing.Size(112, 13);
             this.label14.TabIndex = 25;
             this.label14.Text = "Объем (количество):";
+            this.label14.Visible = false;
             // 
             // btnOk
             // 

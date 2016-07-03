@@ -100,9 +100,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(310, 78);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(110, 13);
+            this.label7.Size = new System.Drawing.Size(105, 13);
             this.label7.TabIndex = 38;
-            this.label7.Text = "Оконч. по контракту";
+            this.label7.Text = "Оконч. по договору";
             // 
             // label9
             // 
@@ -144,9 +144,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(322, 26);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(98, 13);
+            this.label5.Size = new System.Drawing.Size(93, 13);
             this.label5.TabIndex = 36;
-            this.label5.Text = "Нач. по контракту";
+            this.label5.Text = "Нач. по договору";
             // 
             // label4
             // 
@@ -159,7 +159,6 @@
             // 
             // dtpDateStartWork
             // 
-            this.dtpDateStartWork.Checked = false;
             this.dtpDateStartWork.Location = new System.Drawing.Point(441, 20);
             this.dtpDateStartWork.Name = "dtpDateStartWork";
             this.dtpDateStartWork.ShowCheckBox = true;
@@ -168,7 +167,6 @@
             // 
             // dtpDateEndWork
             // 
-            this.dtpDateEndWork.Checked = false;
             this.dtpDateEndWork.Location = new System.Drawing.Point(441, 72);
             this.dtpDateEndWork.Name = "dtpDateEndWork";
             this.dtpDateEndWork.ShowCheckBox = true;
@@ -177,7 +175,6 @@
             // 
             // dtpDateStartFact
             // 
-            this.dtpDateStartFact.Checked = false;
             this.dtpDateStartFact.Location = new System.Drawing.Point(441, 46);
             this.dtpDateStartFact.Name = "dtpDateStartFact";
             this.dtpDateStartFact.ShowCheckBox = true;
@@ -186,7 +183,6 @@
             // 
             // dtpDateEndFact
             // 
-            this.dtpDateEndFact.Checked = false;
             this.dtpDateEndFact.Location = new System.Drawing.Point(441, 98);
             this.dtpDateEndFact.Name = "dtpDateEndFact";
             this.dtpDateEndFact.ShowCheckBox = true;
@@ -212,7 +208,6 @@
             // 
             // dtpDateEnd
             // 
-            this.dtpDateEnd.Checked = false;
             this.dtpDateEnd.Location = new System.Drawing.Point(142, 101);
             this.dtpDateEnd.Name = "dtpDateEnd";
             this.dtpDateEnd.ShowCheckBox = true;
@@ -224,9 +219,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(14, 104);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(118, 13);
+            this.label1.Size = new System.Drawing.Size(120, 13);
             this.label1.TabIndex = 65;
-            this.label1.Text = "Контракт действет до";
+            this.label1.Text = "Договор действует до";
             // 
             // label2
             // 

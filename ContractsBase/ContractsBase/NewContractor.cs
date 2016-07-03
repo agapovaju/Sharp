@@ -34,7 +34,7 @@ namespace ContractsBase
                 connection.Open();
                 SqlCommand command = new SqlCommand(String.Format(
                     "INSERT INTO Contractors(Name, Oktmo, Okopf, Ogrn, Okpo, Inn, Kpp, Member, Id_staff) " +
-                    "VALUES (N'{0}', {1}, {2}, {3}, {4}, {5}, {6}, '{7}', {8} )",
+                    "VALUES (N'{0}', N'{1}', N'{2}', N'{3}', N'{4}', N'{5}', N'{6}', '{7}', {8} )",
                     txtBxName.Text.Replace("'","\""), txtBxOktmo.Text, txtBxOkopf.Text, txtBxOgrn.Text, txtBxOkpo.Text, txtBxInn.Text, txtBxKpp.Text, chkBxMember.Checked, "21"), connection);
 
                 command.ExecuteNonQuery();

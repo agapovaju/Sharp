@@ -225,7 +225,7 @@ namespace ContractsBase
                     cmbBxKind.Visible = true;
                     txtBxSubject.ReadOnly = false;
                     txtBxCost.ReadOnly = false;
-                    txtBxContrName.ReadOnly = false;
+                    //txtBxContrName.ReadOnly = false;
                     txtBxNumber.ReadOnly = false;
                     txtBxOkdp.ReadOnly = false;
                     btnSaveChanges.Visible = true;
@@ -288,7 +288,7 @@ namespace ContractsBase
                         "Contracts.Name, " +
                         "ContKinds.Kind, " +
                         "Contracts.Date_add, " +
-                        "ISNULL(Contracts.Cost, '')," +
+                        "ISNULL(Contracts.Cost, ''), " +
                         "CASE " +
                           "WHEN Contracts.Cost IS NULL AND Agreements.Cost IS NULL THEN '' " +
                           "WHEN Contracts.Cost IS NOT NULL AND Agreements.Cost IS NULL THEN Contracts.Cost " +
@@ -297,14 +297,13 @@ namespace ContractsBase
                        "END, " +
                         "Staff.Name AS SName, " +
                         "Contracts.Date_start, " +
-                        "Contracts.Date_end, " +
+                        //"Contracts.Date_end, " +
+                        "ISNULL(Agreements.Date_end, Contracts.Date_end) AS DateStartWorkResult, " +
                         "ISNULL(Agreements.Date_start_work, Contracts.Date_start_work) AS DateStartWorkResult, " +
                         "ISNULL(Agreements.Date_start_fact, Contracts.Date_start_fact) AS DateStartFactResult, " +
                         "ISNULL(Agreements.Date_end_work, Contracts.Date_end_work) AS DateEndWorkResult, " +
                         "ISNULL(Agreements.Date_end_fact, Contracts.Date_end_fact) AS DateEndFactResult, " +
-                        "ISNULL( " +
-                            "ISNULL(Contracts.Number, 0) + Agreements.Number, " +
-                            "ISNULL(Contracts.Number, 0)) AS NumberResult, " +
+                        "ISNULL(Agreements.Number, ISNULL(Contracts.Number, 0)) AS NumberResult, " + 
                         "Contracts.Okdp, " +
                         "Contracts.Subject, " +
                         "Contracts.Ins_docs " +
@@ -329,17 +328,47 @@ namespace ContractsBase
                 chkBxInsDocs.CheckedChanged += chkBxInsDocs_CheckedChanged;
 
                 if (!reader.IsDBNull(4)) txtBxDateAdd.Text = reader.GetDateTime(4).ToShortDateString();
-                if (!reader.IsDBNull(8)) txtBxDateStart.Text = reader.GetDateTime(8).ToShortDateString();
-                if (!reader.IsDBNull(9)) txtBxDateEnd.Text = reader.GetDateTime(9).ToShortDateString();
-                if (!reader.IsDBNull(10)) txtBxStartWork.Text = reader.GetDateTime(10).ToShortDateString();
-                if (!reader.IsDBNull(11)) txtBxStartFact.Text = reader.GetDateTime(11).ToShortDateString();
-                if (!reader.IsDBNull(12)) txtBxEndWork.Text = reader.GetDateTime(12).ToShortDateString(); ;
-                if (!reader.IsDBNull(13)) txtBxEndFact.Text = reader.GetDateTime(13).ToShortDateString(); ;
+                if (!reader.IsDBNull(8))
+                {
+                    txtBxDateStart.Text = reader.GetDateTime(8).ToShortDateString();
+                    dtpDateStart.Checked = true;
+                    dtpDateStart.Value = reader.GetDateTime(8);
+                }
+                if (!reader.IsDBNull(9))
+                {
+                    txtBxDateEnd.Text = reader.GetDateTime(9).ToShortDateString();
+                    dtpDateEnd.Checked = true;
+                    dtpDateEnd.Value = reader.GetDateTime(9);
+                }
+                if (!reader.IsDBNull(10))
+                {
+                    txtBxStartWork.Text = reader.GetDateTime(10).ToShortDateString();
+                    dtpDateStartWork.Checked = true;
+                    dtpDateStartWork.Value = reader.GetDateTime(10);
+                }
+                if (!reader.IsDBNull(11))
+                {
+                    txtBxStartFact.Text = reader.GetDateTime(11).ToShortDateString();
+                    dtpDateStartFact.Checked = true;
+                    dtpDateStartFact.Value = reader.GetDateTime(11);
+                }
+                if (!reader.IsDBNull(12))
+                {
+                    txtBxEndWork.Text = reader.GetDateTime(12).ToShortDateString();
+                    dtpDateEndWork.Checked = true;
+                    dtpDateEndWork.Value = reader.GetDateTime(12);
+                }
+                if (!reader.IsDBNull(13))
+                {
+                    txtBxEndFact.Text = reader.GetDateTime(13).ToShortDateString();
+                    dtpDateEndFact.Checked = true;
+                    dtpDateEndFact.Value = reader.GetDateTime(13);
+                }
 
                 if (!reader.IsDBNull(14)) txtBxNumber.Text = reader.GetInt32(14).ToString();
                 if (!reader.IsDBNull(15)) txtBxOkdp.Text = reader.GetValue(15).ToString();
 
-                this.Text += " №" + reader.GetString(2);
+                this.Text = "Контракт №" + reader.GetString(2);
 
                 reader.Close();
                 connection.Close();
@@ -379,10 +408,10 @@ namespace ContractsBase
             {
                 NewAgreement form = new NewAgreement(connection, UserParams, IdCont, Convert.ToInt32(dgvAgrs.CurrentRow.Cells["Id_agr"].Value));
                 form.ShowDialog();
+                SelectContractDetails();
             }
 
             RefreshDgv(dgvAgrs, adapterAgrs);
-            SelectContractDetails();
         }
 
         private void btnAddDoc_Click(object sender, EventArgs e)
@@ -640,33 +669,36 @@ namespace ContractsBase
         {
             if (txtBxContrName.Text == "") MessageBox.Show("Поле 'Номер контракта' необходимо заполнить.", "АСКИД");
             else if (txtBxSubject.Text == "") MessageBox.Show("Поле 'Предмет' необходимо заполнить.", "АСКИД");
+            else if (new Regex("[0-9]+").Replace(txtBxNumber.Text, "") != "") MessageBox.Show("Поле 'Объем (количество)' может содержать только цифры", "АСКИД");
             else
-            try
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(String.Format(
-                    "UPDATE Contracts SET Name=N'{0}', Date_start='{1}', Date_end={2}, Date_start_work={3}, Date_end_work={4}, " +
-                        "Date_start_fact={5}, Date_end_fact={6}, Id_type={7}, Id_kind={8}, Subject=N'{9}', Cost=CONVERT(money, '{10}', 0), Number={11}, Okdp=N'{12}' " +
-                    " WHERE Contracts.Id_cont={13}",
-                    txtBxContrName.Text,
-                    dtpDateStart.Value.ToShortDateString(),
-                    dtpDateEnd.Checked ? "'" + dtpDateEnd.Value.ToShortDateString() + "'" : "NULL",
-                    dtpDateStartWork.Checked ? "'" + dtpDateStartWork.Value.ToShortDateString() + "'" : "NULL",
-                    dtpDateEndWork.Checked ? "'" + dtpDateEndWork.Value.ToShortDateString() + "'" : "NULL",
-                    dtpDateStartFact.Checked ? "'" + dtpDateStartFact.Value.ToShortDateString() + "'" : "NULL",
-                    dtpDateEndFact.Checked ? "'" + dtpDateEndFact.Value.ToShortDateString() + "'" : "NULL",
-                    (cmbBxType.SelectedItem as CmbItem).Id, (cmbBxKind.SelectedItem as CmbItem).Id, 
-                    txtBxSubject.Text, txtBxCost.Text == "" ? "NULL" : new Regex(@" *[\,\.] *").Replace(txtBxCost.Text, "."),
-                    txtBxNumber.Text == "" ? "NULL" : txtBxNumber.Text, txtBxOkdp.Text, IdCont), connection);
-                command.ExecuteNonQuery();
-                connection.Close();
+                try
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(String.Format(
+                        "UPDATE Contracts SET Name=N'{0}', Date_start='{1}', Date_end={2}, Date_start_work={3}, Date_end_work={4}, " +
+                            "Date_start_fact={5}, Date_end_fact={6}, Id_type={7}, Id_kind={8}, Subject=N'{9}', Cost=CONVERT(money, '{10}', 0), Number={11}, Okdp=N'{12}' " +
+                        " WHERE Contracts.Id_cont={13}",
+                        txtBxContrName.Text,
+                        dtpDateStart.Value.ToShortDateString(),
+                        dtpDateEnd.Checked ? "'" + dtpDateEnd.Value.ToShortDateString() + "'" : "NULL",
+                        dtpDateStartWork.Checked ? "'" + dtpDateStartWork.Value.ToShortDateString() + "'" : "NULL",
+                        dtpDateEndWork.Checked ? "'" + dtpDateEndWork.Value.ToShortDateString() + "'" : "NULL",
+                        dtpDateStartFact.Checked ? "'" + dtpDateStartFact.Value.ToShortDateString() + "'" : "NULL",
+                        dtpDateEndFact.Checked ? "'" + dtpDateEndFact.Value.ToShortDateString() + "'" : "NULL",
+                        (cmbBxType.SelectedItem as CmbItem).Id, (cmbBxKind.SelectedItem as CmbItem).Id,
+                        txtBxSubject.Text, txtBxCost.Text == "" ? "NULL" : new Regex(@" *[\,\.] *").Replace(txtBxCost.Text, "."),
+                        txtBxNumber.Text == "" ? "NULL" : txtBxNumber.Text, txtBxOkdp.Text, IdCont), connection);
+                    command.ExecuteNonQuery();
+                    connection.Close();
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка! btnSaveChanges: " + ex.Message);
-                if (connection.State == ConnectionState.Open) connection.Close();
-            }
+                    SelectContractDetails();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка! btnSaveChanges: " + ex.Message);
+                    if (connection.State == ConnectionState.Open) connection.Close();
+                }
         }
     }
 }

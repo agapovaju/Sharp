@@ -161,10 +161,20 @@ namespace ContractsBase
                         command.ExecuteNonQuery();
                         connection.Close();
 
-                        // отправка письма с сообщением о создании новго документа
+                        // название договора, к которому добавляется новое платежное поручение
+                        connection.Open();
+                        reader = new SqlCommand(String.Format(
+                            "SELECT Contracts.Name FROM Contracts WHERE(Contracts.Id_cont = {0})",
+                            IdCont), connection).ExecuteReader();
+                        reader.Read();
                         string emailText = Environment.NewLine + "\t" + "Добрый день." + Environment.NewLine + Environment.NewLine +
                             "\t" + "Пользователь " + UserParams.Name + " внес новое платежное поручение \"" + PayNo + "\"" + Environment.NewLine + Environment.NewLine +
-                            "\t" + "Письмо фсормировано автоматически, просьба на него не отвечать.";
+                            "\" к основному документу \"" + reader.GetString(0) + "\"." + Environment.NewLine +
+                            Environment.NewLine + "\t" + "Письмо сформировано автоматически, просьба на него не отвечать.";
+                        reader.Close();
+                        connection.Close();
+
+                        // отправка письма с сообщением о создании новго документа
                         Program.SendMail(emailText);
 
                     }

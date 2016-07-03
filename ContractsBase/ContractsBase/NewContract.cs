@@ -177,6 +177,7 @@ namespace ContractsBase
             else if (new Regex("[\\|/:*?\"<>]+").Replace(txtBxName.Text, "") != txtBxName.Text) MessageBox.Show("Поле 'Номер контракта' не может содержать \\/:*?\"<>|.", "АСКИД");
             else if (txtBxName.Text == "") MessageBox.Show("Необходимо заполнить поле 'Номер контракта'.", "АСКИД");
             else if (txtBxSubject.Text == "") MessageBox.Show("Необходимо заполнить поле 'Предмет договора'.", "АСКИД");
+            else if (new Regex("[0-9]+").Replace(txtBxNumber.Text, "") != "") MessageBox.Show("Поле 'Объем (количество)' может содержать только цифры", "АСКИД");
             else if (txtBxOkdp.Text == "") MessageBox.Show("Необходимо заполнить поле 'ОКДП'.", "АСКИД");
             else if (listViewContractors.Items.Count == 0) MessageBox.Show("Необходимо заполнить поле 'Контрагенты'.", "АСКИД");
             else if (txtBxFilePath.Text == "") MessageBox.Show("Необходимо заполнить поле 'Расположение'.", "АСКИД");
@@ -323,7 +324,7 @@ namespace ContractsBase
 
                     // отправка письма с сообщением о создании новго контракта
                     emailText = Environment.NewLine + "\t" + "Добрый день." + Environment.NewLine + Environment.NewLine + emailText + Environment.NewLine +
-                        "\t" + "Письмо фсормировано автоматически, просьба на него не отвечать.";
+                        "\t" + "Письмо сформировано автоматически, просьба на него не отвечать.";
                     Program.SendMail(emailText);
                 }
                 catch (Exception ex)
