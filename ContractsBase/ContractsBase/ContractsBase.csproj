@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{58B78310-E928-4250-B402-72083DD4DA70}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ContractsBase</RootNamespace>
+    <AssemblyName>ContractsBase</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AdvancedDataGridView">
+      <HintPath>.\AdvancedDataGridView.dll</HintPath>
+    </Reference>
+    <Reference Include="DataGridViewAutoFilter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\DataGridViewAutoFilter.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AgreementDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AgreementDetails.Designer.cs">
+      <DependentUpon>AgreementDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CmbItem.cs" />
+    <Compile Include="ContractDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContractDetails.Designer.cs">
+      <DependentUpon>ContractDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContractorDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContractorDetails.Designer.cs">
+      <DependentUpon>ContractorDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contractors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contractors.Designer.cs">
+      <DependentUpon>Contractors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewAgreement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewAgreement.Designer.cs">
+      <DependentUpon>NewAgreement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewContract.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewContract.Designer.cs">
+      <DependentUpon>NewContract.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewContractor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewContractor.Designer.cs">
+      <DependentUpon>NewContractor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewDoc.Designer.cs">
+      <DependentUpon>NewDoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewPayment.Designer.cs">
+      <DependentUpon>NewPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaymentDetails.Designer.cs">
+      <DependentUpon>PaymentDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="AgreementDetails.resx">
+      <DependentUpon>AgreementDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContractDetails.resx">
+      <DependentUpon>ContractDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContractorDetails.resx">
+      <DependentUpon>ContractorDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contractors.resx">
+      <DependentUpon>Contractors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewAgreement.resx">
+      <DependentUpon>NewAgreement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewContract.resx">
+      <DependentUpon>NewContract.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewContractor.resx">
+      <DependentUpon>NewContractor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewDoc.resx">
+      <DependentUpon>NewDoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewPayment.resx">
+      <DependentUpon>NewPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaymentDetails.resx">
+      <DependentUpon>PaymentDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\add16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\open_file.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\redo_3440.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\agt_update_misc_5023.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\news_subscribe_7827.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\user_business_add_2938.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\stock_addressbook_6254.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\order.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\document_1573.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\copydoc_2364.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\window_list_5076.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\view_list_with_thumbnail_6148.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\key_bindings_7620.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\user_business_add_2178.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\search_7688.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\search_5378.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\search_6493.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\search_6381.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\edit-clear_1523.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\contractors32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\search16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\clearfilter16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\cont32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\invoice16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\remove16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\file16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\edit_add_7758.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
