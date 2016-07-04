@@ -34,7 +34,7 @@ namespace ContractsBase
 
             // виды документов
             connection.Open();
-            SqlDataReader reader = new SqlCommand("SELECT Id_kind, Kind FROM DocsKinds", connection).ExecuteReader();
+            SqlDataReader reader = new SqlCommand("SELECT Id_kind, Kind FROM DocsKinds ORDER BY Kind", connection).ExecuteReader();
             while (reader.Read()) cmbBxKind.Items.Add(new CmbItem(reader.GetByte(0), reader.GetString(1)));
             reader.Close();
             connection.Close();

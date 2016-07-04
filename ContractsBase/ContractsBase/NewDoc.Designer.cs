@@ -52,12 +52,12 @@
             // 
             this.txtBxFilePath.Location = new System.Drawing.Point(101, 21);
             this.txtBxFilePath.Name = "txtBxFilePath";
-            this.txtBxFilePath.Size = new System.Drawing.Size(181, 20);
+            this.txtBxFilePath.Size = new System.Drawing.Size(426, 20);
             this.txtBxFilePath.TabIndex = 1;
             // 
             // btnOpenFile
             // 
-            this.btnOpenFile.Location = new System.Drawing.Point(278, 19);
+            this.btnOpenFile.Location = new System.Drawing.Point(523, 19);
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(24, 23);
             this.btnOpenFile.TabIndex = 2;
@@ -83,12 +83,12 @@
             this.cmbBxKind.FormattingEnabled = true;
             this.cmbBxKind.Location = new System.Drawing.Point(101, 47);
             this.cmbBxKind.Name = "cmbBxKind";
-            this.cmbBxKind.Size = new System.Drawing.Size(201, 21);
+            this.cmbBxKind.Size = new System.Drawing.Size(446, 21);
             this.cmbBxKind.TabIndex = 4;
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(227, 103);
+            this.btnOk.Location = new System.Drawing.Point(472, 103);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 5;
@@ -96,12 +96,12 @@
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
-            // cmbBxFolder
+            // cmbBxFolders
             // 
             this.cmbBxFolders.FormattingEnabled = true;
             this.cmbBxFolders.Location = new System.Drawing.Point(101, 74);
-            this.cmbBxFolders.Name = "cmbBxFolder";
-            this.cmbBxFolders.Size = new System.Drawing.Size(201, 21);
+            this.cmbBxFolders.Name = "cmbBxFolders";
+            this.cmbBxFolders.Size = new System.Drawing.Size(446, 21);
             this.cmbBxFolders.TabIndex = 7;
             // 
             // label3
@@ -117,7 +117,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 138);
+            this.ClientSize = new System.Drawing.Size(566, 138);
             this.Controls.Add(this.cmbBxFolders);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnOk);

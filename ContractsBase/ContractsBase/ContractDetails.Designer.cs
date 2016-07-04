@@ -156,7 +156,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(287, 22);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 13);
+            this.label3.Size = new System.Drawing.Size(91, 13);
             this.label3.TabIndex = 4;
             this.label3.Text = "Номер договора";
             // 
@@ -225,7 +225,7 @@
             // 
             // txtBxStaff
             // 
-            this.txtBxStaff.Location = new System.Drawing.Point(115, 157);
+            this.txtBxStaff.Location = new System.Drawing.Point(423, 157);
             this.txtBxStaff.Name = "txtBxStaff";
             this.txtBxStaff.ReadOnly = true;
             this.txtBxStaff.Size = new System.Drawing.Size(123, 20);
@@ -405,7 +405,7 @@
             // 
             // txtBxOkdp
             // 
-            this.txtBxOkdp.Location = new System.Drawing.Point(423, 157);
+            this.txtBxOkdp.Location = new System.Drawing.Point(115, 157);
             this.txtBxOkdp.Name = "txtBxOkdp";
             this.txtBxOkdp.ReadOnly = true;
             this.txtBxOkdp.Size = new System.Drawing.Size(123, 20);
@@ -435,7 +435,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(296, 160);
+            this.label18.Location = new System.Drawing.Point(13, 160);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(39, 13);
             this.label18.TabIndex = 32;
@@ -534,7 +534,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(13, 160);
+            this.label13.Location = new System.Drawing.Point(296, 160);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(86, 13);
             this.label13.TabIndex = 22;

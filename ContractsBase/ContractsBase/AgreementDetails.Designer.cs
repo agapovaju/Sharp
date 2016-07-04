@@ -217,6 +217,7 @@
             this.label1.Size = new System.Drawing.Size(109, 13);
             this.label1.TabIndex = 35;
             this.label1.Text = "Объем (количество)";
+            this.label1.Visible = false;
             // 
             // txtBxNumber
             // 
@@ -226,6 +227,7 @@
             this.txtBxNumber.Size = new System.Drawing.Size(123, 20);
             this.txtBxNumber.TabIndex = 6;
             this.txtBxNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBxNumber.Visible = false;
             // 
             // txtBxDateEnd
             // 
