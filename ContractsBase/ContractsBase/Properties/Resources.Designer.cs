@@ -113,6 +113,26 @@ namespace ContractsBase.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap document_save_24 {
+            get {
+                object obj = ResourceManager.GetObject("document-save_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap document_save_9459 {
+            get {
+                object obj = ResourceManager.GetObject("document-save_9459", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap edit_add_7758 {
             get {
                 object obj = ResourceManager.GetObject("edit_add_7758", resourceCulture);
@@ -126,6 +146,16 @@ namespace ContractsBase.Properties {
         internal static System.Drawing.Bitmap file16 {
             get {
                 object obj = ResourceManager.GetObject("file16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_yellow_24 {
+            get {
+                object obj = ResourceManager.GetObject("folder_yellow_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -84,20 +84,20 @@
             this.dgvContractors = new System.Windows.Forms.DataGridView();
             this.dgvDocs = new System.Windows.Forms.DataGridView();
             this.dgvAgrs = new System.Windows.Forms.DataGridView();
-            this.btnAddDoc = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
-            this.btnAddAgreement = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.dgvPayments = new System.Windows.Forms.DataGridView();
+            this.label19 = new System.Windows.Forms.Label();
+            this.btnSaveChanges = new System.Windows.Forms.Button();
             this.btnRemovePay = new System.Windows.Forms.Button();
             this.btnRemoveDoc = new System.Windows.Forms.Button();
             this.btnRemoveAgreement = new System.Windows.Forms.Button();
-            this.dgvPayments = new System.Windows.Forms.DataGridView();
             this.btnAddPayment = new System.Windows.Forms.Button();
-            this.label19 = new System.Windows.Forms.Label();
-            this.btnSaveChanges = new System.Windows.Forms.Button();
+            this.btnAddAgreement = new System.Windows.Forms.Button();
+            this.btnAddDoc = new System.Windows.Forms.Button();
+            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -668,17 +668,6 @@
             this.dgvAgrs.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvAgrs_DataBindingComplete);
             this.dgvAgrs.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvAgrs_KeyUp);
             // 
-            // btnAddDoc
-            // 
-            this.btnAddDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddDoc.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
-            this.btnAddDoc.Location = new System.Drawing.Point(519, 140);
-            this.btnAddDoc.Name = "btnAddDoc";
-            this.btnAddDoc.Size = new System.Drawing.Size(25, 23);
-            this.btnAddDoc.TabIndex = 28;
-            this.btnAddDoc.UseVisualStyleBackColor = true;
-            this.btnAddDoc.Click += new System.EventHandler(this.btnAddDoc_Click);
-            // 
             // label15
             // 
             this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -689,17 +678,6 @@
             this.label15.Size = new System.Drawing.Size(66, 13);
             this.label15.TabIndex = 27;
             this.label15.Text = "Документы";
-            // 
-            // btnAddAgreement
-            // 
-            this.btnAddAgreement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddAgreement.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
-            this.btnAddAgreement.Location = new System.Drawing.Point(519, 20);
-            this.btnAddAgreement.Name = "btnAddAgreement";
-            this.btnAddAgreement.Size = new System.Drawing.Size(25, 25);
-            this.btnAddAgreement.TabIndex = 25;
-            this.btnAddAgreement.UseVisualStyleBackColor = true;
-            this.btnAddAgreement.Click += new System.EventHandler(this.btnAddAgreement_Click);
             // 
             // btnClose
             // 
@@ -715,17 +693,6 @@
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog1";
-            // 
-            // btnOpenFolder
-            // 
-            this.btnOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOpenFolder.Location = new System.Drawing.Point(21, 460);
-            this.btnOpenFolder.Name = "btnOpenFolder";
-            this.btnOpenFolder.Size = new System.Drawing.Size(106, 29);
-            this.btnOpenFolder.TabIndex = 27;
-            this.btnOpenFolder.Text = "Папка договора";
-            this.btnOpenFolder.UseVisualStyleBackColor = true;
-            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
             // groupBox4
             // 
@@ -750,39 +717,6 @@
             this.groupBox4.TabIndex = 28;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Приложения";
-            // 
-            // btnRemovePay
-            // 
-            this.btnRemovePay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemovePay.Image = global::ContractsBase.Properties.Resources.remove16;
-            this.btnRemovePay.Location = new System.Drawing.Point(488, 304);
-            this.btnRemovePay.Name = "btnRemovePay";
-            this.btnRemovePay.Size = new System.Drawing.Size(25, 25);
-            this.btnRemovePay.TabIndex = 40;
-            this.btnRemovePay.UseVisualStyleBackColor = true;
-            this.btnRemovePay.Click += new System.EventHandler(this.btnRemovePay_Click);
-            // 
-            // btnRemoveDoc
-            // 
-            this.btnRemoveDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemoveDoc.Image = global::ContractsBase.Properties.Resources.remove16;
-            this.btnRemoveDoc.Location = new System.Drawing.Point(488, 139);
-            this.btnRemoveDoc.Name = "btnRemoveDoc";
-            this.btnRemoveDoc.Size = new System.Drawing.Size(25, 25);
-            this.btnRemoveDoc.TabIndex = 39;
-            this.btnRemoveDoc.UseVisualStyleBackColor = true;
-            this.btnRemoveDoc.Click += new System.EventHandler(this.btnRemoveDoc_Click);
-            // 
-            // btnRemoveAgreement
-            // 
-            this.btnRemoveAgreement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemoveAgreement.Image = global::ContractsBase.Properties.Resources.remove16;
-            this.btnRemoveAgreement.Location = new System.Drawing.Point(488, 20);
-            this.btnRemoveAgreement.Name = "btnRemoveAgreement";
-            this.btnRemoveAgreement.Size = new System.Drawing.Size(25, 25);
-            this.btnRemoveAgreement.TabIndex = 38;
-            this.btnRemoveAgreement.UseVisualStyleBackColor = true;
-            this.btnRemoveAgreement.Click += new System.EventHandler(this.btnRemoveAgreement_Click);
             // 
             // dgvPayments
             // 
@@ -823,17 +757,6 @@
             this.dgvPayments.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvPayments_DataBindingComplete);
             this.dgvPayments.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvPayments_KeyUp);
             // 
-            // btnAddPayment
-            // 
-            this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddPayment.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
-            this.btnAddPayment.Location = new System.Drawing.Point(519, 304);
-            this.btnAddPayment.Name = "btnAddPayment";
-            this.btnAddPayment.Size = new System.Drawing.Size(25, 25);
-            this.btnAddPayment.TabIndex = 36;
-            this.btnAddPayment.UseVisualStyleBackColor = true;
-            this.btnAddPayment.Click += new System.EventHandler(this.btnAddPayment_Click);
-            // 
             // label19
             // 
             this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -848,14 +771,98 @@
             // btnSaveChanges
             // 
             this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveChanges.Location = new System.Drawing.Point(137, 460);
+            this.btnSaveChanges.Image = global::ContractsBase.Properties.Resources.document_save_24;
+            this.btnSaveChanges.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveChanges.Location = new System.Drawing.Point(156, 460);
             this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(130, 29);
+            this.btnSaveChanges.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnSaveChanges.Size = new System.Drawing.Size(159, 29);
             this.btnSaveChanges.TabIndex = 29;
             this.btnSaveChanges.Text = "Сохранить изменения";
+            this.btnSaveChanges.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSaveChanges.UseVisualStyleBackColor = true;
             this.btnSaveChanges.Visible = false;
             this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
+            // 
+            // btnRemovePay
+            // 
+            this.btnRemovePay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemovePay.Image = global::ContractsBase.Properties.Resources.remove16;
+            this.btnRemovePay.Location = new System.Drawing.Point(488, 304);
+            this.btnRemovePay.Name = "btnRemovePay";
+            this.btnRemovePay.Size = new System.Drawing.Size(25, 25);
+            this.btnRemovePay.TabIndex = 40;
+            this.btnRemovePay.UseVisualStyleBackColor = true;
+            this.btnRemovePay.Click += new System.EventHandler(this.btnRemovePay_Click);
+            // 
+            // btnRemoveDoc
+            // 
+            this.btnRemoveDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemoveDoc.Image = global::ContractsBase.Properties.Resources.remove16;
+            this.btnRemoveDoc.Location = new System.Drawing.Point(488, 139);
+            this.btnRemoveDoc.Name = "btnRemoveDoc";
+            this.btnRemoveDoc.Size = new System.Drawing.Size(25, 25);
+            this.btnRemoveDoc.TabIndex = 39;
+            this.btnRemoveDoc.UseVisualStyleBackColor = true;
+            this.btnRemoveDoc.Click += new System.EventHandler(this.btnRemoveDoc_Click);
+            // 
+            // btnRemoveAgreement
+            // 
+            this.btnRemoveAgreement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemoveAgreement.Image = global::ContractsBase.Properties.Resources.remove16;
+            this.btnRemoveAgreement.Location = new System.Drawing.Point(488, 20);
+            this.btnRemoveAgreement.Name = "btnRemoveAgreement";
+            this.btnRemoveAgreement.Size = new System.Drawing.Size(25, 25);
+            this.btnRemoveAgreement.TabIndex = 38;
+            this.btnRemoveAgreement.UseVisualStyleBackColor = true;
+            this.btnRemoveAgreement.Click += new System.EventHandler(this.btnRemoveAgreement_Click);
+            // 
+            // btnAddPayment
+            // 
+            this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddPayment.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
+            this.btnAddPayment.Location = new System.Drawing.Point(519, 304);
+            this.btnAddPayment.Name = "btnAddPayment";
+            this.btnAddPayment.Size = new System.Drawing.Size(25, 25);
+            this.btnAddPayment.TabIndex = 36;
+            this.btnAddPayment.UseVisualStyleBackColor = true;
+            this.btnAddPayment.Click += new System.EventHandler(this.btnAddPayment_Click);
+            // 
+            // btnAddAgreement
+            // 
+            this.btnAddAgreement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddAgreement.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
+            this.btnAddAgreement.Location = new System.Drawing.Point(519, 20);
+            this.btnAddAgreement.Name = "btnAddAgreement";
+            this.btnAddAgreement.Size = new System.Drawing.Size(25, 25);
+            this.btnAddAgreement.TabIndex = 25;
+            this.btnAddAgreement.UseVisualStyleBackColor = true;
+            this.btnAddAgreement.Click += new System.EventHandler(this.btnAddAgreement_Click);
+            // 
+            // btnAddDoc
+            // 
+            this.btnAddDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddDoc.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
+            this.btnAddDoc.Location = new System.Drawing.Point(519, 140);
+            this.btnAddDoc.Name = "btnAddDoc";
+            this.btnAddDoc.Size = new System.Drawing.Size(25, 23);
+            this.btnAddDoc.TabIndex = 28;
+            this.btnAddDoc.UseVisualStyleBackColor = true;
+            this.btnAddDoc.Click += new System.EventHandler(this.btnAddDoc_Click);
+            // 
+            // btnOpenFolder
+            // 
+            this.btnOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOpenFolder.Image = global::ContractsBase.Properties.Resources.folder_yellow_24;
+            this.btnOpenFolder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOpenFolder.Location = new System.Drawing.Point(21, 460);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Size = new System.Drawing.Size(129, 29);
+            this.btnOpenFolder.TabIndex = 27;
+            this.btnOpenFolder.Text = "Папка договора";
+            this.btnOpenFolder.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOpenFolder.UseVisualStyleBackColor = true;
+            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
             // ContractDetails
             // 
