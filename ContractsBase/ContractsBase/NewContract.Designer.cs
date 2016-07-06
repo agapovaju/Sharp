@@ -253,7 +253,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(111, 13);
             this.label10.TabIndex = 20;
-            this.label10.Text = "Начало по конракту:";
+            this.label10.Text = "Начало по договору:";
             // 
             // dtpDateStartFact
             // 

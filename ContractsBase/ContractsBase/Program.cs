@@ -28,8 +28,8 @@ namespace ContractsBase
             try
             {
                 string[] configFile = File.ReadAllLines("config.txt");
-                string emailFrom = configFile.Where(s => s.StartsWith("EmailFrom=")).First().Substring(10);
-                string emailFromPass = configFile.Where(s => s.StartsWith("EmailFromPassword=")).First().Substring(18);
+                string emailFrom = "ASKID@omg.transneft.ru"; //configFile.Where(s => s.StartsWith("EmailFrom=")).First().Substring(10);
+                string emailFromPass = "mkoldA1991"; //configFile.Where(s => s.StartsWith("EmailFromPassword=")).First().Substring(18);
 
                 List<string> mailtoList = new List<string>();
                 int indexStart = Array.IndexOf(configFile, "EmailToStart") + 1;
@@ -48,7 +48,7 @@ namespace ContractsBase
                 client.Host = "vom01-pimsg--01.ome.tn.corp";
                 client.Port = 25;
                 client.EnableSsl = false;
-                client.Credentials = new NetworkCredential(emailFrom, emailFromPass);
+                client.Credentials = new NetworkCredential("agapovay@omg.transneft.ru", emailFromPass);
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 //MessageBox.Show(message);
                 client.Send(mail);

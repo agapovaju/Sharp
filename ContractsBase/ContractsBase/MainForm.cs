@@ -89,7 +89,7 @@ namespace ContractsBase
                     "CONVERT(nvarchar(10), Contracts.Date_add, 104) AS Date_add, " +
                     "Contracts.Date_end, " +
                     //"CONVERT(varchar(10), CONVERT(money, Contracts.Cost), 0) AS Cost, " +
-                    "CONVERT(varchar(10), CONVERT(money, " +
+                    "CONVERT(varchar(21), CONVERT(money, " +
                         "CASE " +
                               "WHEN Contracts.Cost IS NULL AND Agreements.Cost IS NULL THEN '' " +
                               "WHEN Contracts.Cost IS NOT NULL AND Agreements.Cost IS NULL THEN Contracts.Cost " +

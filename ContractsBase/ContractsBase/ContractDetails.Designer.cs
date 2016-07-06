@@ -88,15 +88,15 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.dgvPayments = new System.Windows.Forms.DataGridView();
-            this.label19 = new System.Windows.Forms.Label();
-            this.btnSaveChanges = new System.Windows.Forms.Button();
             this.btnRemovePay = new System.Windows.Forms.Button();
             this.btnRemoveDoc = new System.Windows.Forms.Button();
             this.btnRemoveAgreement = new System.Windows.Forms.Button();
+            this.dgvPayments = new System.Windows.Forms.DataGridView();
             this.btnAddPayment = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
             this.btnAddAgreement = new System.Windows.Forms.Button();
             this.btnAddDoc = new System.Windows.Forms.Button();
+            this.btnSaveChanges = new System.Windows.Forms.Button();
             this.btnOpenFolder = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -718,72 +718,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Приложения";
             // 
-            // dgvPayments
-            // 
-            this.dgvPayments.AllowUserToAddRows = false;
-            this.dgvPayments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvPayments.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
-            this.dgvPayments.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dgvPayments.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgvPayments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvPayments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            this.dgvPayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvPayments.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dgvPayments.Location = new System.Drawing.Point(9, 333);
-            this.dgvPayments.MultiSelect = false;
-            this.dgvPayments.Name = "dgvPayments";
-            this.dgvPayments.ReadOnly = true;
-            this.dgvPayments.RowHeadersVisible = false;
-            this.dgvPayments.Size = new System.Drawing.Size(535, 61);
-            this.dgvPayments.TabIndex = 37;
-            this.dgvPayments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPayments_CellDoubleClick);
-            this.dgvPayments.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvPayments_DataBindingComplete);
-            this.dgvPayments.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvPayments_KeyUp);
-            // 
-            // label19
-            // 
-            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 309);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(121, 13);
-            this.label19.TabIndex = 35;
-            this.label19.Text = "Платежные поручения";
-            // 
-            // btnSaveChanges
-            // 
-            this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveChanges.Image = global::ContractsBase.Properties.Resources.document_save_24;
-            this.btnSaveChanges.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveChanges.Location = new System.Drawing.Point(156, 460);
-            this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnSaveChanges.Size = new System.Drawing.Size(159, 29);
-            this.btnSaveChanges.TabIndex = 29;
-            this.btnSaveChanges.Text = "Сохранить изменения";
-            this.btnSaveChanges.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSaveChanges.UseVisualStyleBackColor = true;
-            this.btnSaveChanges.Visible = false;
-            this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
-            // 
             // btnRemovePay
             // 
             this.btnRemovePay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -817,6 +751,45 @@
             this.btnRemoveAgreement.UseVisualStyleBackColor = true;
             this.btnRemoveAgreement.Click += new System.EventHandler(this.btnRemoveAgreement_Click);
             // 
+            // dgvPayments
+            // 
+            this.dgvPayments.AllowUserToAddRows = false;
+            this.dgvPayments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvPayments.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+            this.dgvPayments.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvPayments.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvPayments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvPayments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.dgvPayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvPayments.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dgvPayments.Location = new System.Drawing.Point(9, 333);
+            this.dgvPayments.MultiSelect = false;
+            this.dgvPayments.Name = "dgvPayments";
+            this.dgvPayments.ReadOnly = true;
+            this.dgvPayments.RowHeadersVisible = false;
+            this.dgvPayments.Size = new System.Drawing.Size(535, 98);
+            this.dgvPayments.TabIndex = 37;
+            this.dgvPayments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPayments_CellDoubleClick);
+            this.dgvPayments.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvPayments_DataBindingComplete);
+            this.dgvPayments.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvPayments_KeyUp);
+            // 
             // btnAddPayment
             // 
             this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -827,6 +800,17 @@
             this.btnAddPayment.TabIndex = 36;
             this.btnAddPayment.UseVisualStyleBackColor = true;
             this.btnAddPayment.Click += new System.EventHandler(this.btnAddPayment_Click);
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(6, 309);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(121, 13);
+            this.label19.TabIndex = 35;
+            this.label19.Text = "Платежные поручения";
             // 
             // btnAddAgreement
             // 
@@ -849,6 +833,22 @@
             this.btnAddDoc.TabIndex = 28;
             this.btnAddDoc.UseVisualStyleBackColor = true;
             this.btnAddDoc.Click += new System.EventHandler(this.btnAddDoc_Click);
+            // 
+            // btnSaveChanges
+            // 
+            this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveChanges.Image = global::ContractsBase.Properties.Resources.document_save_24;
+            this.btnSaveChanges.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveChanges.Location = new System.Drawing.Point(156, 460);
+            this.btnSaveChanges.Name = "btnSaveChanges";
+            this.btnSaveChanges.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnSaveChanges.Size = new System.Drawing.Size(159, 29);
+            this.btnSaveChanges.TabIndex = 29;
+            this.btnSaveChanges.Text = "Сохранить изменения";
+            this.btnSaveChanges.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveChanges.UseVisualStyleBackColor = true;
+            this.btnSaveChanges.Visible = false;
+            this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
             // btnOpenFolder
             // 
