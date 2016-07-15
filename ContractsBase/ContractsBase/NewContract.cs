@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing;
 
 namespace ContractsBase
 {
@@ -21,6 +22,15 @@ namespace ContractsBase
             connection = conn;
             UserParams = userParams;
             Success = false;
+
+                       // меняем размеры
+            int freeHeight = groupBox2.Size.Height - listViewFiles.Location.Y;
+            listViewFiles.Size = new Size(listViewFiles.Size.Width, freeHeight / 10 * 6);
+            listViewPayments.Location = new Point(listViewPayments.Location.X, listViewFiles.Location.Y + listViewFiles.Size.Height + 35);
+            label16.Location = new Point(label16.Location.X, listViewPayments.Location.Y - 21);
+            listViewPayments.Size = new Size(listViewPayments.Size.Width, groupBox2.Size.Height - listViewPayments.Location.Y - 8);
+            btnRemovePay.Location = new Point(btnRemovePay.Location.X, label16.Location.Y - 8);
+            btnAddPayment.Location = new Point(btnAddPayment.Location.X, label16.Location.Y - 8);
 
             try
             {
@@ -48,7 +58,18 @@ namespace ContractsBase
             }
         }
 
-        private void NewContract_Load(object sender, EventArgs e)
+        private void groupBox2_SizeChanged(object sender, EventArgs e)
+         {
+            int freeHeight = groupBox2.Size.Height - listViewFiles.Location.Y;
+            listViewFiles.Size = new Size(listViewFiles.Size.Width, freeHeight / 10 * 6);
+            listViewPayments.Location = new Point(listViewPayments.Location.X, listViewFiles.Location.Y + listViewFiles.Size.Height + 35);
+            label16.Location = new Point(label16.Location.X, listViewPayments.Location.Y - 21);
+            listViewPayments.Size = new Size(listViewPayments.Size.Width, groupBox2.Size.Height - listViewPayments.Location.Y - 8);
+            btnRemovePay.Location = new Point(btnRemovePay.Location.X, label16.Location.Y - 8);
+            btnAddPayment.Location = new Point(btnAddPayment.Location.X, label16.Location.Y - 8);
+        }
+
+    private void NewContract_Load(object sender, EventArgs e)
         {
             dtpDateEnd.Format = DateTimePickerFormat.Custom;
             dtpDateEnd.CustomFormat = "dd.MM.yyyy";

@@ -493,6 +493,7 @@
             this.groupBox2.Size = new System.Drawing.Size(377, 383);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
+            this.groupBox2.SizeChanged += new System.EventHandler(this.groupBox2_SizeChanged);
             // 
             // btnRemovePay
             // 
@@ -549,8 +550,7 @@
             // 
             // listViewPayments
             // 
-            this.listViewPayments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.listViewPayments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewPayments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader6,
