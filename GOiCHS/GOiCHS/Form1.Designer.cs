@@ -35,7 +35,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.qLabelContent = new System.Windows.Forms.Label();
             this.testTypeCBox = new System.Windows.Forms.ComboBox();
-            this.departmentCBox = new System.Windows.Forms.ComboBox();
+            this.depCBox = new System.Windows.Forms.ComboBox();
             this.titleCbox = new System.Windows.Forms.ComboBox();
             this.checkTypeCBox = new System.Windows.Forms.ComboBox();
             this.surnameTBox = new System.Windows.Forms.TextBox();
@@ -48,7 +48,10 @@
             this.departmentLabel = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
             this.checkTypeLabel = new System.Windows.Forms.Label();
-            this.startTestBttn = new System.Windows.Forms.Button();
+            this.startBtn = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // aTextBox
@@ -84,6 +87,7 @@
             this.aButton.TabIndex = 4;
             this.aButton.Text = "Далее";
             this.aButton.UseVisualStyleBackColor = true;
+            this.aButton.Click += new System.EventHandler(this.aButton_Click);
             // 
             // button1
             // 
@@ -98,7 +102,7 @@
             // 
             this.qLabelContent.Location = new System.Drawing.Point(12, 32);
             this.qLabelContent.Name = "qLabelContent";
-            this.qLabelContent.Size = new System.Drawing.Size(673, 321);
+            this.qLabelContent.Size = new System.Drawing.Size(673, 196);
             this.qLabelContent.TabIndex = 6;
             // 
             // testTypeCBox
@@ -109,13 +113,13 @@
             this.testTypeCBox.Size = new System.Drawing.Size(211, 21);
             this.testTypeCBox.TabIndex = 7;
             // 
-            // departmentCBox
+            // depCBox
             // 
-            this.departmentCBox.FormattingEnabled = true;
-            this.departmentCBox.Location = new System.Drawing.Point(701, 274);
-            this.departmentCBox.Name = "departmentCBox";
-            this.departmentCBox.Size = new System.Drawing.Size(211, 21);
-            this.departmentCBox.TabIndex = 8;
+            this.depCBox.FormattingEnabled = true;
+            this.depCBox.Location = new System.Drawing.Point(701, 274);
+            this.depCBox.Name = "depCBox";
+            this.depCBox.Size = new System.Drawing.Size(211, 21);
+            this.depCBox.TabIndex = 8;
             // 
             // titleCbox
             // 
@@ -217,22 +221,51 @@
             this.checkTypeLabel.TabIndex = 20;
             this.checkTypeLabel.Text = "Тип проверки";
             // 
-            // startTestBttn
+            // startBtn
             // 
-            this.startTestBttn.Location = new System.Drawing.Point(701, 390);
-            this.startTestBttn.Name = "startTestBttn";
-            this.startTestBttn.Size = new System.Drawing.Size(77, 23);
-            this.startTestBttn.TabIndex = 21;
-            this.startTestBttn.Text = "Начать тест";
-            this.startTestBttn.UseVisualStyleBackColor = true;
-            this.startTestBttn.Click += new System.EventHandler(this.startTestBttn_Click);
+            this.startBtn.Location = new System.Drawing.Point(701, 390);
+            this.startBtn.Name = "startBtn";
+            this.startBtn.Size = new System.Drawing.Size(77, 23);
+            this.startBtn.TabIndex = 21;
+            this.startBtn.Text = "Начать тест";
+            this.startBtn.UseVisualStyleBackColor = true;
+            this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(16, 302);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(669, 251);
+            this.listBox1.TabIndex = 22;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(692, 539);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(695, 510);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "label2";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(927, 583);
-            this.Controls.Add(this.startTestBttn);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.startBtn);
             this.Controls.Add(this.checkTypeLabel);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.departmentLabel);
@@ -245,7 +278,7 @@
             this.Controls.Add(this.surnameTBox);
             this.Controls.Add(this.checkTypeCBox);
             this.Controls.Add(this.titleCbox);
-            this.Controls.Add(this.departmentCBox);
+            this.Controls.Add(this.depCBox);
             this.Controls.Add(this.testTypeCBox);
             this.Controls.Add(this.qLabelContent);
             this.Controls.Add(this.button1);
@@ -269,7 +302,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label qLabelContent;
         private System.Windows.Forms.ComboBox testTypeCBox;
-        private System.Windows.Forms.ComboBox departmentCBox;
+        private System.Windows.Forms.ComboBox depCBox;
         private System.Windows.Forms.ComboBox titleCbox;
         private System.Windows.Forms.ComboBox checkTypeCBox;
         private System.Windows.Forms.TextBox surnameTBox;
@@ -282,7 +315,10 @@
         private System.Windows.Forms.Label departmentLabel;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label checkTypeLabel;
-        private System.Windows.Forms.Button startTestBttn;
+        private System.Windows.Forms.Button startBtn;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

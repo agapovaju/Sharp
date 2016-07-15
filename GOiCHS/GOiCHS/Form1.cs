@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Office.Interop.Excel;
+
 
 namespace GOiCHS
 {
     public partial class Form1 : Form
     {
+        int qCount = 0;
         string[] testTypeArr = { "0Охрана труда", "1Пожарно-технический минимум" };
-        string[] departmentArr = {  "0Производственный отдел",
+        string[] depArr = {  "0Производственный отдел",
                                         "1Служба организации и проведения торгов",
                                         "2Отдел планирования инвестиций",
                                         "3Управление экономики и финансов",
@@ -66,24 +69,27 @@ namespace GOiCHS
                                     "19Специалист по складскому учету",
                                     "20Старший техник"};
         string[] checkTypeArr = { "0Первичная", "1Повторная", "2Внеочередная" };
+
         const string fileName = @"D:\forohrana\questionlist.xlsx";
+        string[,] tenQuestions = new string[2,10];
+
 
         public Form1()
         {
             InitializeComponent();
         }
-
+        
         private void Form1_Load(object sender, EventArgs e)
         {
             
-            string[] currQuestions = new string[10];
+            
             for (int i=0;i<testTypeArr.Length;i++)
             {
                 testTypeCBox.Items.Add(testTypeArr[i]);
             }
-            for (int i = 0; i < departmentArr.Length; i++)
+            for (int i = 0; i < depArr.Length; i++)
             {
-                departmentCBox.Items.Add(departmentArr[i]);
+                depCBox.Items.Add(depArr[i]);
             }
             for (int i = 0; i < titleArr.Length; i++)
             {
@@ -92,18 +98,7 @@ namespace GOiCHS
             for (int i = 0; i < checkTypeArr.Length; i++)
             {
                 checkTypeCBox.Items.Add(checkTypeArr[i]);
-            }
-            
-
-
-
-            
-
-
-
-
-
-            
+            }                
         }
 
         public static string GetCellValue(string fileName,
@@ -193,32 +188,57 @@ namespace GOiCHS
             return value;
         }
 
-        private void startTestBttn_Click(object sender, EventArgs e)
+        private void startBtn_Click(object sender, EventArgs e)
         {
-            if ((testTypeCBox.SelectedItem.ToString()==testTypeArr[0])&(departmentCBox.SelectedItem.ToString()==departmentArr[19])&(titleCbox.SelectedItem.ToString()==titleArr[13]))
+            int[] randArr = new int[10];
+            if (((testTypeCBox.SelectedItem.ToString()==testTypeArr[0])&(depCBox.SelectedItem.ToString()==depArr[19])&(titleCbox.SelectedItem.ToString()==titleArr[13]))||
+                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[21]) & (titleCbox.SelectedItem.ToString() == titleArr[14]))||
+                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[15]) & (titleCbox.SelectedItem.ToString() == titleArr[13]))||
+                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[16]) & (titleCbox.SelectedItem.ToString() == titleArr[11])))
             {
-                string[] qArr = new string[151];
-                string[] trueAnswerArr = new string[151];
-                // Retrieve the value in cell A1.
-                //string value = GetCellValue(fileName, "НАЧ-ПТУ-СРУ-НИОКР_ОПТИКИ", "A1");
-                //Console.WriteLine(value);
-                // Retrieve the date value in cell A2.
-                //value = GetCellValue(fileName, "Sheet1", "A2");
-                //Console.WriteLine(
-                //DateTime.FromOADate(double.Parse(value)).ToShortDateString());
-                for (int i = 0; i <= 154; i++)
+                int cCount = 0;
+                int rCount = Convert.ToInt32(GetCellValue(fileName, "Лист1", "A1"))-3;
+                string[,] qaArr = new string[2,rCount];
+                
+                for (int i = 0; i < rCount; i++)
                 {
-                    string qTargetCell = "A" + (i + 1).ToString();
-                    string taTargetCell = "B" + (i + 1).ToString();
-                    qArr[i] = GetCellValue(fileName, "Лист1", qTargetCell);
-                    trueAnswerArr[i] = GetCellValue(fileName, "НАЧ-ПТУ-СРУ-НИОКР_ОПТИКИ", taTargetCell);
+                    string checkCell = "C" + (i + 3).ToString();                    
+                    if (GetCellValue(fileName, "Лист1", checkCell) == "1")
+                    {
+                        string qTargetCell = "A" + (i + 3).ToString();
+                        string taTargetCell = "B" + (i + 3).ToString();
+                        qaArr[0, cCount] = GetCellValue(fileName, "Лист1", qTargetCell);
+                        qaArr[1, cCount] = GetCellValue(fileName, "Лист1", taTargetCell);
+                        cCount++;
+                        label2.Text = taTargetCell;
+                    }
+                    Array.Resize<int>(ref qaArr, cCount);
                 }
-                qLabelContent.Text = qArr[new Random().Next(0, qArr.Length)];
+                for (int i = 0; i < 10; i++)
+                {
+                    int rand = new Random().Next(0, qaArr.GetLength(1));
+                    //randArr[i] = rand;
+                    label1.Text = rand.ToString();
+                    tenQuestions[0, i] = qaArr[0, rand];
+                    tenQuestions[1, i] = qaArr[1, rand];
+                }
+
+                qLabelContent.Text = tenQuestions[0, qCount];
+                for (int i=0;i<10;i++)
+                {
+                    listBox1.Items.Add(tenQuestions[0, i]);
+                }
             }
 
 
 
             
+        }
+
+        private void aButton_Click(object sender, EventArgs e)
+        {
+            qCount++;
+            qLabelContent.Text = tenQuestions[0, qCount];
         }
     }
 }
