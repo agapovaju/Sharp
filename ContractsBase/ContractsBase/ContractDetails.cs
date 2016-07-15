@@ -26,6 +26,18 @@ namespace ContractsBase
         public ContractDetails(SqlConnection conn, int idCotract, MainForm.CurrentUserParams userParams)
         {
             InitializeComponent();
+
+            // меняем размеры
+            int freeHeight = grBxAttach.Size.Height - dgvDocs.Location.Y;
+            dgvDocs.Size = new Size(dgvDocs.Size.Width, freeHeight / 10 * 6);
+            dgvPayments.Location = new Point(dgvPayments.Location.X, dgvDocs.Location.Y + dgvDocs.Size.Height + 35);
+            lblPayments.Location = new Point(lblPayments.Location.X, dgvPayments.Location.Y - 21);
+            dgvPayments.Size = new Size(dgvPayments.Size.Width, grBxAttach.Size.Height - dgvPayments.Location.Y - 8);
+            btnRemovePay.Location = new Point(btnRemovePay.Location.X, lblPayments.Location.Y - 8);
+            btnAddPayment.Location = new Point(btnAddPayment.Location.X, lblPayments.Location.Y - 8);
+
+
+            // заполняем контент
             IdCont = idCotract;
             UserParams = userParams;
             connection = conn;
@@ -699,6 +711,17 @@ namespace ContractsBase
                     MessageBox.Show("Ошибка! btnSaveChanges: " + ex.Message);
                     if (connection.State == ConnectionState.Open) connection.Close();
                 }
+        }
+
+        private void grBxAttach_SizeChanged(object sender, EventArgs e)
+        {
+            int freeHeight = grBxAttach.Size.Height - dgvDocs.Location.Y;
+            dgvDocs.Size = new Size(dgvDocs.Size.Width, freeHeight / 10 * 6);
+            dgvPayments.Location = new Point(dgvPayments.Location.X, dgvDocs.Location.Y + dgvDocs.Size.Height + 35);
+            lblPayments.Location = new Point(lblPayments.Location.X, dgvPayments.Location.Y - 21);
+            dgvPayments.Size = new Size(dgvPayments.Size.Width, grBxAttach.Size.Height - dgvPayments.Location.Y - 8);
+            btnRemovePay.Location = new Point(btnRemovePay.Location.X, lblPayments.Location.Y - 8);
+            btnAddPayment.Location = new Point(btnAddPayment.Location.X, lblPayments.Location.Y - 8);
         }
     }
 }

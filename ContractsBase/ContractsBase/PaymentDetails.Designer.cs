@@ -36,7 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtBxDateAdd = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.chkBxInsDocs = new System.Windows.Forms.CheckBox();
             this.txtBxSName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -118,17 +118,16 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Дата внесения";
             // 
-            // button1
+            // btnClose
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(157, 173);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Закрыть";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Location = new System.Drawing.Point(148, 173);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 9;
+            this.btnClose.Text = "Закрыть";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // chkBxInsDocs
             // 
@@ -165,11 +164,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(253, 212);
+            this.ClientSize = new System.Drawing.Size(244, 212);
             this.Controls.Add(this.txtBxSName);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.chkBxInsDocs);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txtBxDateAdd);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtBxInvoice);
@@ -195,7 +194,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtBxDateAdd;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.CheckBox chkBxInsDocs;
         private System.Windows.Forms.TextBox txtBxSName;
         private System.Windows.Forms.Label label5;
