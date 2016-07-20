@@ -84,7 +84,7 @@ namespace ContractsBase
                 adapterAgrs = new SqlDataAdapter(new SqlCommand(String.Format(
                     "SELECT Agreements.Name AS AgrName, " +
                         "Agreements.Date_add, " +
-                        "CONVERT(varchar(10), CONVERT(money, Agreements.Cost), 0) AS Cost, " +
+                        "CONVERT(varchar(21), CONVERT(money, Agreements.Cost), 0) AS Cost, " +
                         "Staff.Name AS StaffName, " +
                         "Agreements.Date_create, " +
                         "Agreements.Ins_docs, " +
