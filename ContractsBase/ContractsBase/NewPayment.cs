@@ -106,7 +106,7 @@ namespace ContractsBase
 
             if (txtBxPayNo.Text == "") MessageBox.Show("Необходимо заполнить поле '№ поручения'", "АСКИД");
             else if (txtBxInvoice.Text == "") MessageBox.Show("Необходимо заполнить поле 'Оплата по счсету'", "АСКИД");
-            else if (new Regex("[\\|/:*?\"<>]+").Replace(txtBxInvoice.Text, "") != txtBxInvoice.Text) MessageBox.Show("Поле 'Оплата по счсету' не может содержать \\/:*?\"<>|.", "АСКИД");
+            else if (new Regex("[\\|/:*?\"<>]+").Replace(txtBxInvoice.Text, "") != txtBxInvoice.Text) MessageBox.Show("Поле 'Оплата по счету' не может содержать \\/:*?\"<>|.", "АСКИД");
             else if (txtBxFilePath.Visible == true && txtBxFilePath.Text == "") MessageBox.Show("Необходимо выбрать файл 'Расположение'", "АСКИД");
             else
             {
