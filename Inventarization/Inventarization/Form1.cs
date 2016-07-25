@@ -51,7 +51,8 @@ namespace Inventarization
             sp = "";
             gpu = "";
             //err_path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Inventarization_log.txt";
-            err_path = @"\\file01-omg\its\Проги в помощь\Инвентаризация\Inventarization_log.txt";
+            //err_path = @"\\file01-omg\its\Проги в помощь\Инвентаризация\Inventarization_log.txt";
+            err_path = @"D:\LOG\Inventarization_log.txt";
 
             if (System.IO.File.Exists(err_path) == false)
             {
