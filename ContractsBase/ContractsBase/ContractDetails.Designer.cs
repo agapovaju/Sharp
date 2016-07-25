@@ -84,27 +84,27 @@
             this.dgvContractors = new System.Windows.Forms.DataGridView();
             this.dgvDocs = new System.Windows.Forms.DataGridView();
             this.dgvAgrs = new System.Windows.Forms.DataGridView();
-            this.btnAddDoc = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
-            this.btnAddAgreement = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btnOpenFolder = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.grBxAttach = new System.Windows.Forms.GroupBox();
             this.btnRemovePay = new System.Windows.Forms.Button();
             this.btnRemoveDoc = new System.Windows.Forms.Button();
             this.btnRemoveAgreement = new System.Windows.Forms.Button();
             this.dgvPayments = new System.Windows.Forms.DataGridView();
             this.btnAddPayment = new System.Windows.Forms.Button();
-            this.label19 = new System.Windows.Forms.Label();
+            this.lblPayments = new System.Windows.Forms.Label();
+            this.btnAddAgreement = new System.Windows.Forms.Button();
+            this.btnAddDoc = new System.Windows.Forms.Button();
             this.btnSaveChanges = new System.Windows.Forms.Button();
+            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvContractors)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDocs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAgrs)).BeginInit();
-            this.groupBox4.SuspendLayout();
+            this.grBxAttach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPayments)).BeginInit();
             this.SuspendLayout();
             // 
@@ -156,9 +156,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(287, 22);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 13);
+            this.label3.Size = new System.Drawing.Size(91, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Номер контракта";
+            this.label3.Text = "Номер договора";
             // 
             // label4
             // 
@@ -225,7 +225,7 @@
             // 
             // txtBxStaff
             // 
-            this.txtBxStaff.Location = new System.Drawing.Point(115, 157);
+            this.txtBxStaff.Location = new System.Drawing.Point(423, 157);
             this.txtBxStaff.Name = "txtBxStaff";
             this.txtBxStaff.ReadOnly = true;
             this.txtBxStaff.Size = new System.Drawing.Size(123, 20);
@@ -348,7 +348,7 @@
             this.groupBox2.Size = new System.Drawing.Size(554, 189);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Детали контракта";
+            this.groupBox2.Text = "Детали договора";
             // 
             // dtpDateStart
             // 
@@ -405,7 +405,7 @@
             // 
             // txtBxOkdp
             // 
-            this.txtBxOkdp.Location = new System.Drawing.Point(423, 157);
+            this.txtBxOkdp.Location = new System.Drawing.Point(115, 157);
             this.txtBxOkdp.Name = "txtBxOkdp";
             this.txtBxOkdp.ReadOnly = true;
             this.txtBxOkdp.Size = new System.Drawing.Size(123, 20);
@@ -435,7 +435,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(296, 160);
+            this.label18.Location = new System.Drawing.Point(13, 160);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(39, 13);
             this.label18.TabIndex = 32;
@@ -534,7 +534,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(13, 160);
+            this.label13.Location = new System.Drawing.Point(296, 160);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(86, 13);
             this.label13.TabIndex = 22;
@@ -554,7 +554,7 @@
             this.groupBox3.Controls.Add(this.dgvContractors);
             this.groupBox3.Location = new System.Drawing.Point(21, 361);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(554, 93);
+            this.groupBox3.Size = new System.Drawing.Size(554, 92);
             this.groupBox3.TabIndex = 25;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Контрагенты";
@@ -589,7 +589,7 @@
             this.dgvContractors.Name = "dgvContractors";
             this.dgvContractors.ReadOnly = true;
             this.dgvContractors.RowHeadersVisible = false;
-            this.dgvContractors.Size = new System.Drawing.Size(535, 63);
+            this.dgvContractors.Size = new System.Drawing.Size(535, 65);
             this.dgvContractors.TabIndex = 33;
             this.dgvContractors.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvContractors_CellMouseDoubleClick);
             // 
@@ -625,7 +625,7 @@
             this.dgvDocs.Name = "dgvDocs";
             this.dgvDocs.ReadOnly = true;
             this.dgvDocs.RowHeadersVisible = false;
-            this.dgvDocs.Size = new System.Drawing.Size(535, 130);
+            this.dgvDocs.Size = new System.Drawing.Size(530, 130);
             this.dgvDocs.TabIndex = 34;
             this.dgvDocs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDocs_CellDoubleClick);
             this.dgvDocs.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvDocs_KeyUp);
@@ -662,22 +662,11 @@
             this.dgvAgrs.Name = "dgvAgrs";
             this.dgvAgrs.ReadOnly = true;
             this.dgvAgrs.RowHeadersVisible = false;
-            this.dgvAgrs.Size = new System.Drawing.Size(535, 83);
+            this.dgvAgrs.Size = new System.Drawing.Size(530, 80);
             this.dgvAgrs.TabIndex = 29;
             this.dgvAgrs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAgrs_CellDoubleClick);
             this.dgvAgrs.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvAgrs_DataBindingComplete);
             this.dgvAgrs.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvAgrs_KeyUp);
-            // 
-            // btnAddDoc
-            // 
-            this.btnAddDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddDoc.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
-            this.btnAddDoc.Location = new System.Drawing.Point(519, 140);
-            this.btnAddDoc.Name = "btnAddDoc";
-            this.btnAddDoc.Size = new System.Drawing.Size(25, 23);
-            this.btnAddDoc.TabIndex = 28;
-            this.btnAddDoc.UseVisualStyleBackColor = true;
-            this.btnAddDoc.Click += new System.EventHandler(this.btnAddDoc_Click);
             // 
             // label15
             // 
@@ -690,21 +679,10 @@
             this.label15.TabIndex = 27;
             this.label15.Text = "Документы";
             // 
-            // btnAddAgreement
-            // 
-            this.btnAddAgreement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddAgreement.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
-            this.btnAddAgreement.Location = new System.Drawing.Point(519, 20);
-            this.btnAddAgreement.Name = "btnAddAgreement";
-            this.btnAddAgreement.Size = new System.Drawing.Size(25, 25);
-            this.btnAddAgreement.TabIndex = 25;
-            this.btnAddAgreement.UseVisualStyleBackColor = true;
-            this.btnAddAgreement.Click += new System.EventHandler(this.btnAddAgreement_Click);
-            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(1052, 460);
+            this.btnClose.Location = new System.Drawing.Point(1048, 466);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 29);
             this.btnClose.TabIndex = 26;
@@ -716,46 +694,36 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
-            // btnOpenFolder
+            // grBxAttach
             // 
-            this.btnOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOpenFolder.Location = new System.Drawing.Point(21, 460);
-            this.btnOpenFolder.Name = "btnOpenFolder";
-            this.btnOpenFolder.Size = new System.Drawing.Size(106, 29);
-            this.btnOpenFolder.TabIndex = 27;
-            this.btnOpenFolder.Text = "Папка договора";
-            this.btnOpenFolder.UseVisualStyleBackColor = true;
-            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.grBxAttach.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.btnRemovePay);
-            this.groupBox4.Controls.Add(this.btnRemoveDoc);
-            this.groupBox4.Controls.Add(this.btnRemoveAgreement);
-            this.groupBox4.Controls.Add(this.dgvPayments);
-            this.groupBox4.Controls.Add(this.btnAddPayment);
-            this.groupBox4.Controls.Add(this.label19);
-            this.groupBox4.Controls.Add(this.dgvAgrs);
-            this.groupBox4.Controls.Add(this.btnAddAgreement);
-            this.groupBox4.Controls.Add(this.dgvDocs);
-            this.groupBox4.Controls.Add(this.label10);
-            this.groupBox4.Controls.Add(this.label15);
-            this.groupBox4.Controls.Add(this.btnAddDoc);
-            this.groupBox4.Location = new System.Drawing.Point(583, 12);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(553, 442);
-            this.groupBox4.TabIndex = 28;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Приложения";
+            this.grBxAttach.Controls.Add(this.btnRemovePay);
+            this.grBxAttach.Controls.Add(this.btnRemoveDoc);
+            this.grBxAttach.Controls.Add(this.btnRemoveAgreement);
+            this.grBxAttach.Controls.Add(this.dgvPayments);
+            this.grBxAttach.Controls.Add(this.btnAddPayment);
+            this.grBxAttach.Controls.Add(this.lblPayments);
+            this.grBxAttach.Controls.Add(this.dgvAgrs);
+            this.grBxAttach.Controls.Add(this.btnAddAgreement);
+            this.grBxAttach.Controls.Add(this.dgvDocs);
+            this.grBxAttach.Controls.Add(this.label10);
+            this.grBxAttach.Controls.Add(this.label15);
+            this.grBxAttach.Controls.Add(this.btnAddDoc);
+            this.grBxAttach.Location = new System.Drawing.Point(583, 12);
+            this.grBxAttach.Name = "grBxAttach";
+            this.grBxAttach.Size = new System.Drawing.Size(549, 441);
+            this.grBxAttach.TabIndex = 28;
+            this.grBxAttach.TabStop = false;
+            this.grBxAttach.Text = "Приложения";
+            this.grBxAttach.SizeChanged += new System.EventHandler(this.grBxAttach_SizeChanged);
             // 
             // btnRemovePay
             // 
-            this.btnRemovePay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemovePay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemovePay.Image = global::ContractsBase.Properties.Resources.remove16;
-            this.btnRemovePay.Location = new System.Drawing.Point(488, 304);
+            this.btnRemovePay.Location = new System.Drawing.Point(484, 304);
             this.btnRemovePay.Name = "btnRemovePay";
             this.btnRemovePay.Size = new System.Drawing.Size(25, 25);
             this.btnRemovePay.TabIndex = 40;
@@ -766,7 +734,7 @@
             // 
             this.btnRemoveDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveDoc.Image = global::ContractsBase.Properties.Resources.remove16;
-            this.btnRemoveDoc.Location = new System.Drawing.Point(488, 139);
+            this.btnRemoveDoc.Location = new System.Drawing.Point(484, 139);
             this.btnRemoveDoc.Name = "btnRemoveDoc";
             this.btnRemoveDoc.Size = new System.Drawing.Size(25, 25);
             this.btnRemoveDoc.TabIndex = 39;
@@ -777,7 +745,7 @@
             // 
             this.btnRemoveAgreement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveAgreement.Image = global::ContractsBase.Properties.Resources.remove16;
-            this.btnRemoveAgreement.Location = new System.Drawing.Point(488, 20);
+            this.btnRemoveAgreement.Location = new System.Drawing.Point(484, 20);
             this.btnRemoveAgreement.Name = "btnRemoveAgreement";
             this.btnRemoveAgreement.Size = new System.Drawing.Size(25, 25);
             this.btnRemoveAgreement.TabIndex = 38;
@@ -787,8 +755,7 @@
             // dgvPayments
             // 
             this.dgvPayments.AllowUserToAddRows = false;
-            this.dgvPayments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvPayments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPayments.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
@@ -817,7 +784,7 @@
             this.dgvPayments.Name = "dgvPayments";
             this.dgvPayments.ReadOnly = true;
             this.dgvPayments.RowHeadersVisible = false;
-            this.dgvPayments.Size = new System.Drawing.Size(535, 61);
+            this.dgvPayments.Size = new System.Drawing.Size(530, 100);
             this.dgvPayments.TabIndex = 37;
             this.dgvPayments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPayments_CellDoubleClick);
             this.dgvPayments.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvPayments_DataBindingComplete);
@@ -825,52 +792,92 @@
             // 
             // btnAddPayment
             // 
-            this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddPayment.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
-            this.btnAddPayment.Location = new System.Drawing.Point(519, 304);
+            this.btnAddPayment.Location = new System.Drawing.Point(515, 304);
             this.btnAddPayment.Name = "btnAddPayment";
             this.btnAddPayment.Size = new System.Drawing.Size(25, 25);
             this.btnAddPayment.TabIndex = 36;
             this.btnAddPayment.UseVisualStyleBackColor = true;
             this.btnAddPayment.Click += new System.EventHandler(this.btnAddPayment_Click);
             // 
-            // label19
+            // lblPayments
             // 
-            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblPayments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 309);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(121, 13);
-            this.label19.TabIndex = 35;
-            this.label19.Text = "Платежные поручения";
+            this.lblPayments.AutoSize = true;
+            this.lblPayments.Location = new System.Drawing.Point(6, 309);
+            this.lblPayments.Name = "lblPayments";
+            this.lblPayments.Size = new System.Drawing.Size(121, 13);
+            this.lblPayments.TabIndex = 35;
+            this.lblPayments.Text = "Платежные поручения";
+            // 
+            // btnAddAgreement
+            // 
+            this.btnAddAgreement.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddAgreement.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
+            this.btnAddAgreement.Location = new System.Drawing.Point(515, 20);
+            this.btnAddAgreement.Name = "btnAddAgreement";
+            this.btnAddAgreement.Size = new System.Drawing.Size(25, 25);
+            this.btnAddAgreement.TabIndex = 25;
+            this.btnAddAgreement.UseVisualStyleBackColor = true;
+            this.btnAddAgreement.Click += new System.EventHandler(this.btnAddAgreement_Click);
+            // 
+            // btnAddDoc
+            // 
+            this.btnAddDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddDoc.Image = global::ContractsBase.Properties.Resources.edit_add_7758;
+            this.btnAddDoc.Location = new System.Drawing.Point(515, 140);
+            this.btnAddDoc.Name = "btnAddDoc";
+            this.btnAddDoc.Size = new System.Drawing.Size(25, 23);
+            this.btnAddDoc.TabIndex = 28;
+            this.btnAddDoc.UseVisualStyleBackColor = true;
+            this.btnAddDoc.Click += new System.EventHandler(this.btnAddDoc_Click);
             // 
             // btnSaveChanges
             // 
-            this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveChanges.Location = new System.Drawing.Point(137, 460);
+            this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSaveChanges.Image = global::ContractsBase.Properties.Resources.document_save_24;
+            this.btnSaveChanges.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveChanges.Location = new System.Drawing.Point(152, 466);
             this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(130, 29);
+            this.btnSaveChanges.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnSaveChanges.Size = new System.Drawing.Size(159, 29);
             this.btnSaveChanges.TabIndex = 29;
             this.btnSaveChanges.Text = "Сохранить изменения";
+            this.btnSaveChanges.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSaveChanges.UseVisualStyleBackColor = true;
             this.btnSaveChanges.Visible = false;
             this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
+            // 
+            // btnOpenFolder
+            // 
+            this.btnOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnOpenFolder.Image = global::ContractsBase.Properties.Resources.folder_yellow_24;
+            this.btnOpenFolder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOpenFolder.Location = new System.Drawing.Point(21, 466);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Size = new System.Drawing.Size(129, 29);
+            this.btnOpenFolder.TabIndex = 27;
+            this.btnOpenFolder.Text = "Папка договора";
+            this.btnOpenFolder.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOpenFolder.UseVisualStyleBackColor = true;
+            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
             // ContractDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1148, 506);
+            this.ClientSize = new System.Drawing.Size(1144, 512);
             this.Controls.Add(this.btnSaveChanges);
-            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.grBxAttach);
             this.Controls.Add(this.btnOpenFolder);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "ContractDetails";
-            this.Text = "Контракт";
+            this.Text = "Договор";
             this.Load += new System.EventHandler(this.ContractDetails_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -880,8 +887,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvContractors)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDocs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAgrs)).EndInit();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.grBxAttach.ResumeLayout(false);
+            this.grBxAttach.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPayments)).EndInit();
             this.ResumeLayout(false);
 
@@ -934,11 +941,11 @@
         private System.Windows.Forms.Button btnOpenFolder;
         private System.Windows.Forms.DataGridView dgvContractors;
         private System.Windows.Forms.DataGridView dgvDocs;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox grBxAttach;
         private System.Windows.Forms.CheckBox chkBxInsDocs;
         private System.Windows.Forms.DataGridView dgvPayments;
         private System.Windows.Forms.Button btnAddPayment;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label lblPayments;
         private System.Windows.Forms.Button btnRemoveAgreement;
         private System.Windows.Forms.Button btnRemovePay;
         private System.Windows.Forms.Button btnRemoveDoc;

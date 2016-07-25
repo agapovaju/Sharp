@@ -89,7 +89,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(321, 104);
+            this.label8.Location = new System.Drawing.Point(321, 101);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(99, 13);
             this.label8.TabIndex = 39;
@@ -98,7 +98,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(310, 78);
+            this.label7.Location = new System.Drawing.Point(315, 75);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(105, 13);
             this.label7.TabIndex = 38;
@@ -142,7 +142,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(322, 26);
+            this.label5.Location = new System.Drawing.Point(327, 27);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(93, 13);
             this.label5.TabIndex = 36;
@@ -231,6 +231,7 @@
             this.label2.Size = new System.Drawing.Size(109, 13);
             this.label2.TabIndex = 67;
             this.label2.Text = "Объем (количество)";
+            this.label2.Visible = false;
             // 
             // txtBxNumber
             // 
@@ -239,6 +240,7 @@
             this.txtBxNumber.Size = new System.Drawing.Size(138, 20);
             this.txtBxNumber.TabIndex = 5;
             this.txtBxNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBxNumber.Visible = false;
             // 
             // chkBxDiss
             // 
@@ -301,11 +303,11 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(338, 153);
+            this.label11.Location = new System.Drawing.Point(299, 154);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(82, 13);
+            this.label11.Size = new System.Drawing.Size(121, 13);
             this.label11.TabIndex = 72;
-            this.label11.Text = "Расположение";
+            this.label11.Text = "Сканированный образ";
             // 
             // NewAgreement
             // 
@@ -371,7 +373,6 @@
         private System.Windows.Forms.DateTimePicker dtpDateEnd;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtBxNumber;
         private System.Windows.Forms.CheckBox chkBxDiss;
         private System.Windows.Forms.TextBox txtBxDateAdd;
         private System.Windows.Forms.Label label10;
@@ -380,5 +381,6 @@
         private System.Windows.Forms.TextBox txtBxFilePath;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.TextBox txtBxNumber;
     }
 }

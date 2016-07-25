@@ -169,7 +169,7 @@ namespace ContractsBase
                         string contrPath = File.ReadAllLines("config.txt").Where(s => s.StartsWith("FileServer=")).First();
                         contrPath = contrPath.Substring(11);
 
-                        // вытаскиваем название отдела, где зарегистрировали контракт и номер контракта
+                        // вытаскиваем название отдела, где зарегистрировали договор и номер договора
                         connection.Open();
                         SqlDataReader reader = new SqlCommand(String.Format(
                             "SELECT Blocks.Block, Contracts.Name FROM Contracts " +

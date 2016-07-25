@@ -123,7 +123,7 @@
             // dtpDateEndFact
             // 
             this.dtpDateEndFact.Checked = false;
-            this.dtpDateEndFact.Location = new System.Drawing.Point(374, 94);
+            this.dtpDateEndFact.Location = new System.Drawing.Point(375, 94);
             this.dtpDateEndFact.Name = "dtpDateEndFact";
             this.dtpDateEndFact.ShowCheckBox = true;
             this.dtpDateEndFact.Size = new System.Drawing.Size(119, 20);
@@ -152,14 +152,14 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(255, 70);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 13);
+            this.label4.Size = new System.Drawing.Size(108, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Оконч. по контракту:";
+            this.label4.Text = "Оконч. по договору:";
             // 
             // dtpDateEndWork
             // 
             this.dtpDateEndWork.Checked = false;
-            this.dtpDateEndWork.Location = new System.Drawing.Point(374, 68);
+            this.dtpDateEndWork.Location = new System.Drawing.Point(375, 68);
             this.dtpDateEndWork.Name = "dtpDateEndWork";
             this.dtpDateEndWork.ShowCheckBox = true;
             this.dtpDateEndWork.Size = new System.Drawing.Size(119, 20);
@@ -239,7 +239,7 @@
             // dtpDateStartWork
             // 
             this.dtpDateStartWork.Checked = false;
-            this.dtpDateStartWork.Location = new System.Drawing.Point(374, 16);
+            this.dtpDateStartWork.Location = new System.Drawing.Point(375, 16);
             this.dtpDateStartWork.Name = "dtpDateStartWork";
             this.dtpDateStartWork.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dtpDateStartWork.ShowCheckBox = true;
@@ -253,12 +253,12 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(111, 13);
             this.label10.TabIndex = 20;
-            this.label10.Text = "Начало по конракту:";
+            this.label10.Text = "Начало по договору:";
             // 
             // dtpDateStartFact
             // 
             this.dtpDateStartFact.Checked = false;
-            this.dtpDateStartFact.Location = new System.Drawing.Point(374, 42);
+            this.dtpDateStartFact.Location = new System.Drawing.Point(375, 42);
             this.dtpDateStartFact.Name = "dtpDateStartFact";
             this.dtpDateStartFact.ShowCheckBox = true;
             this.dtpDateStartFact.Size = new System.Drawing.Size(119, 20);
@@ -321,7 +321,7 @@
             // btnOpenFile
             // 
             this.btnOpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenFile.Location = new System.Drawing.Point(471, 118);
+            this.btnOpenFile.Location = new System.Drawing.Point(472, 118);
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(24, 23);
             this.btnOpenFile.TabIndex = 77;
@@ -333,7 +333,7 @@
             // 
             this.txtBxFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxFilePath.Location = new System.Drawing.Point(374, 120);
+            this.txtBxFilePath.Location = new System.Drawing.Point(375, 120);
             this.txtBxFilePath.Name = "txtBxFilePath";
             this.txtBxFilePath.Size = new System.Drawing.Size(105, 20);
             this.txtBxFilePath.TabIndex = 76;
@@ -343,9 +343,9 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(255, 123);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(82, 13);
+            this.label17.Size = new System.Drawing.Size(124, 13);
             this.label17.TabIndex = 75;
-            this.label17.Text = "Расположение";
+            this.label17.Text = "Сканированный образ:";
             // 
             // txtBxCost
             // 
@@ -493,6 +493,7 @@
             this.groupBox2.Size = new System.Drawing.Size(377, 383);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
+            this.groupBox2.SizeChanged += new System.EventHandler(this.groupBox2_SizeChanged);
             // 
             // btnRemovePay
             // 
@@ -549,8 +550,7 @@
             // 
             // listViewPayments
             // 
-            this.listViewPayments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.listViewPayments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewPayments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader6,

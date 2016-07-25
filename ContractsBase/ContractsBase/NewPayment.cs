@@ -52,7 +52,7 @@ namespace ContractsBase
 
                 try
                 {
-                    // запрос для данных по контракту
+                    // запрос для данных по договору
                     connection.Open();
                     SqlDataReader reader = new SqlCommand(String.Format(
                         "SELECT Pay_no, Date_pay, Date_add, Invoice, Name, Ins_docs " +
@@ -106,7 +106,7 @@ namespace ContractsBase
 
             if (txtBxPayNo.Text == "") MessageBox.Show("Необходимо заполнить поле '№ поручения'", "АСКИД");
             else if (txtBxInvoice.Text == "") MessageBox.Show("Необходимо заполнить поле 'Оплата по счсету'", "АСКИД");
-            else if (new Regex("[\\|/:*?\"<>]+").Replace(txtBxInvoice.Text, "") != txtBxInvoice.Text) MessageBox.Show("Поле 'Оплата по счсету' не может содержать \\/:*?\"<>|.", "АСКИД");
+            else if (new Regex("[\\|/:*?\"<>]+").Replace(txtBxInvoice.Text, "") != txtBxInvoice.Text) MessageBox.Show("Поле 'Оплата по счету' не может содержать \\/:*?\"<>|.", "АСКИД");
             else if (txtBxFilePath.Visible == true && txtBxFilePath.Text == "") MessageBox.Show("Необходимо выбрать файл 'Расположение'", "АСКИД");
             else
             {
@@ -120,7 +120,7 @@ namespace ContractsBase
                 try
                 {
                     
-                    // если вызвали из формы уже созданного контракта,то сразу копируем файлы в папку контракта
+                    // если вызвали из формы уже созданного договора,то сразу копируем файлы в папку договора
                     if (IdPay == null && IdCont != null)
                     {
                         // создаем папку
@@ -128,7 +128,7 @@ namespace ContractsBase
                         string contrPath = File.ReadAllLines("config.txt").Where(s => s.StartsWith("FileServer=")).First();
                         contrPath = contrPath.Substring(11);
 
-                        // вытаскиваем название отдела, где зарегистрировали контракт и номер контракта
+                        // вытаскиваем название отдела, где зарегистрировали договор и номер договора
                         connection.Open();
                         SqlDataReader reader = new SqlCommand(String.Format(
                             "SELECT Blocks.Block, Contracts.Name FROM Contracts " +

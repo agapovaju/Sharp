@@ -26,6 +26,18 @@ namespace ContractsBase
         public ContractDetails(SqlConnection conn, int idCotract, MainForm.CurrentUserParams userParams)
         {
             InitializeComponent();
+
+            // меняем размеры
+            int freeHeight = grBxAttach.Size.Height - dgvDocs.Location.Y;
+            dgvDocs.Size = new Size(dgvDocs.Size.Width, freeHeight / 10 * 6);
+            dgvPayments.Location = new Point(dgvPayments.Location.X, dgvDocs.Location.Y + dgvDocs.Size.Height + 35);
+            lblPayments.Location = new Point(lblPayments.Location.X, dgvPayments.Location.Y - 21);
+            dgvPayments.Size = new Size(dgvPayments.Size.Width, grBxAttach.Size.Height - dgvPayments.Location.Y - 8);
+            btnRemovePay.Location = new Point(btnRemovePay.Location.X, lblPayments.Location.Y - 8);
+            btnAddPayment.Location = new Point(btnAddPayment.Location.X, lblPayments.Location.Y - 8);
+
+
+            // заполняем контент
             IdCont = idCotract;
             UserParams = userParams;
             connection = conn;
@@ -52,8 +64,8 @@ namespace ContractsBase
             toolTip.SetToolTip(btnRemoveDoc, "Удалить документ");
             toolTip.SetToolTip(btnAddPayment, "Добавить платежное поручение");
             toolTip.SetToolTip(btnRemovePay, "Удалить платежное поручение");
-            toolTip.SetToolTip(btnOpenFolder, "Откурыть папку контракта");
-            toolTip.SetToolTip(btnSaveChanges, "Сохранить изменения данных контракта");
+            toolTip.SetToolTip(btnOpenFolder, "Откурыть папку договора");
+            toolTip.SetToolTip(btnSaveChanges, "Сохранить изменения данных договора");
 
         }
 
@@ -62,7 +74,7 @@ namespace ContractsBase
             try
             {
                 // **************************************
-                // общие данные по контракту
+                // общие данные по договору
                 SelectContractDetails();
                 if (UserParams.AccessType != 1) chkBxInsDocs.AutoCheck = false;
 
@@ -72,7 +84,7 @@ namespace ContractsBase
                 adapterAgrs = new SqlDataAdapter(new SqlCommand(String.Format(
                     "SELECT Agreements.Name AS AgrName, " +
                         "Agreements.Date_add, " +
-                        "CONVERT(varchar(10), CONVERT(money, Agreements.Cost), 0) AS Cost, " +
+                        "CONVERT(varchar(21), CONVERT(money, Agreements.Cost), 0) AS Cost, " +
                         "Staff.Name AS StaffName, " +
                         "Agreements.Date_create, " +
                         "Agreements.Ins_docs, " +
@@ -280,7 +292,7 @@ namespace ContractsBase
         {
             try
             {
-                // зпрос для общих данных по контракту
+                // зпрос для общих данных по договору
                 connection.Open();
                 SqlDataReader reader = new SqlCommand(String.Format(
                    "SELECT Contracts.Id_cont, " +
@@ -368,7 +380,7 @@ namespace ContractsBase
                 if (!reader.IsDBNull(14)) txtBxNumber.Text = reader.GetInt32(14).ToString();
                 if (!reader.IsDBNull(15)) txtBxOkdp.Text = reader.GetValue(15).ToString();
 
-                this.Text = "Контракт №" + reader.GetString(2);
+                this.Text = "Договор №" + reader.GetString(2);
 
                 reader.Close();
                 connection.Close();
@@ -434,7 +446,7 @@ namespace ContractsBase
             string contrPath = File.ReadAllLines("config.txt").Where(s => s.StartsWith("FileServer=")).First();
             contrPath = contrPath.Substring(11);
 
-            // вытаскиваем название отдела, где зарегистрировали контракт и номер контракта
+            // вытаскиваем название отдела, где зарегистрировали договор и номер договора
             connection.Open();
             SqlDataReader reader = new SqlCommand(String.Format(
                 "SELECT Blocks.Block, Contracts.Name FROM Contracts " +
@@ -625,7 +637,7 @@ namespace ContractsBase
                 command.ExecuteNonQuery();
                 connection.Close();
 
-                // текущее расположение файла: папка контракта\Docs\номер счета\имя файла
+                // текущее расположение файла: папка договора\Docs\номер счета\имя файла
                 string filePath = Path.Combine(GetContractDirPath(), "Docs", dgvPayments.CurrentRow.Cells["Invoice"].Value.ToString(), dgvPayments.CurrentRow.Cells["Filename"].Value.ToString());
                 string fileName = dgvPayments.CurrentRow.Cells["Filename"].Value.ToString();
                 if (!File.Exists(filePath)) MessageBox.Show("Файл '" + Path.Combine(filePath, fileName) + "' не найден!", "АСКИД");
@@ -667,7 +679,7 @@ namespace ContractsBase
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
-            if (txtBxContrName.Text == "") MessageBox.Show("Поле 'Номер контракта' необходимо заполнить.", "АСКИД");
+            if (txtBxContrName.Text == "") MessageBox.Show("Поле 'Номер договора' необходимо заполнить.", "АСКИД");
             else if (txtBxSubject.Text == "") MessageBox.Show("Поле 'Предмет' необходимо заполнить.", "АСКИД");
             else if (new Regex("[0-9]+").Replace(txtBxNumber.Text, "") != "") MessageBox.Show("Поле 'Объем (количество)' может содержать только цифры", "АСКИД");
             else
@@ -699,6 +711,17 @@ namespace ContractsBase
                     MessageBox.Show("Ошибка! btnSaveChanges: " + ex.Message);
                     if (connection.State == ConnectionState.Open) connection.Close();
                 }
+        }
+
+        private void grBxAttach_SizeChanged(object sender, EventArgs e)
+        {
+            int freeHeight = grBxAttach.Size.Height - dgvDocs.Location.Y;
+            dgvDocs.Size = new Size(dgvDocs.Size.Width, freeHeight / 10 * 6);
+            dgvPayments.Location = new Point(dgvPayments.Location.X, dgvDocs.Location.Y + dgvDocs.Size.Height + 35);
+            lblPayments.Location = new Point(lblPayments.Location.X, dgvPayments.Location.Y - 21);
+            dgvPayments.Size = new Size(dgvPayments.Size.Width, grBxAttach.Size.Height - dgvPayments.Location.Y - 8);
+            btnRemovePay.Location = new Point(btnRemovePay.Location.X, lblPayments.Location.Y - 8);
+            btnAddPayment.Location = new Point(btnAddPayment.Location.X, lblPayments.Location.Y - 8);
         }
     }
 }

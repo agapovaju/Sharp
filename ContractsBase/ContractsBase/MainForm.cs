@@ -83,13 +83,13 @@ namespace ContractsBase
                 // скрываем для непосвещенных сводку по документам
                 if (UserParams.AccessType != 1) groupBoxSummary.Visible = false;
 
-                // запрос на заполнение таблицы контрактов
+                // запрос на заполнение таблицы договоров
                 string strCommand = "SELECT Contracts.Name as CName, " +
                     "Contracts.Date_start, " +
                     "CONVERT(nvarchar(10), Contracts.Date_add, 104) AS Date_add, " +
                     "Contracts.Date_end, " +
                     //"CONVERT(varchar(10), CONVERT(money, Contracts.Cost), 0) AS Cost, " +
-                    "CONVERT(varchar(10), CONVERT(money, " +
+                    "CONVERT(varchar(21), CONVERT(money, " +
                         "CASE " +
                               "WHEN Contracts.Cost IS NULL AND Agreements.Cost IS NULL THEN '' " +
                               "WHEN Contracts.Cost IS NOT NULL AND Agreements.Cost IS NULL THEN Contracts.Cost " +
@@ -109,7 +109,7 @@ namespace ContractsBase
                 adapter = new SqlDataAdapter(new SqlCommand(strCommand, connection));
 
                 dgvConts.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Id_cont", Name = "Id_cont" });
-                dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "CName", HeaderText = "№ контракта", Name = "CName" });
+                dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "CName", HeaderText = "№ договора", Name = "CName" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "Date_start", HeaderText = "Дата заключения", Name = "Date_start" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "Date_add", HeaderText = "Дата внесения", Name = "Date_add" });
                 dgvConts.Columns.Add(new DataGridViewAutoFilterTextBoxColumn { DataPropertyName = "Date_end", HeaderText = "Дата завершения", Name = "Date_end" });
@@ -123,7 +123,7 @@ namespace ContractsBase
 
                 dgvConts.RowHeadersWidth = 10;
 
-                // выделяем цветом просроченные контракты
+                // выделяем цветом просроченные договора
                 ColoredRows();
 
             }
@@ -146,7 +146,7 @@ namespace ContractsBase
 
         private void ColoredRows()
         {
-            // запрос на список контрактов, где есть просроченные документы
+            // запрос на список договоров, где есть просроченные документы
             Dictionary<int, bool> coloredContrs = new Dictionary<int, bool>();
             try
             {
@@ -183,8 +183,8 @@ namespace ContractsBase
             NewContract form = new NewContract(connection, UserParams);
             form.ShowDialog();
 
-            // если контракт был добавлен, то обновить таблицу контрктов
-            if(form.Success)
+            // если договор был добавлен, то обновить таблицу договор
+            if (form.Success)
             {
                 int selRowIndex = dgvConts.CurrentRow.Index;
 
@@ -345,28 +345,57 @@ namespace ContractsBase
         {
             try
             {
+                this.Cursor = Cursors.WaitCursor;
+
                 string strContrPart =
-                    "SELECT Contracts.Date_add, ContKinds.Kind, Contracts.Name, Contracts.Name, CStaff.Name " +
-                    "FROM Contracts INNER JOIN " +
-                        "ContKinds ON Contracts.Id_kind = ContKinds.Id_kind INNER JOIN " +
-                        "Staff AS CStaff ON Contracts.Id_staff = CStaff.Id_staff INNER JOIN " +
-                        "Blocks ON CStaff.Id_block = Blocks.Id_block ";
+                    "SELECT Contracts.Date_add, ContKinds.Kind, Contracts.Name, Contracts.Name, CStaff.Name , " +
+                        "(SELECT Contractors.Name + ', ' " +
+                        "FROM Contractors_Cont CC1 INNER JOIN Contractors ON CC1.Id_contractor = Contractors.Id_contractor " +
+                        "WHERE CC1.Id_cont=CC2.Id_cont FOR xml path('') ) " +
+                    "FROM Contracts " +
+                        "INNER JOIN ContKinds ON Contracts.Id_kind = ContKinds.Id_kind " +
+                        "INNER JOIN Staff AS CStaff ON Contracts.Id_staff = CStaff.Id_staff " +
+                        "INNER JOIN Blocks ON CStaff.Id_block = Blocks.Id_block " +
+                        "INNER JOIN Contractors_Cont AS CC2 ON CC2.Id_cont = Contracts.Id_cont " +
+                    "WHERE_CONDITION " +
+                    "GROUP BY Contracts.Id_cont, Contracts.Date_add, ContKinds.Kind, Contracts.Name, Contracts.Name, CStaff.Name, CC2.Id_cont ";
                 string strAgrPart =
-                    "UNION SELECT Agreements.Date_add, 'Дополнительное соглашение', Contracts.Name, Agreements.Name, AStaff.Name " +
-                    "FROM Agreements INNER JOIN " +
-                        "Contracts ON Agreements.Id_cont = Contracts.Id_cont INNER JOIN " +
-                        "Staff AS AStaff ON Agreements.Id_staff = AStaff.Id_staff ";
+                    "UNION " +
+                    "SELECT Agreements.Date_add, 'Дополнительное соглашение', Contracts.Name, Agreements.Name, AStaff.Name, " +
+                        "(SELECT Contractors.Name + ', ' " +
+                        "FROM Contractors_Cont CC1 INNER JOIN Contractors ON CC1.Id_contractor = Contractors.Id_contractor " +
+                        "WHERE CC1.Id_cont=CC2.Id_cont FOR xml path('') ) " +
+                    "FROM Agreements " +
+                        "INNER JOIN Contracts ON Agreements.Id_cont = Contracts.Id_cont " +
+                        "INNER JOIN Staff AS AStaff ON Agreements.Id_staff = AStaff.Id_staff " +
+                        "INNER JOIN Contractors_Cont AS CC2 ON CC2.Id_cont = Contracts.Id_cont " +
+                    "WHERE_CONDITION " +
+                    "GROUP BY Agreements.Date_add, Contracts.Name, Agreements.Name, AStaff.Name, CC2.Id_cont ";
                 string strPayPart =
-                    "UNION SELECT Payments.Date_add, 'Платежное поручение', Contracts.Name, Payments.Pay_no, Staff.Name " +
-                    "FROM Payments INNER JOIN " +
-                        "Staff ON Payments.Id_staff = Staff.Id_staff INNER JOIN " +
-                        "Contracts ON Payments.Id_cont = Contracts.Id_cont ";
+                    "UNION " +
+                    "SELECT Payments.Date_add, 'Платежное поручение', Contracts.Name, Payments.Pay_no, Staff.Name , " +
+                        "(SELECT Contractors.Name + ', ' " +
+                        "FROM Contractors_Cont CC1 INNER JOIN Contractors ON CC1.Id_contractor = Contractors.Id_contractor " +
+                        "WHERE CC1.Id_cont=CC2.Id_cont FOR xml path('') ) " +
+                    "FROM Payments " +
+                        "INNER JOIN Staff ON Payments.Id_staff = Staff.Id_staff " +
+                        "INNER JOIN Contracts ON Payments.Id_cont = Contracts.Id_cont " +
+                        "INNER JOIN Contractors_Cont AS CC2 ON CC2.Id_cont = Contracts.Id_cont " +
+                    "WHERE_CONDITION " +
+                    "GROUP BY Payments.Date_add, Contracts.Name, Payments.Pay_no, Staff.Name, CC2.Id_cont ";
                 string strDocsPart =
-                    "UNION SELECT Docs.Date_add, DocsKinds.Kind, Contracts.Name, Docs.Name, Staff.Name " +
-                    "FROM Docs INNER JOIN " +
-                        "DocsKinds ON Docs.Id_kind = DocsKinds.Id_kind INNER JOIN " +
-                        "Staff ON Docs.Id_staff = Staff.Id_staff INNER JOIN " +
-                        "Contracts ON Docs.Id_cont = Contracts.Id_cont ";
+                    "UNION " +
+                    "SELECT Docs.Date_add, DocsKinds.Kind, Contracts.Name, Docs.Name, Staff.Name, " +
+                        "(SELECT Contractors.Name + ', ' " +
+                        "FROM Contractors_Cont CC1 INNER JOIN Contractors ON CC1.Id_contractor = Contractors.Id_contractor " +
+                        "WHERE CC1.Id_cont=CC2.Id_cont FOR xml path('') ) " +
+                    "FROM Docs " +
+                        "INNER JOIN DocsKinds ON Docs.Id_kind = DocsKinds.Id_kind " +
+                        "INNER JOIN Staff ON Docs.Id_staff = Staff.Id_staff " +
+                        "INNER JOIN Contracts ON Docs.Id_cont = Contracts.Id_cont " +
+                        "INNER JOIN Contractors_Cont AS CC2 ON CC2.Id_cont = Contracts.Id_cont " +
+                    "WHERE_CONDITION " +
+                    "GROUP BY Docs.Date_add, DocsKinds.Kind, Contracts.Name, Docs.Name, Staff.Name, CC2.Id_cont ";
 
                 // т.к. в базе хранится дата+время
                 DateTime dateStart = new DateTime(dtpDocsStart.Value.Year, dtpDocsStart.Value.Month, dtpDocsStart.Value.Day, 0,0,1);
@@ -374,24 +403,31 @@ namespace ContractsBase
 
                 if (dtpDocsStart.Checked && dtpDocsEnd.Checked)
                 {
-                    strContrPart += "WHERE Contracts.Date_add >='" + dateStart + "' AND Contracts.Date_add <='" + dateEnd + "' ";
-                    strAgrPart += "WHERE Agreements.Date_add >='" + dateStart + "' AND Agreements.Date_add <='" + dateEnd + "' ";
-                    strPayPart += "WHERE Payments.Date_add >='" + dateStart + "' AND Payments.Date_add <='" + dateEnd + "' ";
-                    strDocsPart += "WHERE Docs.Date_add >='" + dateStart + "' AND Docs.Date_add <='" + dateEnd + "' ";
+                    strContrPart = strContrPart.Replace("WHERE_CONDITION ", "WHERE Contracts.Date_add >='" + dateStart + "' AND Contracts.Date_add <='" + dateEnd + "' ");
+                    strAgrPart = strAgrPart.Replace("WHERE_CONDITION ", "WHERE Agreements.Date_add >='" + dateStart + "' AND Agreements.Date_add <='" + dateEnd + "' ");
+                    strPayPart = strPayPart.Replace("WHERE_CONDITION ", "WHERE Payments.Date_add >='" + dateStart + "' AND Payments.Date_add <='" + dateEnd + "' ");
+                    strDocsPart = strDocsPart.Replace("WHERE_CONDITION ", "WHERE Docs.Date_add >='" + dateStart + "' AND Docs.Date_add <='" + dateEnd + "' ");
                 }
                 else if (dtpDocsStart.Checked)
                 {
-                    strContrPart += "WHERE Contracts.Date_add >='" + dateStart + "' ";
-                    strAgrPart += "WHERE Agreements.Date_add >='" + dateStart + "' ";
-                    strPayPart += "WHERE Payments.Date_add >='" + dateStart + "' ";
-                    strDocsPart += "WHERE Docs.Date_add >='" + dateStart + "' ";
+                    strContrPart = strContrPart.Replace("WHERE_CONDITION ", "WHERE Contracts.Date_add >='" + dateStart + "' ");
+                    strAgrPart = strAgrPart.Replace("WHERE_CONDITION ", "WHERE Agreements.Date_add >='" + dateStart + "' ");
+                    strPayPart = strPayPart.Replace("WHERE_CONDITION ", "WHERE Payments.Date_add >='" + dateStart + "' ");
+                    strDocsPart = strDocsPart.Replace("WHERE_CONDITION ", "WHERE Docs.Date_add >='" + dateStart + "' ");
                 }
                 else if (dtpDocsEnd.Checked)
                 {
-                    strContrPart += "WHERE Contracts.Date_add <='" + dateEnd + "' ";
-                    strAgrPart += "WHERE Agreements.Date_add <='" + dateEnd + "' ";
-                    strPayPart += "WHERE Payments.Date_add <='" + dateEnd + "' ";
-                    strDocsPart += "WHERE Docs.Date_add <='" + dateEnd + "' ";
+                    strContrPart = strContrPart.Replace("WHERE_CONDITION ", "WHERE Contracts.Date_add <='" + dateEnd + "' ");
+                    strAgrPart = strAgrPart.Replace("WHERE_CONDITION ", "WHERE Agreements.Date_add <='" + dateEnd + "' ");
+                    strPayPart = strPayPart.Replace("WHERE_CONDITION ", "WHERE Payments.Date_add <='" + dateEnd + "' ");
+                    strDocsPart = strDocsPart.Replace("WHERE_CONDITION ", "WHERE Docs.Date_add <='" + dateEnd + "' ");
+                }
+                else
+                {
+                    strContrPart = strContrPart.Replace("WHERE_CONDITION ", "");
+                    strAgrPart = strAgrPart.Replace("WHERE_CONDITION ", "");
+                    strPayPart = strPayPart.Replace("WHERE_CONDITION ", "");
+                    strDocsPart = strDocsPart.Replace("WHERE_CONDITION ", "");
                 }
 
                 connection.Open();
@@ -408,7 +444,7 @@ namespace ContractsBase
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-
+                #region сводка в .csv
                 //string reportPath = Path.Combine(
                 //    Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Сводка документов.csv");
                 //using (StreamWriter file = new StreamWriter(reportPath, false, Encoding.GetEncoding(1251)))
@@ -426,7 +462,7 @@ namespace ContractsBase
                 //proc.StartInfo.FileName = reportPath;
                 //proc.StartInfo.UseShellExecute = true;
                 //proc.Start();
-
+                #endregion
 
                 Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
 
@@ -443,6 +479,7 @@ namespace ContractsBase
                 xlSheet.Cells[rowCounter, 3] = "Основной документ";
                 xlSheet.Cells[rowCounter, 4] = "Имя";
                 xlSheet.Cells[rowCounter, 5] = "Ответственный";
+                xlSheet.Cells[rowCounter, 6] = "Контрагенты";
                 rowCounter++;
 
                 while (reader.Read())
@@ -452,6 +489,7 @@ namespace ContractsBase
                     xlSheet.Cells[rowCounter, 3] = reader.GetString(2);
                     xlSheet.Cells[rowCounter, 4] = reader.GetString(3);
                     xlSheet.Cells[rowCounter, 5] = reader.GetString(4);
+                    xlSheet.Cells[rowCounter, 6] = reader.GetString(5);
                     rowCounter++;
                 }
 
@@ -466,10 +504,11 @@ namespace ContractsBase
                 xlApp.ActiveWorkbook.SaveAs(Path.Combine(path, fileName));
                 xlApp.Visible = true;
 
+                this.Cursor = Cursors.Default;
 
                 stopWatch.Stop();
-                //MessageBox.Show(stopWatch.ElapsedMilliseconds.ToString() + " мс.", "АСКИД");
-
+                if(UserParams.IdStaff == 18) MessageBox.Show("Время генерации отчета: " + stopWatch.ElapsedMilliseconds.ToString() + " мс.", "АСКИД");
+                
             }
             catch (Exception ex)
             {

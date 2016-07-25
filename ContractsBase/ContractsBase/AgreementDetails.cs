@@ -22,7 +22,7 @@ namespace ContractsBase
             connection = conn;
             IdAgr = idAgr;
 
-            // запрос для данны по контракту
+            // запрос для данны по догоору
             connection.Open();
             SqlDataReader reader = new SqlCommand(String.Format(
                 "SELECT " +

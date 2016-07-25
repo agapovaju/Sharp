@@ -174,9 +174,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(22, 147);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 13);
+            this.label4.Size = new System.Drawing.Size(68, 13);
             this.label4.TabIndex = 49;
-            this.label4.Text = "Расположение";
+            this.label4.Text = "Скан. образ";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // btnOpenFile

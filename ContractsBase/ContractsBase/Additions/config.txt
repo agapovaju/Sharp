@@ -1,0 +1,14 @@
+﻿// строка подключения к базе
+ConnectionString=Data Source = 192.168.31.121\sqlexpress;Network Library = dbmssocn; Initial Catalog = ContractsDatabase; User ID = ageevavn; Password = mkoldA1991;
+// адрес файлового сервера
+FileServer=Z:\ContractBase\
+// если надо войти под другим пользователем. <Id_staff>;<Access_type>;<IdBlock>;<Name>
+user=2;1;2;Имя
+// скакого ящика будет присылаться "письмо счастья"
+EmailFrom=a.y.agapov@yandex.ru
+EmailFromPassword=mkoldA1991
+// список адресатов на получение "писем счастья"
+EmailToStart
+ageevavn@gmail.com
+agapovaju@gmail.com
+EmailToEnd
