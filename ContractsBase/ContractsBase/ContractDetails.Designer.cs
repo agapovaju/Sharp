@@ -131,6 +131,7 @@
             this.txtBxSubject.Multiline = true;
             this.txtBxSubject.Name = "txtBxSubject";
             this.txtBxSubject.ReadOnly = true;
+            this.txtBxSubject.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtBxSubject.Size = new System.Drawing.Size(431, 40);
             this.txtBxSubject.TabIndex = 3;
             // 
