@@ -17,62 +17,63 @@ namespace GOiCHS
     public partial class Form1 : Form
     {
         int qCount = 0;
-        string[] testTypeArr = { "0Охрана труда", "1Пожарно-технический минимум" };
-        string[] depArr = {  "0Производственный отдел",
-                                        "1Служба организации и проведения торгов",
-                                        "2Отдел планирования инвестиций",
-                                        "3Управление экономики и финансов",
-                                        "4Финансовый отдел",
-                                        "5Планово-экономический отдел",
-                                        "6Служба перспективного развития",
-                                        "7Договорно-правовая служба",
-                                        "8Отдел комплектации",
-                                        "9Служба управления персоналом",
-                                        "10Группа ОКР",
-                                        "11Управление разработки программного обеспечения",
-                                        "12Группа разработки и внедрения интеллектуальных систем",
-                                        "13Служба информационных технологий",
-                                        "14Отдел разработки и тестирования программного обеспечения",
-                                        "15Управление НИОКР",
-                                        "16Отдел прикладной оптики и электроники",
-                                        "17Отдел нормативно-технической документации и технического контроля",
-                                        "18Служба волоконно-оптических технологий",
-                                        "19Производственно-техническое управление",
-                                        "20Отдел эксплуатации",
-                                        "21Сборочно-ремонтный участок",
-                                        "22Эксплуатационный участок ОКР",
-                                        "23Руководство",
-                                        "24Участок №2 (г. Брянск)",
-                                        "25Участок №4",
-                                        "26Участок №5 (г. Самара)",
-                                        "27Участок №6 (п. Пурпе)",
-                                        "28Участок №7"};
-        string[] titleArr = {   "0Ведущий инженер",
-                                    "1Ведущий инженер-программист",
-                                    "2Ведущий специалист",
-                                    "3Делопроизводитель",
-                                    "4Заместитель начальника управления",
-                                    "5Инженер",
-                                    "6Инженер 1 категории",
-                                    "7Инженер 2 категории",
-                                    "8Инженер-програмист",
-                                    "9Инженер-програмист 1 категории",
-                                    "10Начальник группы",
-                                    "11Начальник отдела",
-                                    "12Начальник службы",
-                                    "13Начальник управления",
-                                    "14Начальник участка",
-                                    "15Помощник ген.директора",
-                                    "16Помощник по информационной безопасности",
-                                    "17Специалист",
-                                    "18Специалист 1 категории",
-                                    "19Специалист по складскому учету",
-                                    "20Старший техник"};
-        string[] checkTypeArr = { "0Первичная", "1Повторная", "2Внеочередная" };
+        string[] testTypeArr = { "0 Охрана труда", "1 Пожарно-технический минимум" };
+        string[] depArr = {  "0 Производственный отдел",
+                                        "1 Служба организации и проведения торгов",
+                                        "2 Отдел планирования инвестиций",
+                                        "3 Управление экономики и финансов",
+                                        "4 Финансовый отдел",
+                                        "5 Планово-экономический отдел",
+                                        "6 Служба перспективного развития",
+                                        "7 Договорно-правовая служба",
+                                        "8 Отдел комплектации",
+                                        "9 Служба управления персоналом",
+                                        "10 Группа ОКР",
+                                        "11 Управление разработки программного обеспечения",
+                                        "12 Группа разработки и внедрения интеллектуальных систем",
+                                        "13 Служба информационных технологий",
+                                        "14 Отдел разработки и тестирования программного обеспечения",
+                                        "15 Управление НИОКР",
+                                        "16 Отдел прикладной оптики и электроники",
+                                        "17 Отдел нормативно-технической документации и технического контроля",
+                                        "18 Служба волоконно-оптических технологий",
+                                        "19 Производственно-техническое управление",
+                                        "20 Отдел эксплуатации",
+                                        "21 Сборочно-ремонтный участок",
+                                        "22 Эксплуатационный участок ОКР",
+                                        "23 Руководство",
+                                        "24 Участок №2 (г. Брянск)",
+                                        "25 Участок №4",
+                                        "26 Участок №5 (г. Самара)",
+                                        "27 Участок №6 (п. Пурпе)",
+                                        "28 Участок №7"};
+        string[] titleArr = {"0 Ведущий инженер",
+                            "1 Ведущий инженер-программист",
+                            "2 Ведущий специалист",
+                            "3 Делопроизводитель",
+                            "4 Заместитель начальника управления",
+                            "5 Инженер",
+                            "6 Инженер 1 категории",
+                            "7 Инженер 2 категории",
+                            "8 Инженер-програмист",
+                            "9 Инженер-програмист 1 категории",
+                            "10 Начальник группы",
+                            "11 Начальник отдела",
+                            "12 Начальник службы",
+                            "13 Начальник управления",
+                            "14 Начальник участка",
+                            "15 Помощник ген.директора",
+                            "16 Помощник по информационной безопасности",
+                            "17 Специалист",
+                            "18 Cпециалист 1 категории",
+                            "19 Специалист по складскому учету",
+                            "20 Старший техник" };
+        string[] categoryArr = { "0", "1 1-я категория", "2 2-я категория", "3 Ведущий" };
+        string[] checkTypeArr = { "0 Первичная", "1 Повторная", "2 Внеочередная" };
 
         const string fileName = @"D:\forohrana\questionlist.xlsx";
-        string[,] tenQuestions = new string[2,10];
-
+        string[] qtenQuestions = new string[10];
+        string[] atenQuestions = new string[10];
 
         public Form1()
         {
@@ -81,8 +82,8 @@ namespace GOiCHS
         
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-            
+
+            qLabelContent.Visible = false;
             for (int i=0;i<testTypeArr.Length;i++)
             {
                 testTypeCBox.Items.Add(testTypeArr[i]);
@@ -190,55 +191,272 @@ namespace GOiCHS
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-            int[] randArr = new int[10];
-            if (((testTypeCBox.SelectedItem.ToString()==testTypeArr[0])&(depCBox.SelectedItem.ToString()==depArr[19])&(titleCbox.SelectedItem.ToString()==titleArr[13]))||
-                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[21]) & (titleCbox.SelectedItem.ToString() == titleArr[14]))||
-                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[15]) & (titleCbox.SelectedItem.ToString() == titleArr[13]))||
+            testTypeLabel.Visible = false;
+            testTypeCBox.Visible = false;
+            surnameLabel.Visible = false;
+            surnameTBox.Visible = false;
+            nameLabel.Visible = false;
+            nameTBox.Visible = false;
+            patronymicLabel.Visible = false;
+            patronymicTBox.Visible = false;
+            departmentLabel.Visible = false;
+            depCBox.Visible = false;
+            titleLabel.Visible = false;
+            titleCbox.Visible = false;
+            checkTypeLabel.Visible = false;
+            checkTypeCBox.Visible = false;
+            startBtn.Visible = false;
+            qLabel.Visible = true;
+            this.Width = 935;
+            this.Height = 410;
+            qLabelContent.Visible = true;
+            aLabel.Visible = true;
+            aTextBox.Visible = true;
+            skipBttn.Visible = true;
+            aButton.Visible = true;
+        
+////////////////////////////Начальник ПТУ, зам. начальника ПТУ, начальник участка ПТУ, начальник отдела эксплуатации ПТУ, начальник сборочно-ремонтного участка,начальник управления НИОКР, начальник отдела прикладной оптики и электроники 
+            if (//Начальник ПТУ
+                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[19]) & (titleCbox.SelectedItem.ToString() == titleArr[13])) ||
+                //Зам. начачльника ПТУ
+                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[19]) & (titleCbox.SelectedItem.ToString() == titleArr[4])) ||
+                //Начальники участков
+                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (titleCbox.SelectedItem.ToString() == titleArr[14]))||
+                //Начальник отдела эксплуатации
+                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[20]) & (titleCbox.SelectedItem.ToString() == titleArr[11])) ||
+                //Начальник управления НИОКР
+                ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[15]) & (titleCbox.SelectedItem.ToString() == titleArr[13])) ||
+                //Начальник отдела прикладной оптики и электроники
                 ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[16]) & (titleCbox.SelectedItem.ToString() == titleArr[11])))
-            {
+            {   
                 int cCount = 0;
                 int rCount = Convert.ToInt32(GetCellValue(fileName, "Лист1", "A1"))-3;
-                string[,] qaArr = new string[2,rCount];
-                
+                string[] qArr = new string[rCount];
+                string[] aArr = new string[rCount];
+
                 for (int i = 0; i < rCount; i++)
                 {
                     string checkCell = "C" + (i + 3).ToString();                    
                     if (GetCellValue(fileName, "Лист1", checkCell) == "1")
                     {
                         string qTargetCell = "A" + (i + 3).ToString();
-                        string taTargetCell = "B" + (i + 3).ToString();
-                        qaArr[0, cCount] = GetCellValue(fileName, "Лист1", qTargetCell);
-                        qaArr[1, cCount] = GetCellValue(fileName, "Лист1", taTargetCell);
-                        cCount++;
-                        label2.Text = taTargetCell;
+                        string aTargetCell = "B" + (i + 3).ToString();
+                        qArr[cCount] = GetCellValue(fileName, "Лист1", qTargetCell);
+                        aArr[cCount] = GetCellValue(fileName, "Лист1", aTargetCell);
+                        cCount++;                        
                     }
-                    Array.Resize<int>(ref qaArr, cCount);
+                    
                 }
+                Array.Resize<string>(ref qArr, cCount);
+                Array.Resize<string>(ref aArr, cCount);
+
+                Random rand = new Random();
                 for (int i = 0; i < 10; i++)
                 {
-                    int rand = new Random().Next(0, qaArr.GetLength(1));
-                    //randArr[i] = rand;
-                    label1.Text = rand.ToString();
-                    tenQuestions[0, i] = qaArr[0, rand];
-                    tenQuestions[1, i] = qaArr[1, rand];
+                    int pos = rand.Next(0, qArr.Length);
+                    qtenQuestions[i] = qArr[pos];
+                    atenQuestions[i] = aArr[pos];
                 }
 
-                qLabelContent.Text = tenQuestions[0, qCount];
-                for (int i=0;i<10;i++)
-                {
-                    listBox1.Items.Add(tenQuestions[0, i]);
-                }               
+                qLabelContent.Text = qtenQuestions[qCount];                
             }
+////////////////////////////Начальник отдела комплектации
+            else if ((testTypeCBox.SelectedItem.ToString()==testTypeArr[0]) & (depCBox.SelectedItem.ToString()==depArr[8]) & (titleCbox.SelectedItem.ToString()==titleArr[11]))
+            {
+                int cCount = 0;
+                int rCount = Convert.ToInt32(GetCellValue(fileName, "Лист1", "A1")) - 3;
+                string[] qArr = new string[rCount];
+                string[] aArr = new string[rCount];
 
+                for (int i = 0; i < rCount; i++)
+                {
+                    string checkCell = "E" + (i + 3).ToString();
+                    if (GetCellValue(fileName, "Лист1", checkCell) == "1")
+                    {
+                        string qTargetCell = "A" + (i + 3).ToString();
+                        string aTargetCell = "B" + (i + 3).ToString();
+                        qArr[cCount] = GetCellValue(fileName, "Лист1", qTargetCell);
+                        aArr[cCount] = GetCellValue(fileName, "Лист1", aTargetCell);
+                        cCount++;
+                    }
 
+                }
+                Array.Resize<string>(ref qArr, cCount);
+                Array.Resize<string>(ref aArr, cCount);
 
-            
+                Random rand = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    int pos = rand.Next(0, qArr.Length);
+                    qtenQuestions[i] = qArr[pos];
+                    atenQuestions[i] = aArr[pos];
+                }
+
+                qLabelContent.Text = qtenQuestions[qCount];
+            }
+////////////////////////////Начальник службы управления персонала
+            else if ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[9]) & (titleCbox.SelectedItem.ToString() == titleArr[12]))
+            {
+                int cCount = 0;
+                int rCount = Convert.ToInt32(GetCellValue(fileName, "Лист1", "A1")) - 3;
+                string[] qArr = new string[rCount];
+                string[] aArr = new string[rCount];
+
+                for (int i = 0; i < rCount; i++)
+                {
+                    string checkCell = "G" + (i + 3).ToString();
+                    if (GetCellValue(fileName, "Лист1", checkCell) == "1")
+                    {
+                        string qTargetCell = "A" + (i + 3).ToString();
+                        string aTargetCell = "B" + (i + 3).ToString();
+                        qArr[cCount] = GetCellValue(fileName, "Лист1", qTargetCell);
+                        aArr[cCount] = GetCellValue(fileName, "Лист1", aTargetCell);
+                        cCount++;
+                    }
+
+                }
+                Array.Resize<string>(ref qArr, cCount);
+                Array.Resize<string>(ref aArr, cCount);
+
+                Random rand = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    int pos = rand.Next(0, qArr.Length);
+                    qtenQuestions[i] = qArr[pos];
+                    atenQuestions[i] = aArr[pos];
+                }
+
+                qLabelContent.Text = qtenQuestions[qCount];
+            }
+////////////////////////////Руководители управлений, отделов и служб
+            else if (//Начальник группы
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (titleCbox.SelectedItem.ToString() == titleArr[10])) ||
+                     //Начальник отдела
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (titleCbox.SelectedItem.ToString() == titleArr[11])) ||
+                     //Начальник службы
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (titleCbox.SelectedItem.ToString() == titleArr[12])) ||
+                     //Начальник управления
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (titleCbox.SelectedItem.ToString() == titleArr[13])))
+            {
+                int cCount = 0;
+                int rCount = Convert.ToInt32(GetCellValue(fileName, "Лист1", "A1")) - 3;
+                string[] qArr = new string[rCount];
+                string[] aArr = new string[rCount];
+
+                for (int i = 0; i < rCount; i++)
+                {
+                    string checkCell = "D" + (i + 3).ToString();
+                    if (GetCellValue(fileName, "Лист1", checkCell) == "1")
+                    {
+                        string qTargetCell = "A" + (i + 3).ToString();
+                        string aTargetCell = "B" + (i + 3).ToString();
+                        qArr[cCount] = GetCellValue(fileName, "Лист1", qTargetCell);
+                        aArr[cCount] = GetCellValue(fileName, "Лист1", aTargetCell);
+                        cCount++;
+                    }
+
+                }
+                Array.Resize<string>(ref qArr, cCount);
+                Array.Resize<string>(ref aArr, cCount);
+
+                Random rand = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    int pos = rand.Next(0, qArr.Length);
+                    qtenQuestions[i] = qArr[pos];
+                    atenQuestions[i] = aArr[pos];
+                }
+
+                qLabelContent.Text = qtenQuestions[qCount];
+            }
+////////////////////////////Инженеры и специалисты: ПТУ, сборочно - ремонтного участка, отдела прикладной оптики и электроники
+            else if (//инженеры отдела эксплуатации
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[20]) & (titleCbox.SelectedItem.ToString().Contains("Инженер") || titleCbox.SelectedItem.ToString().Contains("инженер"))) ||
+                     //инженеры участков
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString().Contains("Участок") || depCBox.SelectedItem.ToString().Contains("участок")) & (titleCbox.SelectedItem.ToString().Contains("Инженер")|| titleCbox.SelectedItem.ToString().Contains("инженер"))) ||
+                     //инженеры отдела прикладной оптики и электроники
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[16]) & (titleCbox.SelectedItem.ToString().Contains("Инженер") || titleCbox.SelectedItem.ToString().Contains("инженер"))) ||
+                     //специалисты отдела эксплуатации
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[20]) & (titleCbox.SelectedItem.ToString().Contains("специалист")|| titleCbox.SelectedItem.ToString().Contains("Специалист"))) ||
+                     //специалисты участков
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString().Contains("Участок") || depCBox.SelectedItem.ToString().Contains("участок")) & (titleCbox.SelectedItem.ToString().Contains("Специалист") || titleCbox.SelectedItem.ToString().Contains("специалист"))) ||
+                     //специалисты отдела прикладной оптики и электроники
+                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[16]) & (titleCbox.SelectedItem.ToString().Contains("Специалист") || titleCbox.SelectedItem.ToString().Contains("специалист")))
+                     )
+            {
+                int cCount = 0;
+                int rCount = Convert.ToInt32(GetCellValue(fileName, "Лист1", "A1")) - 3;
+                string[] qArr = new string[rCount];
+                string[] aArr = new string[rCount];
+
+                for (int i = 0; i < rCount; i++)
+                {
+                    string checkCell = "F" + (i + 3).ToString();
+                    if (GetCellValue(fileName, "Лист1", checkCell) == "1")
+                    {
+                        string qTargetCell = "A" + (i + 3).ToString();
+                        string aTargetCell = "B" + (i + 3).ToString();
+                        qArr[cCount] = GetCellValue(fileName, "Лист1", qTargetCell);
+                        aArr[cCount] = GetCellValue(fileName, "Лист1", aTargetCell);
+                        cCount++;
+                    }
+
+                }
+                Array.Resize<string>(ref qArr, cCount);
+                Array.Resize<string>(ref aArr, cCount);
+
+                Random rand = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    int pos = rand.Next(0, qArr.Length);
+                    qtenQuestions[i] = qArr[pos];
+                    atenQuestions[i] = aArr[pos];
+                }
+
+                qLabelContent.Text = qtenQuestions[qCount];
+            }
+            else
+            {
+                int cCount = 0;
+                int rCount = Convert.ToInt32(GetCellValue(fileName, "Лист1", "A1")) - 3;
+                string[] qArr = new string[rCount];
+                string[] aArr = new string[rCount];
+
+                for (int i = 0; i < rCount; i++)
+                {
+                    string checkCell = "F" + (i + 3).ToString();
+                    if (GetCellValue(fileName, "Лист1", checkCell) == "1")
+                    {
+                        string qTargetCell = "A" + (i + 3).ToString();
+                        string aTargetCell = "B" + (i + 3).ToString();
+                        qArr[cCount] = GetCellValue(fileName, "Лист1", qTargetCell);
+                        aArr[cCount] = GetCellValue(fileName, "Лист1", aTargetCell);
+                        cCount++;
+                    }
+
+                }
+                Array.Resize<string>(ref qArr, cCount);
+                Array.Resize<string>(ref aArr, cCount);
+
+                Random rand = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    int pos = rand.Next(0, qArr.Length);
+                    qtenQuestions[i] = qArr[pos];
+                    atenQuestions[i] = aArr[pos];
+                }
+
+                qLabelContent.Text = qtenQuestions[qCount];
+            }
         }
 
         private void aButton_Click(object sender, EventArgs e)
         {
-            qCount++;
-            qLabelContent.Text = tenQuestions[0, qCount];
+            if (qCount < 9)
+            {
+                qCount++;
+                qLabelContent.Text = qtenQuestions[qCount];
+            }            
         }
     }
 }
