@@ -62,6 +62,7 @@
             // dgvConts
             // 
             this.dgvConts.AllowUserToAddRows = false;
+            this.dgvConts.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Ivory;
             this.dgvConts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvConts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 

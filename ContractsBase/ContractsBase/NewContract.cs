@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace ContractsBase
@@ -189,6 +190,19 @@ namespace ContractsBase
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            // лог и счетчик времени
+            string logFilename = "timerLogContracts.txt";
+            if (!File.Exists(logFilename))
+            {
+                File.Create(logFilename);
+                File.WriteAllText(logFilename, "Проверка условий\tДанные договоров\tДанные контрагентов\tId_contract\t" +
+                    "Запрос на отдел и создание папки\tПлатежные получения\tФайлы\tМелочи, письмо\tЗакрытие");
+            }
+            StreamWriter fileLog = File.AppendText(logFilename);
+            long diff = 0;
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             if (cmbBxKind.SelectedItem == null) MessageBox.Show("Необходимо заполнить поле 'Тип договора'.", "АСКИД");
             else if (cmbBxType.SelectedItem == null) MessageBox.Show("Необходимо заполнить поле 'Типовой договор'.", "АСКИД");
             else if (new Regex("[\\|/:*?\"<>]+").Replace(txtBxName.Text, "") != txtBxName.Text) MessageBox.Show("Поле 'Номер договора' не может содержать \\/:*?\"<>|.", "АСКИД");
@@ -201,6 +215,9 @@ namespace ContractsBase
             else if (!File.Exists(txtBxFilePath.Text)) MessageBox.Show("Указанный в поле 'Расположение' файл не существует.", "АСКИД");
             else
             {
+                fileLog.Write(stopwatch.ElapsedMilliseconds + "\t");
+                diff = stopwatch.ElapsedMilliseconds;
+
                 try
                 {
                     connection.Open();
@@ -223,13 +240,15 @@ namespace ContractsBase
                         txtBxNumber.Text == "" ? "NULL" : txtBxNumber.Text, txtBxOkdp.Text), connection);
                     command.ExecuteNonQuery();
 
-                    
+                    fileLog.Write((stopwatch.ElapsedMilliseconds - diff) + "\t");
+                    diff = stopwatch.ElapsedMilliseconds;
+
                     // попутно формируем тело письма
                     string emailText = "\t" + "Пользователь " + UserParams.Name + " внес новый основной документ \"" + txtBxName.Text + 
                         "\" (" + Path.GetFileName(txtBxFilePath.Text) + ")" + Environment.NewLine;
-
+                    
                     // данные контрагентов
-                    SqlDataReader reader = new SqlCommand("SELECT MAX(Id_cont) FROM Contracts", connection).ExecuteReader();
+                    SqlDataReader reader = new SqlCommand("SELECT MAX(Id_cont) FROM Contracts WHERE Id_staff = " + UserParams.IdStaff, connection).ExecuteReader();
                     reader.Read();
                     int idCont = reader.GetInt32(0);
                     reader.Close();
@@ -242,6 +261,9 @@ namespace ContractsBase
                     command = new SqlCommand(strCommand, connection);
                     command.ExecuteNonQuery();
 
+                    fileLog.Write((stopwatch.ElapsedMilliseconds - diff) + "\t");
+                    fileLog.Write(idCont + "\t");
+                    diff = stopwatch.ElapsedMilliseconds;
 
                     // ******************************************
                     // создаем папку договора, копируем файл
@@ -266,7 +288,10 @@ namespace ContractsBase
                     else File.Copy(filePath, Path.Combine(contrPath, Path.GetFileName(filePath)));
                     contrPath = System.IO.Path.Combine(contrPath, "Docs");
                     if (!Directory.Exists(contrPath)) Directory.CreateDirectory(contrPath);
-                    
+
+                    fileLog.Write((stopwatch.ElapsedMilliseconds - diff) + "\t");
+                    diff = stopwatch.ElapsedMilliseconds;
+
 
                     // ******************************************
                     // данные платежных поручений
@@ -304,6 +329,8 @@ namespace ContractsBase
                         emailText += Environment.NewLine;
                     }
 
+                    fileLog.Write((stopwatch.ElapsedMilliseconds - diff) + "\t");
+                    diff = stopwatch.ElapsedMilliseconds;
 
                     // ******************************************
                     // данные файлов
@@ -334,7 +361,8 @@ namespace ContractsBase
 
                     }
 
-
+                    fileLog.Write((stopwatch.ElapsedMilliseconds - diff) + "\t");
+                    diff = stopwatch.ElapsedMilliseconds;
 
                     connection.Close();
                     Success = true;
@@ -343,12 +371,18 @@ namespace ContractsBase
                     emailText = Environment.NewLine + "\t" + "Добрый день." + Environment.NewLine + Environment.NewLine + emailText + Environment.NewLine +
                         "\t" + "Письмо сформировано автоматически, просьба на него не отвечать.";
                     Program.SendMail(emailText);
+
+                    fileLog.Write((stopwatch.ElapsedMilliseconds - diff) + "\t");
+                    diff = stopwatch.ElapsedMilliseconds;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Ошибка. " + Environment.NewLine + "NewContract.btnOk: " + ex.Message);
                     if (connection.State == ConnectionState.Open) connection.Close();
                 }
+
+                fileLog.Write((stopwatch.ElapsedMilliseconds - diff) + Environment.NewLine);
+                diff = stopwatch.ElapsedMilliseconds;
 
                 Close();
             }

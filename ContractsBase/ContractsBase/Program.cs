@@ -50,8 +50,8 @@ namespace ContractsBase
                 client.EnableSsl = false;
                 client.Credentials = new NetworkCredential("agapovay@omg.transneft.ru", emailFromPass);
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //MessageBox.Show(message);
-                client.Send(mail);
+                MessageBox.Show(message);
+                //client.Send(mail);
                 mail.Dispose();
             }
             catch (Exception e)
