@@ -626,6 +626,7 @@
             this.dgvDocs.Name = "dgvDocs";
             this.dgvDocs.ReadOnly = true;
             this.dgvDocs.RowHeadersVisible = false;
+            this.dgvDocs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDocs.Size = new System.Drawing.Size(530, 130);
             this.dgvDocs.TabIndex = 34;
             this.dgvDocs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDocs_CellDoubleClick);
@@ -663,6 +664,7 @@
             this.dgvAgrs.Name = "dgvAgrs";
             this.dgvAgrs.ReadOnly = true;
             this.dgvAgrs.RowHeadersVisible = false;
+            this.dgvAgrs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAgrs.Size = new System.Drawing.Size(530, 80);
             this.dgvAgrs.TabIndex = 29;
             this.dgvAgrs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAgrs_CellDoubleClick);
@@ -785,6 +787,7 @@
             this.dgvPayments.Name = "dgvPayments";
             this.dgvPayments.ReadOnly = true;
             this.dgvPayments.RowHeadersVisible = false;
+            this.dgvPayments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPayments.Size = new System.Drawing.Size(530, 100);
             this.dgvPayments.TabIndex = 37;
             this.dgvPayments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPayments_CellDoubleClick);

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using SData = System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using DataGridViewAutoFilter;
@@ -153,13 +154,14 @@ namespace ContractsBase
                 connection.Open();
                 SqlDataReader reader = new SqlCommand(
                     "SELECT DISTINCT Contracts.Id_cont, " +
-                         "IIF( " +
-                            "(Agreements.Ins_docs = 'False' AND DATEDIFF(day, Agreements.Date_create, Agreements.Date_add) >= 3) OR " +
+                        "IIF(COUNT(CASE WHEN(Agreements.Ins_docs = 'False' AND DATEDIFF(day, Agreements.Date_create, Agreements.Date_add) >= 3) OR " +
                             "(Payments.Ins_docs = 'False' AND DATEDIFF(day, Payments.Date_pay, Payments.Date_add) >= 3) OR " +
-                            "(Contracts.Ins_docs = 'False'AND DATEDIFF(day, Contracts.Date_start, Contracts.Date_add) >= 1), 'True', 'False') AS ColoredRow " +
-                    "FROM Contracts INNER JOIN Staff ON Contracts.Id_staff = Staff.Id_staff " +
+                            "(Contracts.Ins_docs = 'False'AND DATEDIFF(day, Contracts.Date_start, Contracts.Date_add) >= 1) THEN 1 ELSE NULL END) > 0, 'True', 'False')  " +
+                    "FROM Contracts " +
+                        "INNER JOIN Staff ON Contracts.Id_staff = Staff.Id_staff " +
                         "LEFT OUTER JOIN Payments ON Contracts.Id_cont = Payments.Id_cont " +
-                        "LEFT OUTER JOIN Agreements ON Contracts.Id_cont = Agreements.Id_cont", connection).ExecuteReader();
+                        "LEFT OUTER JOIN Agreements ON Contracts.Id_cont = Agreements.Id_cont " +
+                    "GROUP BY Contracts.Id_cont", connection).ExecuteReader();
                 while (reader.Read()) coloredContrs.Add(reader.GetInt32(0), reader.GetString(1) == "True" ? true : false);
                 reader.Close();
                 connection.Close();
@@ -182,26 +184,26 @@ namespace ContractsBase
         {
             NewContract form = new NewContract(connection, UserParams);
             form.ShowDialog();
-
+            
             // если договор был добавлен, то обновить таблицу договор
-            if (form.Success)
+            if (form.Success) RefreshData();
+        }
+
+        private void RefreshData()
+        {
+            int selRowIndex = dgvConts.CurrentRow.Index;
+
+            SData.DataTable dataTable = new SData.DataTable("Contracts");
+            adapter.Fill(dataTable);
+            BindingSource bindingSource = new BindingSource();
+            bindingSource.DataSource = dataTable;
+            dgvConts.DataSource = bindingSource;
+
+            if (dgvConts.Rows.Count >= selRowIndex)
             {
-                int selRowIndex = dgvConts.CurrentRow.Index;
-
-                SData.DataTable dataTable = new SData.DataTable("Contracts");
-                adapter.Fill(dataTable);
-                BindingSource bindingSource = new BindingSource();
-                bindingSource.DataSource = dataTable;
-                dgvConts.DataSource = bindingSource;
-
-                if (dgvConts.Rows.Count >= selRowIndex)
-                {
-                    dgvConts.Rows[selRowIndex].Selected = true;
-                    dgvConts.FirstDisplayedScrollingRowIndex = selRowIndex;
-                }
+                dgvConts.Rows[selRowIndex].Selected = true;
+                dgvConts.FirstDisplayedScrollingRowIndex = selRowIndex;
             }
-
-
         }
 
         private void btnContractors_Click(object sender, EventArgs e)
@@ -397,11 +399,18 @@ namespace ContractsBase
                     "WHERE_CONDITION " +
                     "GROUP BY Docs.Date_add, DocsKinds.Kind, Contracts.Name, Docs.Name, Staff.Name, CC2.Id_cont ";
 
+                
                 // т.к. в базе хранится дата+время
+                if(!dtpDocsStart.Checked && !dtpDocsEnd.Checked)
+                {
+                    dtpDateStart.Value = DateTime.Now;
+                    dtpDocsEnd.Value = DateTime.Now;
+                }
                 DateTime dateStart = new DateTime(dtpDocsStart.Value.Year, dtpDocsStart.Value.Month, dtpDocsStart.Value.Day, 0,0,1);
                 DateTime dateEnd = new DateTime(dtpDocsEnd.Value.Year, dtpDocsEnd.Value.Month, dtpDocsEnd.Value.Day, 23, 59, 59);
 
-                if (dtpDocsStart.Checked && dtpDocsEnd.Checked)
+                // если не выбрана ни начальная дата, ни конечная, то только за текущий день
+                if ((dtpDocsStart.Checked && dtpDocsEnd.Checked) || (!dtpDocsStart.Checked && !dtpDocsEnd.Checked))
                 {
                     strContrPart = strContrPart.Replace("WHERE_CONDITION ", "WHERE Contracts.Date_add >='" + dateStart + "' AND Contracts.Date_add <='" + dateEnd + "' ");
                     strAgrPart = strAgrPart.Replace("WHERE_CONDITION ", "WHERE Agreements.Date_add >='" + dateStart + "' AND Agreements.Date_add <='" + dateEnd + "' ");
@@ -421,13 +430,6 @@ namespace ContractsBase
                     strAgrPart = strAgrPart.Replace("WHERE_CONDITION ", "WHERE Agreements.Date_add <='" + dateEnd + "' ");
                     strPayPart = strPayPart.Replace("WHERE_CONDITION ", "WHERE Payments.Date_add <='" + dateEnd + "' ");
                     strDocsPart = strDocsPart.Replace("WHERE_CONDITION ", "WHERE Docs.Date_add <='" + dateEnd + "' ");
-                }
-                else
-                {
-                    strContrPart = strContrPart.Replace("WHERE_CONDITION ", "");
-                    strAgrPart = strAgrPart.Replace("WHERE_CONDITION ", "");
-                    strPayPart = strPayPart.Replace("WHERE_CONDITION ", "");
-                    strDocsPart = strDocsPart.Replace("WHERE_CONDITION ", "");
                 }
 
                 connection.Open();
@@ -515,6 +517,11 @@ namespace ContractsBase
                 MessageBox.Show("Ошибка. btnDocsOk: " + ex.Message);
                 if (connection.State == SData.ConnectionState.Open) connection.Close();
             }
+        }
+
+        private void RefreshRecords_Click(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }

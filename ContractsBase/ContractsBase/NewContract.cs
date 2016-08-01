@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -144,6 +145,8 @@ namespace ContractsBase
                     }
                     reader.Close();
                     connection.Close();
+
+                    listViewContractors.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                 }
             }
             catch (Exception ex)
@@ -204,7 +207,7 @@ namespace ContractsBase
                 try
                 {
                     connection.Open();
-
+                    
                     // ******************************************
                     // данные в таблицу договоров
                     SqlCommand command = new SqlCommand(String.Format(
@@ -222,39 +225,40 @@ namespace ContractsBase
                         txtBxSubject.Text, txtBxCost.Text == "" ? "NULL" : new Regex(@" *[\,\.] *").Replace(txtBxCost.Text, "."),
                         txtBxNumber.Text == "" ? "NULL" : txtBxNumber.Text, txtBxOkdp.Text), connection);
                     command.ExecuteNonQuery();
-
                     
                     // попутно формируем тело письма
                     string emailText = "\t" + "Пользователь " + UserParams.Name + " внес новый основной документ \"" + txtBxName.Text + 
                         "\" (" + Path.GetFileName(txtBxFilePath.Text) + ")" + Environment.NewLine;
-
+                    
                     // данные контрагентов
-                    SqlDataReader reader = new SqlCommand("SELECT MAX(Id_cont) FROM Contracts", connection).ExecuteReader();
+                    SqlDataReader reader = new SqlCommand("SELECT MAX(Id_cont) FROM Contracts WHERE Id_staff = " + UserParams.IdStaff, connection).ExecuteReader();
                     reader.Read();
                     int idCont = reader.GetInt32(0);
                     reader.Close();
-
+                    
                     string strCommand = "INSERT INTO Contractors_Cont(Id_cont, Id_contractor) VALUES ";
                     foreach (ListViewItem item in listViewContractors.Items)
                         strCommand += "(" + idCont + ", " + item.SubItems[3].Text + "), ";
                     strCommand = strCommand.Substring(0, strCommand.Length - 2);
-
+                    
                     command = new SqlCommand(strCommand, connection);
                     command.ExecuteNonQuery();
 
+                   
 
                     // ******************************************
                     // создаем папку договора, копируем файл
                     // из конфига тянем путь к файловому серверу
                     string contrPath = File.ReadAllLines("config.txt").Where(s => s.StartsWith("FileServer=")).First();
                     contrPath = contrPath.Substring(11);
-
+                    
                     // вытаскиваем название отдела, где зарегистрировали договор и номер договора
                     reader = new SqlCommand(String.Format(
                         "SELECT Blocks.Block, Contracts.Name FROM Contracts " +
                         "INNER JOIN Staff ON Contracts.Id_staff = Staff.Id_staff " +
                         "INNER JOIN Blocks ON Staff.Id_block = Blocks.Id_block " +
                         "WHERE(Contracts.Id_cont = {0})", idCont), connection).ExecuteReader();
+                    
                     reader.Read();
                     contrPath = System.IO.Path.Combine(contrPath, reader.GetString(0), reader.GetString(1));
                     reader.Close();
@@ -279,7 +283,7 @@ namespace ContractsBase
                         foreach (ListViewItem item in listViewPayments.Items)
                         {
                             strCommand += String.Format("({0}, N'{1}', '{2}', '{3}', N'{4}', {5}, N'{6}'), ", idCont, item.Text, item.SubItems[1].Text,
-                               DateTime.Now, item.SubItems[2].Text, UserParams.IdStaff, item.SubItems[3].Text);
+                               DateTime.Now, item.SubItems[2].Text, UserParams.IdStaff, Path.GetFileName(item.SubItems[3].Text));
                             // для каждого платежного поручения создаем папку
                             string invoice = item.SubItems[2].Text;
                             string invoicePath = "";
@@ -297,10 +301,10 @@ namespace ContractsBase
                             emailText += "\t\t" + item.Text + Environment.NewLine;
                         }
                         strCommand = strCommand.Substring(0, strCommand.Length - 2);
-
+                        
                         command = new SqlCommand(strCommand, connection);
                         command.ExecuteNonQuery();
-
+                        
                         emailText += Environment.NewLine;
                     }
 
@@ -327,29 +331,30 @@ namespace ContractsBase
                             else File.Copy(item.SubItems[2].Text, Path.Combine(newPath, Path.GetFileName(item.SubItems[2].Text)));
                         }
                         strCommand = strCommand.Substring(0, strCommand.Length - 2);
-
+                        
                         command = new SqlCommand(strCommand, connection);
                         command.ExecuteNonQuery();
                         emailText += Environment.NewLine;
-
+                        
                     }
 
-
-
+                    
                     connection.Close();
                     Success = true;
 
                     // отправка письма с сообщением о создании нового договора
                     emailText = Environment.NewLine + "\t" + "Добрый день." + Environment.NewLine + Environment.NewLine + emailText + Environment.NewLine +
                         "\t" + "Письмо сформировано автоматически, просьба на него не отвечать.";
+                    
                     Program.SendMail(emailText);
+                    
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Ошибка. " + Environment.NewLine + "NewContract.btnOk: " + ex.Message);
                     if (connection.State == ConnectionState.Open) connection.Close();
                 }
-
+                
                 Close();
             }
         }
@@ -362,7 +367,6 @@ namespace ContractsBase
 
             if (form.Success)
             {
-                // TODO: id пользователя
                 ListViewItem item = new ListViewItem();
                 item.Text = Path.GetFileName(form.PayNo);
                 item.SubItems.Add(form.PayDate.ToShortDateString());
@@ -370,7 +374,7 @@ namespace ContractsBase
                 item.SubItems.Add(form.Filename);
                 listViewPayments.Items.Add(item);
 
-                listViewFiles.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                listViewPayments.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
         }
 

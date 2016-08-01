@@ -53,6 +53,7 @@
             this.btnClear = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.NewContract = new System.Windows.Forms.Button();
+            this.RefreshRecords = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConts)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -62,6 +63,7 @@
             // dgvConts
             // 
             this.dgvConts.AllowUserToAddRows = false;
+            this.dgvConts.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Ivory;
             this.dgvConts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvConts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -76,7 +78,7 @@
             this.dgvConts.Name = "dgvConts";
             this.dgvConts.ReadOnly = true;
             this.dgvConts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvConts.Size = new System.Drawing.Size(612, 235);
+            this.dgvConts.Size = new System.Drawing.Size(612, 247);
             this.dgvConts.TabIndex = 0;
             this.dgvConts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvConts_CellDoubleClick);
             this.dgvConts.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvConts_DataBindingComplete);
@@ -236,7 +238,7 @@
             this.groupBoxSummary.Controls.Add(this.dtpDocsStart);
             this.groupBoxSummary.Controls.Add(this.label5);
             this.groupBoxSummary.Controls.Add(this.btnDocsOk);
-            this.groupBoxSummary.Location = new System.Drawing.Point(636, 227);
+            this.groupBoxSummary.Location = new System.Drawing.Point(630, 259);
             this.groupBoxSummary.Name = "groupBoxSummary";
             this.groupBoxSummary.Size = new System.Drawing.Size(127, 118);
             this.groupBoxSummary.TabIndex = 20;
@@ -329,11 +331,26 @@
             this.NewContract.UseVisualStyleBackColor = true;
             this.NewContract.Click += new System.EventHandler(this.NewContract_Click);
             // 
+            // RefreshRecords
+            // 
+            this.RefreshRecords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.RefreshRecords.Image = global::ContractsBase.Properties.Resources.contractors32;
+            this.RefreshRecords.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RefreshRecords.Location = new System.Drawing.Point(630, 216);
+            this.RefreshRecords.Name = "RefreshRecords";
+            this.RefreshRecords.Size = new System.Drawing.Size(133, 37);
+            this.RefreshRecords.TabIndex = 21;
+            this.RefreshRecords.Text = "Обновить записи";
+            this.RefreshRecords.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.RefreshRecords.UseVisualStyleBackColor = true;
+            this.RefreshRecords.Click += new System.EventHandler(this.RefreshRecords_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(772, 377);
+            this.ClientSize = new System.Drawing.Size(772, 389);
+            this.Controls.Add(this.RefreshRecords);
             this.Controls.Add(this.groupBoxSummary);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnSearch);
@@ -383,6 +400,7 @@
         private System.Windows.Forms.DateTimePicker dtpDocsStart;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnDocsOk;
+        private System.Windows.Forms.Button RefreshRecords;
     }
 }
 

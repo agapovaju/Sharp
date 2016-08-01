@@ -510,6 +510,7 @@ namespace ContractsBase
 
         private void dgvPayments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex == -1 || e.RowIndex == -1) return;
             if (UserParams.AccessType != 1)
             {
                 PaymentDetails form = new PaymentDetails(connection,
