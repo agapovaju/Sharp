@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.IO;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -127,6 +128,21 @@ namespace ContractsBase
         {
             try
             {
+                // лог и счетчик времени
+                string logFilename = "timerLogDS.txt";
+                if (!File.Exists(logFilename))
+                {
+                    File.Create(logFilename);
+                    File.WriteAllText(logFilename, "Проверка условий\tДанные договоров\tДанные контрагентов\t" +
+                        "Запрос на отдел и создание папки\tПлатежные получения\tФайлы\tМелочи, письмо\tЗакрытие");
+                }
+                StreamWriter fileLog = File.AppendText(logFilename);
+                fileLog.Write("Контракт\t");
+                long diff = 0;
+                fileLog.WriteLine();
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
                 // если добавляем новое
                 if (IdAgr == null)
                 {
@@ -139,6 +155,9 @@ namespace ContractsBase
                     else if (!File.Exists(txtBxFilePath.Text)) MessageBox.Show("Необходимо заполнить поле 'Указанный файл не существует'.", "АСКИД");
                     else
                     {
+                        fileLog.Write(stopwatch.ElapsedMilliseconds + "\t");
+                        diff = stopwatch.ElapsedMilliseconds;
+
                         connection.Open();
 
                         // убираем отметку с последнего ДС, что он последний

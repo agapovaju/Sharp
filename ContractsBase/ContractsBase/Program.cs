@@ -52,8 +52,8 @@ namespace ContractsBase
                 client.Credentials = new NetworkCredential("agapovay@omg.transneft.ru", emailFromPass);
                 //client.Credentials = new NetworkCredential("agapovay@petrolight.local", emailFromPass);
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //MessageBox.Show(message);
-                client.Send(mail);
+                MessageBox.Show(message);
+                //client.Send(mail);
                 mail.Dispose();
             }
             catch (Exception e)
