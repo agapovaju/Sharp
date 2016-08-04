@@ -85,7 +85,7 @@
             this.aButton.Name = "aButton";
             this.aButton.Size = new System.Drawing.Size(75, 23);
             this.aButton.TabIndex = 4;
-            this.aButton.Text = "Далее";
+            this.aButton.Text = "Ответить";
             this.aButton.UseVisualStyleBackColor = true;
             this.aButton.Visible = false;
             this.aButton.Click += new System.EventHandler(this.aButton_Click);
@@ -99,6 +99,7 @@
             this.skipBttn.Text = "Пропустить";
             this.skipBttn.UseVisualStyleBackColor = true;
             this.skipBttn.Visible = false;
+            this.skipBttn.Click += new System.EventHandler(this.skipBttn_Click);
             // 
             // qLabelContent
             // 
