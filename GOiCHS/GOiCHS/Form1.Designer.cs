@@ -226,7 +226,7 @@
             // 
             // startBtn
             // 
-            this.startBtn.Location = new System.Drawing.Point(13, 341);
+            this.startBtn.Location = new System.Drawing.Point(77, 340);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(77, 23);
             this.startBtn.TabIndex = 21;
@@ -262,7 +262,7 @@
             this.Controls.Add(this.aTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Тестирование";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

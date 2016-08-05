@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.Office.Interop.Excel;
 
 
 namespace GOiCHS
@@ -75,6 +74,14 @@ namespace GOiCHS
         string[] qtenQuestions = new string[10];
         string[] atenQuestions = new string[10];
         string[] uatenQuestions = new string[10];
+
+        string testTypeString;
+        string surnameString;
+        string nameString;
+        string patronymicString;
+        string depString;
+        string titleString;
+        string checkTypeString;
 
         public Form1()
         {
@@ -221,6 +228,21 @@ namespace GOiCHS
                 aTextBox.Visible = true;
                 skipBttn.Visible = true;
                 aButton.Visible = true;
+
+                testTypeString = testTypeCBox.SelectedItem.ToString();
+                surnameString = surnameTBox.Text;
+                nameString = nameTBox.Text;
+                patronymicString = patronymicTBox.Text;
+                depString = depCBox.SelectedItem.ToString();
+                titleString = titleCbox.SelectedItem.ToString();
+                checkTypeString = checkTypeCBox.SelectedItem.ToString();
+
+                Timer t = new Timer();
+                t.Interval = 10 * 1000; //10 сек
+                t.Tick += delegate {
+                    MessageBox.Show("Закончилось время на выполнение теста. Необходимо начать заново", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.Close(); };
+                t.Start();
 
                 ////////////////////////////Начальник ПТУ, зам. начальника ПТУ, начальник участка ПТУ, начальник отдела эксплуатации ПТУ, начальник сборочно-ремонтного участка,начальник управления НИОКР, начальник отдела прикладной оптики и электроники 
                 if (//Начальник ПТУ
@@ -500,13 +522,37 @@ namespace GOiCHS
 
         private void aButton_Click(object sender, EventArgs e)
         {
+            int trueAnswers = 0;
             if (qCount < 9)
             {
                 uatenQuestions[qCount] = aTextBox.Text;
                 qCount++;
                 qLabelContent.Text = qtenQuestions[qCount];
                 
-            }            
+            }
+            else
+            {
+                for (int i=0;i<9;i++)
+                {
+                    if (atenQuestions[i]==uatenQuestions[i])
+                    {
+                        trueAnswers++;
+                    }
+                }
+                if (trueAnswers<=7)
+                {
+                    string message = "Правильных ответов " + trueAnswers + ". Тест не сдан";
+                    MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    Close();
+                }
+                else
+                {
+                    string message = "Правильных ответов " + trueAnswers + ". Тест сдан";
+                    MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    Close();
+                }
+            }
+            aTextBox.Text = "";            
         }
 
         private void skipBttn_Click(object sender, EventArgs e)
@@ -525,7 +571,9 @@ namespace GOiCHS
             if (qCount != 9)
             {
                 qLabelContent.Text = qtenQuestions[qCount];
-            }            
+            }
+            aTextBox.Text = "";
         }
+        
     }
 }
