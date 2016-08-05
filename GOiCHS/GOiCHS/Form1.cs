@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace GOiCHS
 {
@@ -82,6 +82,14 @@ namespace GOiCHS
         string depString;
         string titleString;
         string checkTypeString;
+
+        private Excel.Sheets excelsheets;
+        private Excel.Worksheet excelworksheet;
+        private Excel.Range excelcells;
+        private Excel.Workbooks excelappworkbooks;
+        private Excel.Workbook excelappworkbook;
+        private Excel.Application excelapp;
+        string docName = @"D:\forohrana\report.xltx";
 
         public Form1()
         {
@@ -238,7 +246,7 @@ namespace GOiCHS
                 checkTypeString = checkTypeCBox.SelectedItem.ToString();
 
                 Timer t = new Timer();
-                t.Interval = 10 * 1000; //10 сек
+                t.Interval = 900 * 1000; //10 сек
                 t.Tick += delegate {
                     MessageBox.Show("Закончилось время на выполнение теста. Необходимо начать заново", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.Close(); };
@@ -543,12 +551,14 @@ namespace GOiCHS
                 {
                     string message = "Правильных ответов " + trueAnswers + ". Тест не сдан";
                     MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    saveReport();
                     Close();
                 }
                 else
                 {
                     string message = "Правильных ответов " + trueAnswers + ". Тест сдан";
                     MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    saveReport();
                     Close();
                 }
             }
@@ -573,6 +583,70 @@ namespace GOiCHS
                 qLabelContent.Text = qtenQuestions[qCount];
             }
             aTextBox.Text = "";
+        }
+
+        private void saveReport()
+        {
+            string savePath = @"D:\forohrana\" + surnameString + nameString + " " + DateTime.Now.ToString("dd-MM-yy-hh-mm") + ".xlsx";
+            excelapp = new Excel.Application();
+            excelapp.Visible = true;
+            excelapp.SheetsInNewWorkbook = 1;
+            excelapp.Workbooks.Open(docName,
+  Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+  Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+  Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+  Type.Missing, Type.Missing);
+
+            excelappworkbooks = excelapp.Workbooks;
+            excelappworkbook = excelappworkbooks["Report1"];
+            excelsheets = excelappworkbook.Worksheets;
+            //Получаем ссылку на лист 1
+            excelworksheet = (Excel.Worksheet)excelsheets.get_Item(1);
+            //Забиваем ФИО  
+            excelcells = excelworksheet.get_Range("A6", "A6");                      
+            excelcells.Value2 += surnameString + " " + nameString + " " + patronymicString;
+            //Забиваем должность
+            excelcells = excelworksheet.get_Range("A8", "A8");
+            excelcells.Value2 += titleString;
+            //Забиваем подразделение
+            excelcells = excelworksheet.get_Range("A9", "A9");
+            excelcells.Value2 += depString;
+            //Забиваем тему проверки
+            excelcells = excelworksheet.get_Range("A10", "A10");
+            excelcells.Value2 += testTypeString;
+            //Забиваем дату
+            excelcells = excelworksheet.get_Range("A11", "A11");
+            excelcells.Value2 += DateTime.Now.ToString("dd-mm-yyyy");
+            //Заполняем таблицу с вопросами и ответами
+            for (int i=0;i<10;i++)
+            {
+                int ti = i + 16;
+                string cellB = "B" + ti.ToString();
+                string cellC = "C" + ti.ToString();
+                string cellD = "D" + ti.ToString();
+                string cellF = "F" + ti.ToString();
+                string res;
+                excelcells = excelworksheet.get_Range(cellB, cellB);
+                excelcells.Value2 = qtenQuestions[i];
+                excelcells = excelworksheet.get_Range(cellC, cellC);
+                excelcells.Value2 = uatenQuestions[i];
+                excelcells = excelworksheet.get_Range(cellD, cellD);
+                excelcells.Value2 = atenQuestions[i];
+                if (uatenQuestions[i]==atenQuestions[i])
+                {
+                    res = "Верно";
+                }
+                else
+                {
+                    res= "Неверно";
+                }
+                excelcells = excelworksheet.get_Range(cellF, cellF);
+                excelcells.Value2 = res;
+
+            }
+            //MessageBox.Show(savePath,"123",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
+            excelappworkbook.SaveAs(savePath);
+            excelappworkbook.Close();          
         }
         
     }
