@@ -91,6 +91,12 @@ namespace GOiCHS
         private Excel.Application excelapp;
         string docName = @"D:\forohrana\report.xltx";
 
+        Timer t = new Timer();
+        long startTime;
+        long endTime;
+        long elapsedTime;
+        int trueAnswers = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -245,8 +251,9 @@ namespace GOiCHS
                 titleString = titleCbox.SelectedItem.ToString();
                 checkTypeString = checkTypeCBox.SelectedItem.ToString();
 
-                Timer t = new Timer();
-                t.Interval = 900 * 1000; //10 сек
+                startTime = DateTime.Now.Ticks;
+
+                t.Interval = 900 * 1000; //15 минут
                 t.Tick += delegate {
                     MessageBox.Show("Закончилось время на выполнение теста. Необходимо начать заново", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.Close(); };
@@ -530,7 +537,7 @@ namespace GOiCHS
 
         private void aButton_Click(object sender, EventArgs e)
         {
-            int trueAnswers = 0;
+            trueAnswers = 0;
             if (qCount < 9)
             {
                 uatenQuestions[qCount] = aTextBox.Text;
@@ -540,6 +547,8 @@ namespace GOiCHS
             }
             else
             {
+                endTime = DateTime.Now.Ticks;
+                elapsedTime = (endTime - startTime)/1000;
                 for (int i=0;i<9;i++)
                 {
                     if (atenQuestions[i]==uatenQuestions[i])
@@ -548,7 +557,7 @@ namespace GOiCHS
                     }
                 }
                 if (trueAnswers<=7)
-                {
+                {                    
                     string message = "Правильных ответов " + trueAnswers + ". Тест не сдан";
                     MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     saveReport();
@@ -562,7 +571,7 @@ namespace GOiCHS
                     Close();
                 }
             }
-            aTextBox.Text = "";            
+            aTextBox.Text = "";
         }
 
         private void skipBttn_Click(object sender, EventArgs e)
@@ -616,7 +625,7 @@ namespace GOiCHS
             excelcells.Value2 += testTypeString;
             //Забиваем дату
             excelcells = excelworksheet.get_Range("A11", "A11");
-            excelcells.Value2 += DateTime.Now.ToString("dd-mm-yyyy");
+            excelcells.Value2 += DateTime.Now.ToString("dd-MM-yyyy");
             //Заполняем таблицу с вопросами и ответами
             for (int i=0;i<10;i++)
             {
@@ -644,6 +653,24 @@ namespace GOiCHS
                 excelcells.Value2 = res;
 
             }
+            //Забиваем результат проверки
+            excelcells = excelworksheet.get_Range("B28", "B28");
+            if (trueAnswers>7)
+            {
+                excelcells.Value2 += "Сдал";
+            }
+            else
+            {
+                excelcells.Value2 += "Не сдал";
+            }
+            //Забиваем количество ответов
+            excelcells = excelworksheet.get_Range("F28", "F28");
+            excelcells.Value2 = trueAnswers.ToString();
+            excelcells = excelworksheet.get_Range("F29", "F29");
+            excelcells.Value2 = (10 - trueAnswers).ToString();
+            //Забиваем фактическое время прохождения теста
+            excelcells = excelworksheet.get_Range("D29", "D29");
+            excelcells.Value2 = elapsedTime.ToString();
             //MessageBox.Show(savePath,"123",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
             excelappworkbook.SaveAs(savePath);
             excelappworkbook.Close();          
