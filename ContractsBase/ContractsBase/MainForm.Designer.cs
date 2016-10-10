@@ -334,7 +334,7 @@
             // RefreshRecords
             // 
             this.RefreshRecords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RefreshRecords.Image = global::ContractsBase.Properties.Resources.contractors32;
+            this.RefreshRecords.Image = global::ContractsBase.Properties.Resources.Refresh_32;
             this.RefreshRecords.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.RefreshRecords.Location = new System.Drawing.Point(630, 216);
             this.RefreshRecords.Name = "RefreshRecords";
