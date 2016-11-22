@@ -183,7 +183,7 @@ namespace ContractsReport
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
                 connection.Close();
-                Console.ReadLine();
+                //Console.ReadLine();
             }
         }
     }

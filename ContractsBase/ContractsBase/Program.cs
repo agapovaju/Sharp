@@ -53,7 +53,7 @@ namespace ContractsBase
                 //client.Credentials = new NetworkCredential("agapovay@petrolight.local", emailFromPass);
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 MessageBox.Show(message);
-                //client.Send(mail);
+                client.Send(mail);
                 mail.Dispose();
             }
             catch (Exception e)
