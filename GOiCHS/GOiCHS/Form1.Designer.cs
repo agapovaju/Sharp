@@ -122,7 +122,7 @@
             this.depCBox.Location = new System.Drawing.Point(13, 225);
             this.depCBox.Name = "depCBox";
             this.depCBox.Size = new System.Drawing.Size(211, 21);
-            this.depCBox.TabIndex = 8;
+            this.depCBox.TabIndex = 11;
             // 
             // titleCbox
             // 
@@ -130,7 +130,7 @@
             this.titleCbox.Location = new System.Drawing.Point(13, 269);
             this.titleCbox.Name = "titleCbox";
             this.titleCbox.Size = new System.Drawing.Size(211, 21);
-            this.titleCbox.TabIndex = 9;
+            this.titleCbox.TabIndex = 12;
             // 
             // checkTypeCBox
             // 
@@ -138,28 +138,28 @@
             this.checkTypeCBox.Location = new System.Drawing.Point(13, 313);
             this.checkTypeCBox.Name = "checkTypeCBox";
             this.checkTypeCBox.Size = new System.Drawing.Size(211, 21);
-            this.checkTypeCBox.TabIndex = 10;
+            this.checkTypeCBox.TabIndex = 13;
             // 
             // surnameTBox
             // 
             this.surnameTBox.Location = new System.Drawing.Point(13, 96);
             this.surnameTBox.Name = "surnameTBox";
             this.surnameTBox.Size = new System.Drawing.Size(211, 20);
-            this.surnameTBox.TabIndex = 11;
+            this.surnameTBox.TabIndex = 8;
             // 
             // nameTBox
             // 
             this.nameTBox.Location = new System.Drawing.Point(13, 139);
             this.nameTBox.Name = "nameTBox";
             this.nameTBox.Size = new System.Drawing.Size(211, 20);
-            this.nameTBox.TabIndex = 12;
+            this.nameTBox.TabIndex = 9;
             // 
             // patronymicTBox
             // 
             this.patronymicTBox.Location = new System.Drawing.Point(13, 182);
             this.patronymicTBox.Name = "patronymicTBox";
             this.patronymicTBox.Size = new System.Drawing.Size(211, 20);
-            this.patronymicTBox.TabIndex = 13;
+            this.patronymicTBox.TabIndex = 10;
             // 
             // testTypeLabel
             // 

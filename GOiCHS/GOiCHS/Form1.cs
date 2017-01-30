@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Diagnostics;
 
 namespace GOiCHS
 {
@@ -91,6 +92,8 @@ namespace GOiCHS
         private Excel.Application excelapp;
         string docName = @"D:\forohrana\report.xltx";
 
+        Stopwatch sw = new Stopwatch();
+        string elapsedTime1;
         Timer t = new Timer();
         long startTime;
         long endTime;
@@ -103,8 +106,7 @@ namespace GOiCHS
         }
         
         private void Form1_Load(object sender, EventArgs e)
-        {
-
+        {            
             qLabelContent.Visible = false;
             for (int i=0;i<testTypeArr.Length;i++)
             {
@@ -215,7 +217,7 @@ namespace GOiCHS
         {
             if ((testTypeCBox.SelectedItem == null) || (surnameTBox.Text == "") || (nameTBox.Text == "") || (patronymicTBox.Text == "") || (depCBox.SelectedItem == null) || (titleCbox.SelectedItem == null) || (checkTypeCBox.SelectedItem == null))
             {
-                MessageBox.Show("Необходимо заполнить все поля", "Внимание", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("Необходимо заполнить все поля", "Внимание!", MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
             else
             {
@@ -252,6 +254,7 @@ namespace GOiCHS
                 checkTypeString = checkTypeCBox.SelectedItem.ToString();
 
                 startTime = DateTime.Now.Ticks;
+                sw.Start();
 
                 t.Interval = 900 * 1000; //15 минут
                 t.Tick += delegate {
@@ -537,41 +540,53 @@ namespace GOiCHS
 
         private void aButton_Click(object sender, EventArgs e)
         {
-            trueAnswers = 0;
-            if (qCount < 9)
+            if (aTextBox.Text!="")
             {
-                uatenQuestions[qCount] = aTextBox.Text;
-                qCount++;
-                qLabelContent.Text = qtenQuestions[qCount];
-                
-            }
-            else
-            {
-                endTime = DateTime.Now.Ticks;
-                elapsedTime = (endTime - startTime)/1000;
-                for (int i=0;i<9;i++)
+                trueAnswers = 0;
+                if (qCount < 9)
                 {
-                    if (atenQuestions[i]==uatenQuestions[i])
-                    {
-                        trueAnswers++;
-                    }
-                }
-                if (trueAnswers<=7)
-                {                    
-                    string message = "Правильных ответов " + trueAnswers + ". Тест не сдан";
-                    MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    saveReport();
-                    Close();
+                    uatenQuestions[qCount] = aTextBox.Text;
+                    qCount++;
+                    qLabelContent.Text = qtenQuestions[qCount];
+
                 }
                 else
                 {
-                    string message = "Правильных ответов " + trueAnswers + ". Тест сдан";
-                    MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    saveReport();
-                    Close();
+                    endTime = DateTime.Now.Ticks;
+                    sw.Stop();
+                    TimeSpan ts = sw.Elapsed;
+                    elapsedTime1 = String.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
+                    elapsedTime = (endTime - startTime) / 1000;
+                    for (int i = 0; i < 9; i++)
+                    {
+                        if (atenQuestions[i] == uatenQuestions[i])
+                        {
+                            trueAnswers++;
+                        }
+                    }
+                    if (trueAnswers <= 7)
+                    {
+                        string message = "Правильных ответов " + trueAnswers + ". Тест не сдан";
+                        MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        saveReport();
+                        Close();
+                    }
+                    else
+                    {
+                        string message = "Правильных ответов " + trueAnswers + ". Тест сдан";
+                        MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        saveReport();
+                        Close();
+                    }
                 }
+                aTextBox.Text = "";
             }
-            aTextBox.Text = "";
+            else
+            {
+                string message = "Поле ОТВЕТ не может быть пустым. Заполните поле.";
+                MessageBox.Show(message, "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
         }
 
         private void skipBttn_Click(object sender, EventArgs e)
@@ -669,8 +684,10 @@ namespace GOiCHS
             excelcells = excelworksheet.get_Range("F29", "F29");
             excelcells.Value2 = (10 - trueAnswers).ToString();
             //Забиваем фактическое время прохождения теста
+            
             excelcells = excelworksheet.get_Range("D29", "D29");
-            excelcells.Value2 = elapsedTime.ToString();
+            excelcells.Value2 = elapsedTime1;
+            //excelcells.Value2 = elapsedTime.ToString();
             //MessageBox.Show(savePath,"123",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
             excelappworkbook.SaveAs(savePath);
             excelappworkbook.Close();          
