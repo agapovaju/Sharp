@@ -17,61 +17,62 @@ namespace GOiCHS
     public partial class Form1 : Form
     {
         int qCount = 0;
-        string[] testTypeArr = { "0 Охрана труда", "1 Пожарно-технический минимум" };
-        string[] depArr = {  "0 Производственный отдел",
-                                        "1 Служба организации и проведения торгов",
-                                        "2 Отдел планирования инвестиций",
-                                        "3 Управление экономики и финансов",
-                                        "4 Финансовый отдел",
-                                        "5 Планово-экономический отдел",
-                                        "6 Служба перспективного развития",
-                                        "7 Договорно-правовая служба",
-                                        "8 Отдел комплектации",
-                                        "9 Служба управления персоналом",
-                                        "10 Группа ОКР",
-                                        "11 Управление разработки программного обеспечения",
-                                        "12 Группа разработки и внедрения интеллектуальных систем",
-                                        "13 Служба информационных технологий",
-                                        "14 Отдел разработки и тестирования программного обеспечения",
-                                        "15 Управление НИОКР",
-                                        "16 Отдел прикладной оптики и электроники",
-                                        "17 Отдел нормативно-технической документации и технического контроля",
-                                        "18 Служба волоконно-оптических технологий",
-                                        "19 Производственно-техническое управление",
-                                        "20 Отдел эксплуатации",
-                                        "21 Сборочно-ремонтный участок",
-                                        "22 Эксплуатационный участок ОКР",
-                                        "23 Руководство",
-                                        "24 Участок №2 (г. Брянск)",
-                                        "25 Участок №4",
-                                        "26 Участок №5 (г. Самара)",
-                                        "27 Участок №6 (п. Пурпе)",
-                                        "28 Участок №7"};
-        string[] titleArr = {"0 Ведущий инженер",
-                            "1 Ведущий инженер-программист",
-                            "2 Ведущий специалист",
-                            "3 Делопроизводитель",
-                            "4 Заместитель начальника управления",
-                            "5 Инженер",
-                            "6 Инженер 1 категории",
-                            "7 Инженер 2 категории",
-                            "8 Инженер-програмист",
-                            "9 Инженер-програмист 1 категории",
-                            "10 Начальник группы",
-                            "11 Начальник отдела",
-                            "12 Начальник службы",
-                            "13 Начальник управления",
-                            "14 Начальник участка",
-                            "15 Помощник ген.директора",
-                            "16 Помощник по информационной безопасности",
-                            "17 Специалист",
-                            "18 Cпециалист 1 категории",
-                            "19 Специалист по складскому учету",
-                            "20 Старший техник" };
+        string[] testTypeArr = { "Охрана труда", "Пожарно-технический минимум" };
+        string[] depArr = {  "Производственный отдел",
+                                        "Служба организации и проведения торгов",
+                                        "Отдел планирования инвестиций",
+                                        "Управление экономики и финансов",
+                                        "Финансовый отдел",
+                                        "Планово-экономический отдел",
+                                        "Служба перспективного развития",
+                                        "Договорно-правовая служба",
+                                        "Отдел комплектации",
+                                        "Служба управления персоналом",
+                                        "Группа ОКР",
+                                        "Управление разработки программного обеспечения",
+                                        "Группа разработки и внедрения интеллектуальных систем",
+                                        "Служба информационных технологий",
+                                        "Отдел разработки и тестирования программного обеспечения",
+                                        "Управление НИОКР",
+                                        "Отдел прикладной оптики и электроники",
+                                        "Отдел нормативно-технической документации и технического контроля",
+                                        "Служба волоконно-оптических технологий",
+                                        "Производственно-техническое управление",
+                                        "Отдел эксплуатации",
+                                        "Сборочно-ремонтный участок",
+                                        "Эксплуатационный участок ОКР",
+                                        "Руководство",
+                                        "Участок №2 (г. Брянск)",
+                                        "Участок №4",
+                                        "Участок №5 (г. Самара)",
+                                        "Участок №6 (п. Пурпе)",
+                                        "Участок №7"};
+        string[] titleArr = {"Ведущий инженер",
+                            "Ведущий инженер-программист",
+                            "Ведущий специалист",
+                            "Делопроизводитель",
+                            "Заместитель начальника управления",
+                            "Инженер",
+                            "Инженер 1 категории",
+                            "Инженер 2 категории",
+                            "Инженер-програмист",
+                            "Инженер-програмист 1 категории",
+                            "Начальник группы",
+                            "Начальник отдела",
+                            "Начальник службы",
+                            "Начальник управления",
+                            "Начальник участка",
+                            "Помощник ген.директора",
+                            "Помощник по информационной безопасности",
+                            "Специалист",
+                            "Cпециалист 1 категории",
+                            "Специалист по складскому учету",
+                            "Старший техник" };
         string[] categoryArr = { "0", "1 1-я категория", "2 2-я категория", "3 Ведущий" };
-        string[] checkTypeArr = { "0 Первичная", "1 Повторная", "2 Внеочередная" };
+        string[] checkTypeArr = { "Первичная", "Повторная", "Внеочередная" };
 
-        const string fileName = @"D:\forohrana\questionlist.xlsx";
+        //const string fileName = @"D:\forohrana\questionlist.xlsx";
+        const string fileName = "questionlist.xlsx";
         string[] qtenQuestions = new string[10];
         string[] atenQuestions = new string[10];
         string[] uatenQuestions = new string[10];
@@ -90,7 +91,8 @@ namespace GOiCHS
         private Excel.Workbooks excelappworkbooks;
         private Excel.Workbook excelappworkbook;
         private Excel.Application excelapp;
-        string docName = @"D:\forohrana\report.xltx";
+        //string docName = @"D:\forohrana\report.xltx";
+        string docName = Environment.CurrentDirectory+ @"\Report.xltx";
 
         Stopwatch sw = new Stopwatch();
         string elapsedTime1;
@@ -103,10 +105,13 @@ namespace GOiCHS
         public Form1()
         {
             InitializeComponent();
+            this.Width = 480;
+            this.Height = 410;
         }
         
         private void Form1_Load(object sender, EventArgs e)
-        {            
+        {
+            
             qLabelContent.Visible = false;
             for (int i=0;i<testTypeArr.Length;i++)
             {
@@ -131,85 +136,91 @@ namespace GOiCHS
         string addressName)
         {
             string value = null;
+            
+                
 
-            // Open the spreadsheet document for read-only access.
-            using (SpreadsheetDocument document =
-                SpreadsheetDocument.Open(fileName, false))
-            {
-                // Retrieve a reference to the workbook part.
-                WorkbookPart wbPart = document.WorkbookPart;
-
-                // Find the sheet with the supplied name, and then use that 
-                // Sheet object to retrieve a reference to the first worksheet.
-                Sheet theSheet = wbPart.Workbook.Descendants<Sheet>().
-                  Where(s => s.Name == sheetName).FirstOrDefault();
-
-                // Throw an exception if there is no sheet.
-                if (theSheet == null)
+                // Open the spreadsheet document for read-only access.
+                using (SpreadsheetDocument document =
+                    SpreadsheetDocument.Open(fileName, false))
                 {
-                    throw new ArgumentException("sheetName");
-                }
+                    // Retrieve a reference to the workbook part.
+                    WorkbookPart wbPart = document.WorkbookPart;
 
-                // Retrieve a reference to the worksheet part.
-                WorksheetPart wsPart =
-                    (WorksheetPart)(wbPart.GetPartById(theSheet.Id));
+                    // Find the sheet with the supplied name, and then use that 
+                    // Sheet object to retrieve a reference to the first worksheet.
+                    Sheet theSheet = wbPart.Workbook.Descendants<Sheet>().
+                      Where(s => s.Name == sheetName).FirstOrDefault();
 
-                // Use its Worksheet property to get a reference to the cell 
-                // whose address matches the address you supplied.
-                Cell theCell = wsPart.Worksheet.Descendants<Cell>().
-                  Where(c => c.CellReference == addressName).FirstOrDefault();
-
-                // If the cell does not exist, return an empty string.
-                if (theCell != null)
-                {
-                    value = theCell.InnerText;
-
-                    // If the cell represents an integer number, you are done. 
-                    // For dates, this code returns the serialized value that 
-                    // represents the date. The code handles strings and 
-                    // Booleans individually. For shared strings, the code 
-                    // looks up the corresponding value in the shared string 
-                    // table. For Booleans, the code converts the value into 
-                    // the words TRUE or FALSE.
-                    if (theCell.DataType != null)
+                    // Throw an exception if there is no sheet.
+                    if (theSheet == null)
                     {
-                        switch (theCell.DataType.Value)
+                        throw new ArgumentException("sheetName");
+                    }
+
+                    // Retrieve a reference to the worksheet part.
+                    WorksheetPart wsPart =
+                        (WorksheetPart)(wbPart.GetPartById(theSheet.Id));
+
+                    // Use its Worksheet property to get a reference to the cell 
+                    // whose address matches the address you supplied.
+                    Cell theCell = wsPart.Worksheet.Descendants<Cell>().
+                      Where(c => c.CellReference == addressName).FirstOrDefault();
+
+                    // If the cell does not exist, return an empty string.
+                    if (theCell != null)
+                    {
+                        value = theCell.InnerText;
+
+                        // If the cell represents an integer number, you are done. 
+                        // For dates, this code returns the serialized value that 
+                        // represents the date. The code handles strings and 
+                        // Booleans individually. For shared strings, the code 
+                        // looks up the corresponding value in the shared string 
+                        // table. For Booleans, the code converts the value into 
+                        // the words TRUE or FALSE.
+                        if (theCell.DataType != null)
                         {
-                            case CellValues.SharedString:
+                            switch (theCell.DataType.Value)
+                            {
+                                case CellValues.SharedString:
 
-                                // For shared strings, look up the value in the
-                                // shared strings table.
-                                var stringTable =
-                                    wbPart.GetPartsOfType<SharedStringTablePart>()
-                                    .FirstOrDefault();
+                                    // For shared strings, look up the value in the
+                                    // shared strings table.
+                                    var stringTable =
+                                        wbPart.GetPartsOfType<SharedStringTablePart>()
+                                        .FirstOrDefault();
 
-                                // If the shared string table is missing, something 
-                                // is wrong. Return the index that is in
-                                // the cell. Otherwise, look up the correct text in 
-                                // the table.
-                                if (stringTable != null)
-                                {
-                                    value =
-                                        stringTable.SharedStringTable
-                                        .ElementAt(int.Parse(value)).InnerText;
-                                }
-                                break;
+                                    // If the shared string table is missing, something 
+                                    // is wrong. Return the index that is in
+                                    // the cell. Otherwise, look up the correct text in 
+                                    // the table.
+                                    if (stringTable != null)
+                                    {
+                                        value =
+                                            stringTable.SharedStringTable
+                                            .ElementAt(int.Parse(value)).InnerText;
+                                    }
+                                    break;
 
-                            case CellValues.Boolean:
-                                switch (value)
-                                {
-                                    case "0":
-                                        value = "FALSE";
-                                        break;
-                                    default:
-                                        value = "TRUE";
-                                        break;
-                                }
-                                break;
+                                case CellValues.Boolean:
+                                    switch (value)
+                                    {
+                                        case "0":
+                                            value = "FALSE";
+                                            break;
+                                        default:
+                                            value = "TRUE";
+                                            break;
+                                    }
+                                    break;
+                            }
                         }
                     }
                 }
-            }
+                
+            
+            
+            
             return value;
         }
 
@@ -218,7 +229,7 @@ namespace GOiCHS
             if ((testTypeCBox.SelectedItem == null) || (surnameTBox.Text == "") || (nameTBox.Text == "") || (patronymicTBox.Text == "") || (depCBox.SelectedItem == null) || (titleCbox.SelectedItem == null) || (checkTypeCBox.SelectedItem == null))
             {
                 MessageBox.Show("Необходимо заполнить все поля", "Внимание!", MessageBoxButtons.OK,MessageBoxIcon.Warning);
-            }
+            }            
             else
             {
                 testTypeLabel.Visible = false;
@@ -238,7 +249,8 @@ namespace GOiCHS
                 startBtn.Visible = false;
                 qLabel.Visible = true;
                 this.Width = 935;
-                this.Height = 410;
+                this.Height = 300;
+                this.Text = testTypeCBox.SelectedItem.ToString();
                 qLabelContent.Visible = true;
                 aLabel.Visible = true;
                 aTextBox.Visible = true;
@@ -261,9 +273,76 @@ namespace GOiCHS
                     MessageBox.Show("Закончилось время на выполнение теста. Необходимо начать заново", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.Close(); };
                 t.Start();
+                
+                ////////////////////////////Пожарка
+                if (testTypeCBox.SelectedItem.ToString() == testTypeArr[1])
+                {                    
+                    int cCount = 0;
+                    int rCount = Convert.ToInt32(GetCellValue(fileName, "Пожарка", "A1")) - 3;
+                    string[] qArr = new string[rCount];
+                    string[] aArr = new string[rCount];
 
+                    for (int i = 0; i < rCount; i++)
+                    {                        
+                        string qTargetCell = "A" + (i + 3).ToString();
+                        string aTargetCell = "B" + (i + 3).ToString();
+                        qArr[cCount] = GetCellValue(fileName, "Пожарка", qTargetCell);
+                        qArr[cCount] = qArr[cCount].Replace("_x000D_","");
+                        aArr[cCount] = GetCellValue(fileName, "Пожарка", aTargetCell);
+                        aArr[cCount] = aArr[cCount].Replace("_x000D_", "");
+                        cCount++;
+
+                    }
+                    Array.Resize<string>(ref qArr, cCount);
+                    Array.Resize<string>(ref aArr, cCount);
+
+                    Random rand = new Random();
+
+                    int j = 0;
+                    while (j < 10)
+                    {
+                        int pos = rand.Next(0, qArr.Length);
+                        if (qtenQuestions.Contains<string>(qArr[pos]) == false)
+                        {
+                            qtenQuestions[j] = qArr[pos];
+                            atenQuestions[j] = aArr[pos];
+                            j++;
+                        }
+                    }           
+                    qLabelContent.Text = qtenQuestions[qCount];
+                    if (qLabelContent.Text.Contains("Красный квадрат"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory+ @"\Pic\4.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("Желтый треугольник"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\2.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("Синий круг"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\3.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("зеленый квадрат"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\5.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("Красный круг"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\1.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("синий квадрат"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\6.jpg");
+                        pBox.Image = image1;
+                    }
+                }                
                 ////////////////////////////Начальник ПТУ, зам. начальника ПТУ, начальник участка ПТУ, начальник отдела эксплуатации ПТУ, начальник сборочно-ремонтного участка,начальник управления НИОКР, начальник отдела прикладной оптики и электроники 
-                if (//Начальник ПТУ
+                else if (//Начальник ПТУ
                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[19]) & (titleCbox.SelectedItem.ToString() == titleArr[13])) ||
                     //Зам. начачльника ПТУ
                     ((testTypeCBox.SelectedItem.ToString() == testTypeArr[0]) & (depCBox.SelectedItem.ToString() == depArr[19]) & (titleCbox.SelectedItem.ToString() == titleArr[4])) ||
@@ -542,13 +621,43 @@ namespace GOiCHS
         {
             if (aTextBox.Text!="")
             {
+                pBox.Image = null;
                 trueAnswers = 0;
                 if (qCount < 9)
                 {
                     uatenQuestions[qCount] = aTextBox.Text;
                     qCount++;
                     qLabelContent.Text = qtenQuestions[qCount];
-
+                    if (qLabelContent.Text.Contains("Красный квадрат"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\4.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("Желтый треугольник"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\2.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("Синий круг"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\3.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("зеленый квадрат"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\5.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("Красный круг"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\1.jpg");
+                        pBox.Image = image1;
+                    }
+                    if (qLabelContent.Text.Contains("синий квадрат"))
+                    {
+                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\6.jpg");
+                        pBox.Image = image1;
+                    }
                 }
                 else
                 {
@@ -580,6 +689,7 @@ namespace GOiCHS
                     }
                 }
                 aTextBox.Text = "";
+                
             }
             else
             {
@@ -591,6 +701,7 @@ namespace GOiCHS
 
         private void skipBttn_Click(object sender, EventArgs e)
         {
+            pBox.Image = null;
             string skipQString;
             string skipAString;
             skipQString = qtenQuestions[qCount];
@@ -604,14 +715,46 @@ namespace GOiCHS
             atenQuestions[9] = skipAString;
             if (qCount != 9)
             {
+                
                 qLabelContent.Text = qtenQuestions[qCount];
+                if (qLabelContent.Text.Contains("Красный квадрат"))
+                {
+                    Bitmap image1 = new Bitmap(@"D:\ForOhrana\Pic\4.jpg");
+                    pBox.Image = image1;
+                }
+                if (qLabelContent.Text.Contains("Желтый треугольник"))
+                {
+                    Bitmap image1 = new Bitmap(@"D:\ForOhrana\Pic\2.jpg");
+                    pBox.Image = image1;
+                }
+                if (qLabelContent.Text.Contains("Синий круг"))
+                {
+                    Bitmap image1 = new Bitmap(@"D:\ForOhrana\Pic\3.jpg");
+                    pBox.Image = image1;
+                }
+                if (qLabelContent.Text.Contains("зеленый квадрат"))
+                {
+                    Bitmap image1 = new Bitmap(@"D:\ForOhrana\Pic\5.jpg");
+                    pBox.Image = image1;
+                }
+                if (qLabelContent.Text.Contains("Красный круг"))
+                {
+                    Bitmap image1 = new Bitmap(@"D:\ForOhrana\Pic\1.jpg");
+                    pBox.Image = image1;
+                }
+                if (qLabelContent.Text.Contains("синий квадрат"))
+                {
+                    Bitmap image1 = new Bitmap(@"D:\ForOhrana\Pic\6.jpg");
+                    pBox.Image = image1;
+                }
             }
             aTextBox.Text = "";
+            
         }
 
         private void saveReport()
         {
-            string savePath = @"D:\forohrana\" + surnameString + nameString + " " + DateTime.Now.ToString("dd-MM-yy-hh-mm") + ".xlsx";
+            string savePath = Environment.CurrentDirectory+ @"\reports\" + surnameString + nameString + " " + DateTime.Now.ToString("dd-MM-yy-hh-mm") + ".xlsx";
             excelapp = new Excel.Application();
             excelapp.Visible = true;
             excelapp.SheetsInNewWorkbook = 1;
@@ -652,6 +795,8 @@ namespace GOiCHS
                 string res;
                 excelcells = excelworksheet.get_Range(cellB, cellB);
                 excelcells.Value2 = qtenQuestions[i];
+                excelworksheet.get_Range(cellB, cellB).EntireRow.AutoFit();
+
                 excelcells = excelworksheet.get_Range(cellC, cellC);
                 excelcells.Value2 = uatenQuestions[i];
                 excelcells = excelworksheet.get_Range(cellD, cellD);
@@ -668,6 +813,7 @@ namespace GOiCHS
                 excelcells.Value2 = res;
 
             }
+            
             //Забиваем результат проверки
             excelcells = excelworksheet.get_Range("B28", "B28");
             if (trueAnswers>7)

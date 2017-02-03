@@ -49,6 +49,8 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.checkTypeLabel = new System.Windows.Forms.Label();
             this.startBtn = new System.Windows.Forms.Button();
+            this.pBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pBox)).BeginInit();
             this.SuspendLayout();
             // 
             // aTextBox
@@ -62,7 +64,7 @@
             // qLabel
             // 
             this.qLabel.AutoSize = true;
-            this.qLabel.Location = new System.Drawing.Point(13, 13);
+            this.qLabel.Location = new System.Drawing.Point(15, 15);
             this.qLabel.Name = "qLabel";
             this.qLabel.Size = new System.Drawing.Size(44, 13);
             this.qLabel.TabIndex = 2;
@@ -110,61 +112,66 @@
             // 
             // testTypeCBox
             // 
+            this.testTypeCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.testTypeCBox.FormattingEnabled = true;
-            this.testTypeCBox.Location = new System.Drawing.Point(13, 49);
+            this.testTypeCBox.Location = new System.Drawing.Point(15, 50);
             this.testTypeCBox.Name = "testTypeCBox";
-            this.testTypeCBox.Size = new System.Drawing.Size(211, 21);
+            this.testTypeCBox.Size = new System.Drawing.Size(435, 21);
             this.testTypeCBox.TabIndex = 7;
             // 
             // depCBox
             // 
+            this.depCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.depCBox.FormattingEnabled = true;
-            this.depCBox.Location = new System.Drawing.Point(13, 225);
+            this.depCBox.Location = new System.Drawing.Point(15, 225);
             this.depCBox.Name = "depCBox";
-            this.depCBox.Size = new System.Drawing.Size(211, 21);
+            this.depCBox.Size = new System.Drawing.Size(435, 21);
             this.depCBox.TabIndex = 11;
             // 
             // titleCbox
             // 
+            this.titleCbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.titleCbox.FormattingEnabled = true;
-            this.titleCbox.Location = new System.Drawing.Point(13, 269);
+            this.titleCbox.Location = new System.Drawing.Point(15, 270);
             this.titleCbox.Name = "titleCbox";
-            this.titleCbox.Size = new System.Drawing.Size(211, 21);
+            this.titleCbox.Size = new System.Drawing.Size(435, 21);
             this.titleCbox.TabIndex = 12;
             // 
             // checkTypeCBox
             // 
+            this.checkTypeCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.checkTypeCBox.DropDownWidth = 429;
             this.checkTypeCBox.FormattingEnabled = true;
-            this.checkTypeCBox.Location = new System.Drawing.Point(13, 313);
+            this.checkTypeCBox.Location = new System.Drawing.Point(15, 315);
             this.checkTypeCBox.Name = "checkTypeCBox";
-            this.checkTypeCBox.Size = new System.Drawing.Size(211, 21);
+            this.checkTypeCBox.Size = new System.Drawing.Size(435, 21);
             this.checkTypeCBox.TabIndex = 13;
             // 
             // surnameTBox
             // 
-            this.surnameTBox.Location = new System.Drawing.Point(13, 96);
+            this.surnameTBox.Location = new System.Drawing.Point(15, 95);
             this.surnameTBox.Name = "surnameTBox";
-            this.surnameTBox.Size = new System.Drawing.Size(211, 20);
+            this.surnameTBox.Size = new System.Drawing.Size(435, 20);
             this.surnameTBox.TabIndex = 8;
             // 
             // nameTBox
             // 
-            this.nameTBox.Location = new System.Drawing.Point(13, 139);
+            this.nameTBox.Location = new System.Drawing.Point(15, 140);
             this.nameTBox.Name = "nameTBox";
-            this.nameTBox.Size = new System.Drawing.Size(211, 20);
+            this.nameTBox.Size = new System.Drawing.Size(435, 20);
             this.nameTBox.TabIndex = 9;
             // 
             // patronymicTBox
             // 
-            this.patronymicTBox.Location = new System.Drawing.Point(13, 182);
+            this.patronymicTBox.Location = new System.Drawing.Point(15, 180);
             this.patronymicTBox.Name = "patronymicTBox";
-            this.patronymicTBox.Size = new System.Drawing.Size(211, 20);
+            this.patronymicTBox.Size = new System.Drawing.Size(435, 20);
             this.patronymicTBox.TabIndex = 10;
             // 
             // testTypeLabel
             // 
             this.testTypeLabel.AutoSize = true;
-            this.testTypeLabel.Location = new System.Drawing.Point(13, 33);
+            this.testTypeLabel.Location = new System.Drawing.Point(15, 35);
             this.testTypeLabel.Name = "testTypeLabel";
             this.testTypeLabel.Size = new System.Drawing.Size(71, 13);
             this.testTypeLabel.TabIndex = 14;
@@ -173,7 +180,7 @@
             // surnameLabel
             // 
             this.surnameLabel.AutoSize = true;
-            this.surnameLabel.Location = new System.Drawing.Point(13, 80);
+            this.surnameLabel.Location = new System.Drawing.Point(15, 80);
             this.surnameLabel.Name = "surnameLabel";
             this.surnameLabel.Size = new System.Drawing.Size(56, 13);
             this.surnameLabel.TabIndex = 15;
@@ -182,7 +189,7 @@
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(13, 123);
+            this.nameLabel.Location = new System.Drawing.Point(15, 125);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(29, 13);
             this.nameLabel.TabIndex = 16;
@@ -191,7 +198,7 @@
             // patronymicLabel
             // 
             this.patronymicLabel.AutoSize = true;
-            this.patronymicLabel.Location = new System.Drawing.Point(13, 166);
+            this.patronymicLabel.Location = new System.Drawing.Point(15, 165);
             this.patronymicLabel.Name = "patronymicLabel";
             this.patronymicLabel.Size = new System.Drawing.Size(54, 13);
             this.patronymicLabel.TabIndex = 17;
@@ -200,7 +207,7 @@
             // departmentLabel
             // 
             this.departmentLabel.AutoSize = true;
-            this.departmentLabel.Location = new System.Drawing.Point(13, 209);
+            this.departmentLabel.Location = new System.Drawing.Point(15, 210);
             this.departmentLabel.Name = "departmentLabel";
             this.departmentLabel.Size = new System.Drawing.Size(151, 13);
             this.departmentLabel.TabIndex = 18;
@@ -209,7 +216,7 @@
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Location = new System.Drawing.Point(13, 253);
+            this.titleLabel.Location = new System.Drawing.Point(15, 255);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(65, 13);
             this.titleLabel.TabIndex = 19;
@@ -218,7 +225,7 @@
             // checkTypeLabel
             // 
             this.checkTypeLabel.AutoSize = true;
-            this.checkTypeLabel.Location = new System.Drawing.Point(13, 297);
+            this.checkTypeLabel.Location = new System.Drawing.Point(15, 300);
             this.checkTypeLabel.Name = "checkTypeLabel";
             this.checkTypeLabel.Size = new System.Drawing.Size(77, 13);
             this.checkTypeLabel.TabIndex = 20;
@@ -226,7 +233,7 @@
             // 
             // startBtn
             // 
-            this.startBtn.Location = new System.Drawing.Point(77, 340);
+            this.startBtn.Location = new System.Drawing.Point(190, 340);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(77, 23);
             this.startBtn.TabIndex = 21;
@@ -234,11 +241,20 @@
             this.startBtn.UseVisualStyleBackColor = true;
             this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
             // 
+            // pBox
+            // 
+            this.pBox.Location = new System.Drawing.Point(701, 82);
+            this.pBox.Name = "pBox";
+            this.pBox.Size = new System.Drawing.Size(242, 140);
+            this.pBox.TabIndex = 22;
+            this.pBox.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(234, 371);
+            this.ClientSize = new System.Drawing.Size(464, 371);
+            this.Controls.Add(this.pBox);
             this.Controls.Add(this.startBtn);
             this.Controls.Add(this.checkTypeLabel);
             this.Controls.Add(this.titleLabel);
@@ -264,6 +280,7 @@
             this.Name = "Form1";
             this.Text = "Тестирование";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,6 +308,7 @@
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label checkTypeLabel;
         private System.Windows.Forms.Button startBtn;
+        private System.Windows.Forms.PictureBox pBox;
     }
 }
 
