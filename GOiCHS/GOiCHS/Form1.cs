@@ -619,83 +619,91 @@ namespace GOiCHS
 
         private void aButton_Click(object sender, EventArgs e)
         {
-            if (aTextBox.Text!="")
+            try
             {
-                pBox.Image = null;
-                trueAnswers = 0;
-                if (qCount < 9)
+                if (aTextBox.Text != "")
                 {
-                    uatenQuestions[qCount] = aTextBox.Text;
-                    qCount++;
-                    qLabelContent.Text = qtenQuestions[qCount];
-                    if (qLabelContent.Text.Contains("Красный квадрат"))
+                    pBox.Image = null;
+                    trueAnswers = 0;
+                    if (qCount < 9)
                     {
-                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\4.jpg");
-                        pBox.Image = image1;
-                    }
-                    if (qLabelContent.Text.Contains("Желтый треугольник"))
-                    {
-                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\2.jpg");
-                        pBox.Image = image1;
-                    }
-                    if (qLabelContent.Text.Contains("Синий круг"))
-                    {
-                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\3.jpg");
-                        pBox.Image = image1;
-                    }
-                    if (qLabelContent.Text.Contains("зеленый квадрат"))
-                    {
-                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\5.jpg");
-                        pBox.Image = image1;
-                    }
-                    if (qLabelContent.Text.Contains("Красный круг"))
-                    {
-                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\1.jpg");
-                        pBox.Image = image1;
-                    }
-                    if (qLabelContent.Text.Contains("синий квадрат"))
-                    {
-                        Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\6.jpg");
-                        pBox.Image = image1;
-                    }
-                }
-                else
-                {
-                    endTime = DateTime.Now.Ticks;
-                    sw.Stop();
-                    TimeSpan ts = sw.Elapsed;
-                    elapsedTime1 = String.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
-                    elapsedTime = (endTime - startTime) / 1000;
-                    for (int i = 0; i < 9; i++)
-                    {
-                        if (atenQuestions[i] == uatenQuestions[i])
+                        uatenQuestions[qCount] = aTextBox.Text;
+                        qCount++;
+                        qLabelContent.Text = qtenQuestions[qCount];
+                        if (qLabelContent.Text.Contains("Красный квадрат"))
                         {
-                            trueAnswers++;
+                            Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\4.jpg");
+                            pBox.Image = image1;
                         }
-                    }
-                    if (trueAnswers <= 7)
-                    {
-                        string message = "Правильных ответов " + trueAnswers + ". Тест не сдан";
-                        MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                        saveReport();
-                        Close();
+                        if (qLabelContent.Text.Contains("Желтый треугольник"))
+                        {
+                            Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\2.jpg");
+                            pBox.Image = image1;
+                        }
+                        if (qLabelContent.Text.Contains("Синий круг"))
+                        {
+                            Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\3.jpg");
+                            pBox.Image = image1;
+                        }
+                        if (qLabelContent.Text.Contains("зеленый квадрат"))
+                        {
+                            Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\5.jpg");
+                            pBox.Image = image1;
+                        }
+                        if (qLabelContent.Text.Contains("Красный круг"))
+                        {
+                            Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\1.jpg");
+                            pBox.Image = image1;
+                        }
+                        if (qLabelContent.Text.Contains("синий квадрат"))
+                        {
+                            Bitmap image1 = new Bitmap(Environment.CurrentDirectory + @"\Pic\6.jpg");
+                            pBox.Image = image1;
+                        }
                     }
                     else
                     {
-                        string message = "Правильных ответов " + trueAnswers + ". Тест сдан";
-                        MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                        saveReport();
-                        Close();
+                        endTime = DateTime.Now.Ticks;
+                        sw.Stop();
+                        TimeSpan ts = sw.Elapsed;
+                        elapsedTime1 = String.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
+                        elapsedTime = (endTime - startTime) / 1000;
+                        for (int i = 0; i < 9; i++)
+                        {
+                            if (atenQuestions[i] == uatenQuestions[i])
+                            {
+                                trueAnswers++;
+                            }
+                        }
+                        if (trueAnswers <= 7)
+                        {
+                            string message = "Правильных ответов " + trueAnswers + ". Тест не сдан";
+                            MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            saveReport();
+                            Close();
+                        }
+                        else
+                        {
+                            string message = "Правильных ответов " + trueAnswers + ". Тест сдан";
+                            MessageBox.Show(message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            saveReport();
+                            Close();
+                        }
                     }
+                    aTextBox.Text = "";
+
                 }
-                aTextBox.Text = "";
-                
+                else
+                {
+                    string message = "Поле ОТВЕТ не может быть пустым. Заполните поле.";
+                    MessageBox.Show(message, "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                string message = "Поле ОТВЕТ не может быть пустым. Заполните поле.";
-                MessageBox.Show(message, "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace, "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            
             
         }
 
@@ -754,89 +762,97 @@ namespace GOiCHS
 
         private void saveReport()
         {
-            string savePath = Environment.CurrentDirectory+ @"\reports\" + surnameString + nameString + " " + DateTime.Now.ToString("dd-MM-yy-hh-mm") + ".xlsx";
-            excelapp = new Excel.Application();
-            excelapp.Visible = true;
-            excelapp.SheetsInNewWorkbook = 1;
-            excelapp.Workbooks.Open(docName,
-  Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-  Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-  Type.Missing, Type.Missing, Type.Missing, Type.Missing,
-  Type.Missing, Type.Missing);
-
-            excelappworkbooks = excelapp.Workbooks;
-            excelappworkbook = excelappworkbooks["Report1"];
-            excelsheets = excelappworkbook.Worksheets;
-            //Получаем ссылку на лист 1
-            excelworksheet = (Excel.Worksheet)excelsheets.get_Item(1);
-            //Забиваем ФИО  
-            excelcells = excelworksheet.get_Range("A6", "A6");                      
-            excelcells.Value2 += surnameString + " " + nameString + " " + patronymicString;
-            //Забиваем должность
-            excelcells = excelworksheet.get_Range("A8", "A8");
-            excelcells.Value2 += titleString;
-            //Забиваем подразделение
-            excelcells = excelworksheet.get_Range("A9", "A9");
-            excelcells.Value2 += depString;
-            //Забиваем тему проверки
-            excelcells = excelworksheet.get_Range("A10", "A10");
-            excelcells.Value2 += testTypeString;
-            //Забиваем дату
-            excelcells = excelworksheet.get_Range("A11", "A11");
-            excelcells.Value2 += DateTime.Now.ToString("dd-MM-yyyy");
-            //Заполняем таблицу с вопросами и ответами
-            for (int i=0;i<10;i++)
+            try
             {
-                int ti = i + 16;
-                string cellB = "B" + ti.ToString();
-                string cellC = "C" + ti.ToString();
-                string cellD = "D" + ti.ToString();
-                string cellF = "F" + ti.ToString();
-                string res;
-                excelcells = excelworksheet.get_Range(cellB, cellB);
-                excelcells.Value2 = qtenQuestions[i];
-                excelworksheet.get_Range(cellB, cellB).EntireRow.AutoFit();
+                string savePath = Environment.CurrentDirectory + @"\reports\" + surnameString + nameString + " " + DateTime.Now.ToString("dd-MM-yy-hh-mm") + ".xlsx";
+                excelapp = new Excel.Application();
+                excelapp.Visible = true;
+                excelapp.SheetsInNewWorkbook = 1;
+                excelapp.Workbooks.Open(docName,
+      Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+      Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+      Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+      Type.Missing, Type.Missing);
 
-                excelcells = excelworksheet.get_Range(cellC, cellC);
-                excelcells.Value2 = uatenQuestions[i];
-                excelcells = excelworksheet.get_Range(cellD, cellD);
-                excelcells.Value2 = atenQuestions[i];
-                if (uatenQuestions[i]==atenQuestions[i])
+                excelappworkbooks = excelapp.Workbooks;
+                excelappworkbook = excelappworkbooks["Report1"];
+                excelsheets = excelappworkbook.Worksheets;
+                //Получаем ссылку на лист 1
+                excelworksheet = (Excel.Worksheet)excelsheets.get_Item(1);
+                //Забиваем ФИО  
+                excelcells = excelworksheet.get_Range("A6", "A6");
+                excelcells.Value2 += surnameString + " " + nameString + " " + patronymicString;
+                //Забиваем должность
+                excelcells = excelworksheet.get_Range("A8", "A8");
+                excelcells.Value2 += titleString;
+                //Забиваем подразделение
+                excelcells = excelworksheet.get_Range("A9", "A9");
+                excelcells.Value2 += depString;
+                //Забиваем тему проверки
+                excelcells = excelworksheet.get_Range("A10", "A10");
+                excelcells.Value2 += testTypeString;
+                //Забиваем дату
+                excelcells = excelworksheet.get_Range("A11", "A11");
+                excelcells.Value2 += DateTime.Now.ToString("dd-MM-yyyy");
+                //Заполняем таблицу с вопросами и ответами
+                for (int i = 0; i < 10; i++)
                 {
-                    res = "Верно";
+                    int ti = i + 16;
+                    string cellB = "B" + ti.ToString();
+                    string cellC = "C" + ti.ToString();
+                    string cellD = "D" + ti.ToString();
+                    string cellF = "F" + ti.ToString();
+                    string res;
+                    excelcells = excelworksheet.get_Range(cellB, cellB);
+                    excelcells.Value2 = qtenQuestions[i];
+                    excelworksheet.get_Range(cellB, cellB).EntireRow.AutoFit();
+
+                    excelcells = excelworksheet.get_Range(cellC, cellC);
+                    excelcells.Value2 = uatenQuestions[i];
+                    excelcells = excelworksheet.get_Range(cellD, cellD);
+                    excelcells.Value2 = atenQuestions[i];
+                    if (uatenQuestions[i] == atenQuestions[i])
+                    {
+                        res = "Верно";
+                    }
+                    else
+                    {
+                        res = "Неверно";
+                    }
+                    excelcells = excelworksheet.get_Range(cellF, cellF);
+                    excelcells.Value2 = res;
+
+                }
+
+                //Забиваем результат проверки
+                excelcells = excelworksheet.get_Range("B28", "B28");
+                if (trueAnswers > 7)
+                {
+                    excelcells.Value2 += "Сдал";
                 }
                 else
                 {
-                    res= "Неверно";
+                    excelcells.Value2 += "Не сдал";
                 }
-                excelcells = excelworksheet.get_Range(cellF, cellF);
-                excelcells.Value2 = res;
+                //Забиваем количество ответов
+                excelcells = excelworksheet.get_Range("F28", "F28");
+                excelcells.Value2 = trueAnswers.ToString();
+                excelcells = excelworksheet.get_Range("F29", "F29");
+                excelcells.Value2 = (10 - trueAnswers).ToString();
+                //Забиваем фактическое время прохождения теста
 
+                excelcells = excelworksheet.get_Range("D29", "D29");
+                excelcells.Value2 = elapsedTime1;
+                //excelcells.Value2 = elapsedTime.ToString();
+                //MessageBox.Show(savePath,"123",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
+                excelappworkbook.SaveAs(savePath);
+                excelappworkbook.Close();
             }
-            
-            //Забиваем результат проверки
-            excelcells = excelworksheet.get_Range("B28", "B28");
-            if (trueAnswers>7)
+            catch (Exception ex)
             {
-                excelcells.Value2 += "Сдал";
+                MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace, "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else
-            {
-                excelcells.Value2 += "Не сдал";
-            }
-            //Забиваем количество ответов
-            excelcells = excelworksheet.get_Range("F28", "F28");
-            excelcells.Value2 = trueAnswers.ToString();
-            excelcells = excelworksheet.get_Range("F29", "F29");
-            excelcells.Value2 = (10 - trueAnswers).ToString();
-            //Забиваем фактическое время прохождения теста
-            
-            excelcells = excelworksheet.get_Range("D29", "D29");
-            excelcells.Value2 = elapsedTime1;
-            //excelcells.Value2 = elapsedTime.ToString();
-            //MessageBox.Show(savePath,"123",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
-            excelappworkbook.SaveAs(savePath);
-            excelappworkbook.Close();          
+
         }
         
     }
