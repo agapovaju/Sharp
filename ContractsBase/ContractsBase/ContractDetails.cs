@@ -262,14 +262,15 @@ namespace ContractsBase
         private void ColoredRows(int days, DataGridView dgv, string colNameStart, string colNameEnd)
         {
             // дни календарные
-            int addDays = 3;
+            //int addDays = 3;
             foreach (DataGridViewRow row in dgv.Rows)
             {
                 if (row.Cells["Ins_docs"].Value.ToString() == "False" && row.Cells[colNameStart].Value.ToString() != "")
                 {
-                    DateTime dateStart = DateTime.Parse(row.Cells[colNameStart].Value.ToString());
-                    DateTime dateAdd = DateTime.Parse(row.Cells[colNameEnd].Value.ToString());
-                    if (dateAdd >= dateStart.AddDays(addDays)) row.DefaultCellStyle.BackColor = Color.LightPink;
+                    //DateTime dateStart = DateTime.Parse(row.Cells[colNameStart].Value.ToString());
+                    //DateTime dateAdd = DateTime.Parse(row.Cells[colNameEnd].Value.ToString());
+                    //if (dateAdd >= dateStart.AddDays(addDays)) row.DefaultCellStyle.BackColor = Color.LightPink;
+                    if (row.Cells["Ins_docs"].Value.ToString() == "False") { row.DefaultCellStyle.BackColor = Color.LightPink; }
                 }
             }
         }
