@@ -45,12 +45,14 @@ namespace ContractsBase
                 //if (!string.IsNullOrEmpty(attachFile))
                 //    mail.Attachments.Add(new Attachment(attachFile));
                 SmtpClient client = new SmtpClient();
-                client.Host = "vom01-pimsg--01.ome.tn.corp";
+                //client.Host = "vom01-pimsg--01.ome.tn.corp";
+                client.Host = "10.245.2.31";
                 client.Port = 25;
                 client.EnableSsl = false;
                 client.Credentials = new NetworkCredential("agapovay@omg.transneft.ru", emailFromPass);
+                //client.Credentials = new NetworkCredential("agapovay@petrolight.local", emailFromPass);
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //MessageBox.Show(message);
+                MessageBox.Show(message);
                 client.Send(mail);
                 mail.Dispose();
             }

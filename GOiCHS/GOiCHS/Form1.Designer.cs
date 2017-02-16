@@ -32,7 +32,7 @@
             this.qLabel = new System.Windows.Forms.Label();
             this.aLabel = new System.Windows.Forms.Label();
             this.aButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.skipBttn = new System.Windows.Forms.Button();
             this.qLabelContent = new System.Windows.Forms.Label();
             this.testTypeCBox = new System.Windows.Forms.ComboBox();
             this.depCBox = new System.Windows.Forms.ComboBox();
@@ -49,9 +49,8 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.checkTypeLabel = new System.Windows.Forms.Label();
             this.startBtn = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.pBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pBox)).BeginInit();
             this.SuspendLayout();
             // 
             // aTextBox
@@ -60,15 +59,17 @@
             this.aTextBox.Name = "aTextBox";
             this.aTextBox.Size = new System.Drawing.Size(129, 20);
             this.aTextBox.TabIndex = 1;
+            this.aTextBox.Visible = false;
             // 
             // qLabel
             // 
             this.qLabel.AutoSize = true;
-            this.qLabel.Location = new System.Drawing.Point(13, 13);
+            this.qLabel.Location = new System.Drawing.Point(15, 15);
             this.qLabel.Name = "qLabel";
             this.qLabel.Size = new System.Drawing.Size(44, 13);
             this.qLabel.TabIndex = 2;
             this.qLabel.Text = "Вопрос";
+            this.qLabel.Visible = false;
             // 
             // aLabel
             // 
@@ -78,6 +79,7 @@
             this.aLabel.Size = new System.Drawing.Size(37, 13);
             this.aLabel.TabIndex = 3;
             this.aLabel.Text = "Ответ";
+            this.aLabel.Visible = false;
             // 
             // aButton
             // 
@@ -85,18 +87,21 @@
             this.aButton.Name = "aButton";
             this.aButton.Size = new System.Drawing.Size(75, 23);
             this.aButton.TabIndex = 4;
-            this.aButton.Text = "Далее";
+            this.aButton.Text = "Ответить";
             this.aButton.UseVisualStyleBackColor = true;
+            this.aButton.Visible = false;
             this.aButton.Click += new System.EventHandler(this.aButton_Click);
             // 
-            // button1
+            // skipBttn
             // 
-            this.button1.Location = new System.Drawing.Point(837, 23);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Пропустить";
-            this.button1.UseVisualStyleBackColor = true;
+            this.skipBttn.Location = new System.Drawing.Point(837, 23);
+            this.skipBttn.Name = "skipBttn";
+            this.skipBttn.Size = new System.Drawing.Size(75, 23);
+            this.skipBttn.TabIndex = 5;
+            this.skipBttn.Text = "Пропустить";
+            this.skipBttn.UseVisualStyleBackColor = true;
+            this.skipBttn.Visible = false;
+            this.skipBttn.Click += new System.EventHandler(this.skipBttn_Click);
             // 
             // qLabelContent
             // 
@@ -107,61 +112,66 @@
             // 
             // testTypeCBox
             // 
+            this.testTypeCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.testTypeCBox.FormattingEnabled = true;
-            this.testTypeCBox.Location = new System.Drawing.Point(701, 98);
+            this.testTypeCBox.Location = new System.Drawing.Point(15, 50);
             this.testTypeCBox.Name = "testTypeCBox";
-            this.testTypeCBox.Size = new System.Drawing.Size(211, 21);
+            this.testTypeCBox.Size = new System.Drawing.Size(435, 21);
             this.testTypeCBox.TabIndex = 7;
             // 
             // depCBox
             // 
+            this.depCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.depCBox.FormattingEnabled = true;
-            this.depCBox.Location = new System.Drawing.Point(701, 274);
+            this.depCBox.Location = new System.Drawing.Point(15, 225);
             this.depCBox.Name = "depCBox";
-            this.depCBox.Size = new System.Drawing.Size(211, 21);
-            this.depCBox.TabIndex = 8;
+            this.depCBox.Size = new System.Drawing.Size(435, 21);
+            this.depCBox.TabIndex = 11;
             // 
             // titleCbox
             // 
+            this.titleCbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.titleCbox.FormattingEnabled = true;
-            this.titleCbox.Location = new System.Drawing.Point(701, 318);
+            this.titleCbox.Location = new System.Drawing.Point(15, 270);
             this.titleCbox.Name = "titleCbox";
-            this.titleCbox.Size = new System.Drawing.Size(211, 21);
-            this.titleCbox.TabIndex = 9;
+            this.titleCbox.Size = new System.Drawing.Size(435, 21);
+            this.titleCbox.TabIndex = 12;
             // 
             // checkTypeCBox
             // 
+            this.checkTypeCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.checkTypeCBox.DropDownWidth = 429;
             this.checkTypeCBox.FormattingEnabled = true;
-            this.checkTypeCBox.Location = new System.Drawing.Point(701, 362);
+            this.checkTypeCBox.Location = new System.Drawing.Point(15, 315);
             this.checkTypeCBox.Name = "checkTypeCBox";
-            this.checkTypeCBox.Size = new System.Drawing.Size(211, 21);
-            this.checkTypeCBox.TabIndex = 10;
+            this.checkTypeCBox.Size = new System.Drawing.Size(435, 21);
+            this.checkTypeCBox.TabIndex = 13;
             // 
             // surnameTBox
             // 
-            this.surnameTBox.Location = new System.Drawing.Point(701, 145);
+            this.surnameTBox.Location = new System.Drawing.Point(15, 95);
             this.surnameTBox.Name = "surnameTBox";
-            this.surnameTBox.Size = new System.Drawing.Size(211, 20);
-            this.surnameTBox.TabIndex = 11;
+            this.surnameTBox.Size = new System.Drawing.Size(435, 20);
+            this.surnameTBox.TabIndex = 8;
             // 
             // nameTBox
             // 
-            this.nameTBox.Location = new System.Drawing.Point(701, 188);
+            this.nameTBox.Location = new System.Drawing.Point(15, 140);
             this.nameTBox.Name = "nameTBox";
-            this.nameTBox.Size = new System.Drawing.Size(211, 20);
-            this.nameTBox.TabIndex = 12;
+            this.nameTBox.Size = new System.Drawing.Size(435, 20);
+            this.nameTBox.TabIndex = 9;
             // 
             // patronymicTBox
             // 
-            this.patronymicTBox.Location = new System.Drawing.Point(701, 231);
+            this.patronymicTBox.Location = new System.Drawing.Point(15, 180);
             this.patronymicTBox.Name = "patronymicTBox";
-            this.patronymicTBox.Size = new System.Drawing.Size(211, 20);
-            this.patronymicTBox.TabIndex = 13;
+            this.patronymicTBox.Size = new System.Drawing.Size(435, 20);
+            this.patronymicTBox.TabIndex = 10;
             // 
             // testTypeLabel
             // 
             this.testTypeLabel.AutoSize = true;
-            this.testTypeLabel.Location = new System.Drawing.Point(701, 82);
+            this.testTypeLabel.Location = new System.Drawing.Point(15, 35);
             this.testTypeLabel.Name = "testTypeLabel";
             this.testTypeLabel.Size = new System.Drawing.Size(71, 13);
             this.testTypeLabel.TabIndex = 14;
@@ -170,7 +180,7 @@
             // surnameLabel
             // 
             this.surnameLabel.AutoSize = true;
-            this.surnameLabel.Location = new System.Drawing.Point(701, 126);
+            this.surnameLabel.Location = new System.Drawing.Point(15, 80);
             this.surnameLabel.Name = "surnameLabel";
             this.surnameLabel.Size = new System.Drawing.Size(56, 13);
             this.surnameLabel.TabIndex = 15;
@@ -179,7 +189,7 @@
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(701, 172);
+            this.nameLabel.Location = new System.Drawing.Point(15, 125);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(29, 13);
             this.nameLabel.TabIndex = 16;
@@ -188,7 +198,7 @@
             // patronymicLabel
             // 
             this.patronymicLabel.AutoSize = true;
-            this.patronymicLabel.Location = new System.Drawing.Point(701, 215);
+            this.patronymicLabel.Location = new System.Drawing.Point(15, 165);
             this.patronymicLabel.Name = "patronymicLabel";
             this.patronymicLabel.Size = new System.Drawing.Size(54, 13);
             this.patronymicLabel.TabIndex = 17;
@@ -197,7 +207,7 @@
             // departmentLabel
             // 
             this.departmentLabel.AutoSize = true;
-            this.departmentLabel.Location = new System.Drawing.Point(701, 258);
+            this.departmentLabel.Location = new System.Drawing.Point(15, 210);
             this.departmentLabel.Name = "departmentLabel";
             this.departmentLabel.Size = new System.Drawing.Size(151, 13);
             this.departmentLabel.TabIndex = 18;
@@ -206,7 +216,7 @@
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Location = new System.Drawing.Point(701, 302);
+            this.titleLabel.Location = new System.Drawing.Point(15, 255);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(65, 13);
             this.titleLabel.TabIndex = 19;
@@ -215,7 +225,7 @@
             // checkTypeLabel
             // 
             this.checkTypeLabel.AutoSize = true;
-            this.checkTypeLabel.Location = new System.Drawing.Point(701, 346);
+            this.checkTypeLabel.Location = new System.Drawing.Point(15, 300);
             this.checkTypeLabel.Name = "checkTypeLabel";
             this.checkTypeLabel.Size = new System.Drawing.Size(77, 13);
             this.checkTypeLabel.TabIndex = 20;
@@ -223,7 +233,7 @@
             // 
             // startBtn
             // 
-            this.startBtn.Location = new System.Drawing.Point(701, 390);
+            this.startBtn.Location = new System.Drawing.Point(190, 340);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(77, 23);
             this.startBtn.TabIndex = 21;
@@ -231,40 +241,20 @@
             this.startBtn.UseVisualStyleBackColor = true;
             this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
             // 
-            // listBox1
+            // pBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(16, 302);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(669, 251);
-            this.listBox1.TabIndex = 22;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(692, 539);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "label1";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(695, 510);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 24;
-            this.label2.Text = "label2";
+            this.pBox.Location = new System.Drawing.Point(701, 82);
+            this.pBox.Name = "pBox";
+            this.pBox.Size = new System.Drawing.Size(242, 140);
+            this.pBox.TabIndex = 22;
+            this.pBox.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(927, 583);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.listBox1);
+            this.ClientSize = new System.Drawing.Size(464, 371);
+            this.Controls.Add(this.pBox);
             this.Controls.Add(this.startBtn);
             this.Controls.Add(this.checkTypeLabel);
             this.Controls.Add(this.titleLabel);
@@ -281,14 +271,16 @@
             this.Controls.Add(this.depCBox);
             this.Controls.Add(this.testTypeCBox);
             this.Controls.Add(this.qLabelContent);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.skipBttn);
             this.Controls.Add(this.aButton);
             this.Controls.Add(this.aLabel);
             this.Controls.Add(this.qLabel);
             this.Controls.Add(this.aTextBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Тестирование";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -299,7 +291,7 @@
         private System.Windows.Forms.Label qLabel;
         private System.Windows.Forms.Label aLabel;
         private System.Windows.Forms.Button aButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button skipBttn;
         private System.Windows.Forms.Label qLabelContent;
         private System.Windows.Forms.ComboBox testTypeCBox;
         private System.Windows.Forms.ComboBox depCBox;
@@ -316,9 +308,7 @@
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label checkTypeLabel;
         private System.Windows.Forms.Button startBtn;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox pBox;
     }
 }
 

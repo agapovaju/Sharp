@@ -172,6 +172,7 @@
             this.dgvConts.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvConts.Location = new System.Drawing.Point(12, 153);
             this.dgvConts.Name = "dgvConts";
+            this.dgvConts.ReadOnly = true;
             this.dgvConts.Size = new System.Drawing.Size(476, 132);
             this.dgvConts.TabIndex = 13;
             this.dgvConts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvConts_CellDoubleClick);
