@@ -15,6 +15,7 @@ using System.Management.Instrumentation;
 using System.Xml;
 using System.IO;
 using System.ServiceProcess;
+using System.DirectoryServices;
 
 namespace Inventarization
 {
@@ -51,8 +52,8 @@ namespace Inventarization
             sp = "";
             gpu = "";
             //err_path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Inventarization_log.txt";
-            //err_path = @"\\file01-omg\its\Проги в помощь\Инвентаризация\Inventarization_log.txt";
-            err_path = @"D:\LOG\Inventarization_log.txt";
+            err_path = @"\\192.168.2.222\02_управл_разработки_по\02-1_Служба_информ_техн\Проги в помощь\Инвентаризация\Inventarization_log.txt";
+            //err_path = @"D:\LOG\Inventarization_log.txt";
 
             if (System.IO.File.Exists(err_path) == false)
             {
@@ -365,6 +366,7 @@ namespace Inventarization
                 comp_mass = System.IO.File.ReadAllLines(openFileDialog1.FileName, Encoding.UTF8);
                 for (int i = 0; i < comp_mass.Length; i++)
                 {
+                    comp_mass[i] = comp_mass[i].Replace(" ", "");
                     listbox_comp_list.Items.Add(comp_mass[i]);
                 }
             }
@@ -637,6 +639,23 @@ namespace Inventarization
                 "Сохранить все компьютеры - сохраняет в файл .csv информацию по всем компьютерам из списка\r\n"+
                 "Отчет об ошибках - открывает файл лога с ошибками\r\n"+
                 "Выход - выход из программы");
+        }
+
+        private void запросИзADToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            {
+                DirectoryEntry enTry = new DirectoryEntry("LDAP://OU=Comps,DC=ome,DC=tn,DC=corp"); //Надо поменять на свои
+                DirectorySearcher mySearcher = new DirectorySearcher(enTry);
+                int UF_ACCOUNTDISABLE = 0x0002; // Исключаем из поиска отключенный компьютеры
+                String searchFilter = "(&(objectClass=computer)(!(userAccountControl:1.2.840.113556.1.4.803:=" + UF_ACCOUNTDISABLE.ToString() + ")))";
+                mySearcher.Filter = (searchFilter);
+                SearchResultCollection resEnt = mySearcher.FindAll();                
+                foreach (SearchResult srItem in resEnt)
+                {                    
+                    listbox_comp_list.Items.Add(srItem.GetDirectoryEntry().Name.ToString().Substring(3).ToUpper()); //Добавляю список найденных компов в listbox
+                    listbox_comp_list.Sorted = true;                    
+                }
+            }
         }
     }
 }

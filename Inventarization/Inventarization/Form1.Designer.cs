@@ -67,6 +67,7 @@
             this.label_curr_comp = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.запросИзADToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -319,6 +320,7 @@
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.открытьToolStripMenuItem,
+            this.запросИзADToolStripMenuItem,
             this.сохранитьToolStripMenuItem,
             this.отчетОбОшибкахToolStripMenuItem,
             this.выходToolStripMenuItem});
@@ -412,6 +414,13 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // запросИзADToolStripMenuItem
+            // 
+            this.запросИзADToolStripMenuItem.Name = "запросИзADToolStripMenuItem";
+            this.запросИзADToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.запросИзADToolStripMenuItem.Text = "Запрос из AD";
+            this.запросИзADToolStripMenuItem.Click += new System.EventHandler(this.запросИзADToolStripMenuItem_Click);
+            // 
             // inventarization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -478,6 +487,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListBox listbox_offline_comps;
         private System.Windows.Forms.Label label_offline_comps;
+        private System.Windows.Forms.ToolStripMenuItem запросИзADToolStripMenuItem;
     }
 }
 
