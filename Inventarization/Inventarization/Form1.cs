@@ -35,7 +35,7 @@ namespace Inventarization
         public inventarization()
         {
             InitializeComponent();
-            dataGridView_services.RowHeadersVisible = false;
+            /*dataGridView_services.RowHeadersVisible = false;
             dataGridView_services.Rows.Clear();
             dataGridView_services.ColumnCount = 3;
             dataGridView_services.ColumnHeadersVisible = true;
@@ -45,7 +45,7 @@ namespace Inventarization
             dataGridView_services.Columns[0].Width = 170;
             dataGridView_services.Columns[1].Width = 540;
             dataGridView_services.Columns[2].Width = 70;
-            dataGridView_services.Width = 800;
+            dataGridView_services.Width = 800;*/
             cpu = "";
             ram = "";
             os = "";
@@ -313,7 +313,7 @@ namespace Inventarization
             return sp;
         }
 
-        public void get_services(string address)
+        /*public void get_services(string address)
         {
             try
             {
@@ -357,7 +357,7 @@ namespace Inventarization
                 }
             }
         }
-
+        */
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -408,7 +408,7 @@ namespace Inventarization
                         get_SP(address);
                         label_sp_val.Text = sp;
                         progress_bar.Value = 100;
-                        get_services(address);
+                        //get_services(address);
                         progress_bar.Value = 0;
                         //}
                         //catch (ManagementException em)
@@ -425,7 +425,7 @@ namespace Inventarization
                         label_gpu_val.Text = "";
                         label_os_val.Text = "";
                         label_sp_val.Text = "";
-                        dataGridView_services.Rows.Clear();
+                        //dataGridView_services.Rows.Clear();
                         progress_bar.Value = 0;
                     }
                 }
@@ -448,7 +448,7 @@ namespace Inventarization
                     label_gpu_val.Text = "";
                     label_os_val.Text = "";
                     label_sp_val.Text = "";
-                    dataGridView_services.Rows.Clear();
+                    //dataGridView_services.Rows.Clear();
                 }
             }
             
@@ -643,19 +643,25 @@ namespace Inventarization
 
         private void запросИзADToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            {
-                DirectoryEntry enTry = new DirectoryEntry("LDAP://OU=Comps,DC=ome,DC=tn,DC=corp"); //Надо поменять на свои
+            listbox_comp_list.Items.Clear();
+            DirectoryEntry enTry = new DirectoryEntry("LDAP://OU=Comps,DC=ome,DC=tn,DC=corp"); //Надо поменять на свои
                 DirectorySearcher mySearcher = new DirectorySearcher(enTry);
                 int UF_ACCOUNTDISABLE = 0x0002; // Исключаем из поиска отключенный компьютеры
                 String searchFilter = "(&(objectClass=computer)(!(userAccountControl:1.2.840.113556.1.4.803:=" + UF_ACCOUNTDISABLE.ToString() + ")))";
                 mySearcher.Filter = (searchFilter);
-                SearchResultCollection resEnt = mySearcher.FindAll();                
+                SearchResultCollection resEnt = mySearcher.FindAll();
+                
                 foreach (SearchResult srItem in resEnt)
                 {                    
                     listbox_comp_list.Items.Add(srItem.GetDirectoryEntry().Name.ToString().Substring(3).ToUpper()); //Добавляю список найденных компов в listbox
                     listbox_comp_list.Sorted = true;                    
-                }
-            }
+                }                
+                    comp_mass = (from object item in listbox_comp_list.Items select item.ToString()).ToArray<string>();             
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

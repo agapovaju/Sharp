@@ -55,6 +55,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.запросИзADToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.текущийКомпьютерToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.всеКомпьютерыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,6 @@
             this.label_curr_comp = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.запросИзADToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -112,6 +112,7 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Current information";
             this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // pictureBox1
             // 
@@ -132,6 +133,7 @@
             this.dataGridView_services.ReadOnly = true;
             this.dataGridView_services.Size = new System.Drawing.Size(782, 524);
             this.dataGridView_services.TabIndex = 6;
+            this.dataGridView_services.Visible = false;
             // 
             // label_sp_val
             // 
@@ -312,7 +314,7 @@
             this.справкаToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1414, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1412, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -334,6 +336,13 @@
             this.открытьToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.открытьToolStripMenuItem.Text = "Открыть";
             this.открытьToolStripMenuItem.Click += new System.EventHandler(this.открытьToolStripMenuItem_Click);
+            // 
+            // запросИзADToolStripMenuItem
+            // 
+            this.запросИзADToolStripMenuItem.Name = "запросИзADToolStripMenuItem";
+            this.запросИзADToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.запросИзADToolStripMenuItem.Text = "Запрос из AD";
+            this.запросИзADToolStripMenuItem.Click += new System.EventHandler(this.запросИзADToolStripMenuItem_Click);
             // 
             // сохранитьToolStripMenuItem
             // 
@@ -414,18 +423,11 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // запросИзADToolStripMenuItem
-            // 
-            this.запросИзADToolStripMenuItem.Name = "запросИзADToolStripMenuItem";
-            this.запросИзADToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.запросИзADToolStripMenuItem.Text = "Запрос из AD";
-            this.запросИзADToolStripMenuItem.Click += new System.EventHandler(this.запросИзADToolStripMenuItem_Click);
-            // 
             // inventarization
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1414, 662);
+            this.ClientSize = new System.Drawing.Size(1412, 662);
             this.Controls.Add(this.label_curr_comp);
             this.Controls.Add(this.progress_bar);
             this.Controls.Add(this.tabControl1);
