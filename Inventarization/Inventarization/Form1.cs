@@ -52,7 +52,7 @@ namespace Inventarization
             sp = "";
             gpu = "";
             //err_path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Inventarization_log.txt";
-            err_path = @"\\192.168.2.222\02_управл_разработки_по\02-1_Служба_информ_техн\Проги в помощь\Инвентаризация\Inventarization_log.txt";
+            err_path = @"\\192.168.1.31\users\agapovay\Inventarization_log.txt";
             //err_path = @"D:\LOG\Inventarization_log.txt";
 
             if (System.IO.File.Exists(err_path) == false)
@@ -644,7 +644,7 @@ namespace Inventarization
         private void запросИзADToolStripMenuItem_Click(object sender, EventArgs e)
         {
             listbox_comp_list.Items.Clear();
-            DirectoryEntry enTry = new DirectoryEntry("LDAP://OU=Comps,DC=ome,DC=tn,DC=corp"); //Надо поменять на свои
+            DirectoryEntry enTry = new DirectoryEntry("LDAP://OU=Comps,OU=petrolight,DC=petrolight,DC=local"); //Надо поменять на свои
                 DirectorySearcher mySearcher = new DirectorySearcher(enTry);
                 int UF_ACCOUNTDISABLE = 0x0002; // Исключаем из поиска отключенный компьютеры
                 String searchFilter = "(&(objectClass=computer)(!(userAccountControl:1.2.840.113556.1.4.803:=" + UF_ACCOUNTDISABLE.ToString() + ")))";
