@@ -12,18 +12,46 @@ namespace DocTech
 {
     public partial class FormDocumentList : Form
     {
-        public FormDocumentList()
+        private string cType;
+        private string eType;
+        private string cName;
+        private string rTable;
+
+        public FormDocumentList(string containerType, string containerName, string elementType, string table)
         {
             InitializeComponent();
+            cType = containerType;
+            eType = elementType;
+            cName = containerName;
+            rTable = table;
         }
 
         private void FormDocumentList_Load(object sender, EventArgs e)
         {
-            List<string> documents = ClassDBRequests.getNameElements("Files");
+            string str = eType + "s";
+            List<string> documents = ClassDBRequests.getNameElements(str);
             foreach (string doc in documents)
             {
-                listBoxDocuments.Items.Add(doc);
+                checkedListBoxDocuments.Items.Add(doc);
             }
+        }
+
+        private void checkedListBoxDocuments_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBoxCheckedFiles.Items.Clear();
+            foreach (string file in checkedListBoxDocuments.CheckedItems)
+            {
+                listBoxCheckedFiles.Items.Add(file);
+            }
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            foreach (string file in listBoxCheckedFiles.Items)
+            {
+                ClassDBRequests.newRelation(eType, cType, file, cName, rTable);
+            }
+            this.Close();
         }
     }
 }
