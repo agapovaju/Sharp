@@ -141,8 +141,8 @@ namespace DocTech
         //Создание новых связей
         public static void newRelation(string elementType, string containerType, string elementName, string containerName, string table)
         {
-            int containerId=-1;
-            int elementId=-1;
+            int containerId = new int();
+            int elementId = new int(); ;
             string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
             string tableForGI = containerType + "s";
             containerId = getId(containerName, tableForGI);
@@ -151,17 +151,18 @@ namespace DocTech
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
+                SqlCommand command = new SqlCommand();
                 //string sqlExpression = "SELECT id FROM " + containerType + "s WHERE Name=" + "'" + containerName + "'";
                 //SqlCommand command = new SqlCommand(sqlExpression, connection);
                 //SqlDataReader reader = command.ExecuteReader();
                 //if (reader.HasRows) // если есть данные
-                //{                   
+                //{
                 //    while (reader.Read()) // построчно считываем данные
                 //    {
                 //        //int id = reader.GetValue(0);
                 //        containerId = (int)reader.GetValue(0);
                 //        //string extension = reader.GetValue(2);
-                //        //byte[] file = reader.GetValue(3);                        
+                //        //byte[] file = reader.GetValue(3);
                 //    }
                 //}
                 //reader.Close();
@@ -176,22 +177,23 @@ namespace DocTech
                 //        //int id = reader.GetValue(0);
                 //        elementId = (int)reader.GetValue(0);
                 //        //string extension = reader.GetValue(2);
-                //        //byte[] file = reader.GetValue(3);                        
+                //        //byte[] file = reader.GetValue(3);
                 //    }
                 //}
                 //reader.Close();
-
-                if ((containerId != -1) & (elementId != -1))
-                {
-                    SqlCommand command = new SqlCommand();
+                                    
+                
+                    
                     command.Connection = connection;
-                    command.CommandText = @"INSERT INTO " + table + " VALUES (@Details_Id,@Files_Id)";
-                    command.Parameters.Add("@Details_Id", SqlDbType.Int);
-                    command.Parameters.Add("@Files_Id", SqlDbType.Int);
-                    command.Parameters["@Details_Id"].Value = containerId;
-                    command.Parameters["@Files_Id"].Value = elementId;
+                    command.CommandText = @"INSERT INTO " + table + " VALUES (@" + containerType + "s_Id,@" + elementType + "s_Id)";
+                    string containerIdstring = "@" + containerType + "s_Id";
+                    string elementIdstring = "@" + elementType + "s_Id";
+                    command.Parameters.Add(containerIdstring, SqlDbType.Int);
+                    command.Parameters.Add(elementIdstring, SqlDbType.Int);
+                    command.Parameters[containerIdstring].Value = containerId;
+                    command.Parameters[elementIdstring].Value = elementId;
                     command.ExecuteNonQuery();
-                }               
+                               
             }
         }
 
@@ -267,20 +269,55 @@ namespace DocTech
             int elementId = new int();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                SqlCommand command = new SqlCommand();
                 switch (elementType)
-                {
+                {                    
                     case "File":
                         elementId = getId(elementName, "Files");                        
-                        connection.Open();
-                        SqlCommand command = new SqlCommand();
+                        connection.Open();                        
                         command.Connection = connection;
-                        //command.CommandText = "DELETE FROM Sys_Files WHERE Files_id=" + elementId;
-                        //command.ExecuteNonQuery();
-                        //command.CommandText = "DELETE FROM Det_Files WHERE Files_id=" + elementId;
-                        //command.ExecuteNonQuery();
-                        //command.CommandText = "DELETE FROM Dev_Files WHERE Files_id=" + elementId;
-                        //command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Sys_Files WHERE Files_id=" + elementId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Det_Files WHERE Files_id=" + elementId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Dev_Files WHERE Files_id=" + elementId;
+                        command.ExecuteNonQuery();
                         command.CommandText = "DELETE FROM Files WHERE name=" + "'" + elementName + "'";
+                        command.ExecuteNonQuery();
+                        break;
+                    case "Detail":
+                        elementId = getId(elementName, "Details");
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "DELETE FROM Det_Files WHERE Details_id=" + elementId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Dev_Det WHERE Details_id=" + elementId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Details WHERE name=" + "'" + elementName + "'";
+                        command.ExecuteNonQuery();
+                        break;
+                    case "Device":
+                        elementId = getId(elementName, "Devices");
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "DELETE FROM Sys_Dev WHERE Devices_id=" + elementId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Dev_Files WHERE Devices_id=" + elementId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Dev_Det WHERE Devices_id=" + elementId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Devices WHERE name=" + "'" + elementName + "'";
+                        command.ExecuteNonQuery();
+                        break;
+                    case "System":
+                        elementId = getId(elementName, "Systems");
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = "DELETE FROM Sys_Dev WHERE Systems_id=" + elementId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Sys_Files WHERE Systems_id=" + elementId;
+                        command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Systems WHERE name=" + "'" + elementName + "'";
                         command.ExecuteNonQuery();
                         break;
                 }                

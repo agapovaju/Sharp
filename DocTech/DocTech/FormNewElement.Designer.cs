@@ -88,7 +88,7 @@
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.textBoxNumber);
             this.Name = "FormNewElement";
-            this.Text = "FormNewElement";
+            this.Text = "Добавление элемента";
             this.Load += new System.EventHandler(this.FormNewDetail_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

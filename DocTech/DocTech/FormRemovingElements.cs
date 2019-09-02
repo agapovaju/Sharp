@@ -30,10 +30,27 @@ namespace DocTech
 
         private void buttonDel_Click(object sender, EventArgs e)
         {
+            string elementType = "";
+            switch (tbl)
+            {
+                case "Files":
+                    elementType = "File";
+                    break;
+                case "Details":
+                    elementType = "Detail";
+                    break;
+                case "Devices":
+                    elementType = "Device";
+                    break;
+                case "Systems":
+                    elementType = "System";
+                    break;
+            }
             foreach (string element in checkedListBox1.CheckedItems)
             {
-                ClassDBRequests.removeElement(element, "File");
+                ClassDBRequests.removeElement(element, elementType);                
             }
+            this.Close();
         }
     }
 }

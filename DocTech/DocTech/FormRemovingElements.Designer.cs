@@ -58,7 +58,7 @@
             this.Controls.Add(this.buttonDel);
             this.Controls.Add(this.checkedListBox1);
             this.Name = "FormRemovingElements";
-            this.Text = "RemovingElements";
+            this.Text = "Удаление элемента";
             this.Load += new System.EventHandler(this.RemovingElements_Load);
             this.ResumeLayout(false);
 

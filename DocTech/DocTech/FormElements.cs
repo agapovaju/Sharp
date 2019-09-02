@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace DocTech
 {
-    public partial class FormEDocumentList : Form
+    public partial class FormElements : Form
     {
         private string cType;
         private string eType;
         private string cName;
         private string rTable;
 
-        public FormEDocumentList(string containerType, string containerName, string elementType, string table)
+        public FormElements(string containerType, string containerName, string elementType, string table)
         {
             InitializeComponent();
             cType = containerType;
@@ -32,14 +32,14 @@ namespace DocTech
             List<string> elements = ClassDBRequests.getNameElements(str);
             foreach (string element in elements)
             {
-                checkedListBoxDocuments.Items.Add(element);
+                checkedListBoxElements.Items.Add(element);
             }
         }
 
         private void checkedListBoxDocuments_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBoxCheckedFiles.Items.Clear();
-            foreach (string file in checkedListBoxDocuments.CheckedItems)
+            foreach (string file in checkedListBoxElements.CheckedItems)
             {
                 listBoxCheckedFiles.Items.Add(file);
             }
