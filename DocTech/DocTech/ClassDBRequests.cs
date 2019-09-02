@@ -260,5 +260,31 @@ namespace DocTech
             }
             return elements;
         }
+
+        public static void removeElement(string elementName, string elementType)
+        {
+            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            int elementId = new int();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                switch (elementType)
+                {
+                    case "File":
+                        elementId = getId(elementName, "Files");                        
+                        connection.Open();
+                        SqlCommand command = new SqlCommand();
+                        command.Connection = connection;
+                        //command.CommandText = "DELETE FROM Sys_Files WHERE Files_id=" + elementId;
+                        //command.ExecuteNonQuery();
+                        //command.CommandText = "DELETE FROM Det_Files WHERE Files_id=" + elementId;
+                        //command.ExecuteNonQuery();
+                        //command.CommandText = "DELETE FROM Dev_Files WHERE Files_id=" + elementId;
+                        //command.ExecuteNonQuery();
+                        command.CommandText = "DELETE FROM Files WHERE name=" + "'" + elementName + "'";
+                        command.ExecuteNonQuery();
+                        break;
+                }                
+            }
+        }
     }
 }

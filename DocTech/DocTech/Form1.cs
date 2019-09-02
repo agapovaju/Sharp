@@ -17,14 +17,6 @@ namespace DocTech
         public Form1()
         {
             InitializeComponent();
-            //string[] files = System.IO.Directory.GetFiles(@"C:\petrolight\__НОВ КД", "4372*", System.IO.SearchOption.AllDirectories);
-            //foreach (string file in files)
-            //{
-            //    listBox1.Items.Add(System.IO.Path.GetFileName(file));                
-            //}
-            //treeViewElements.ContextMenuStrip = contextMenuStrip1;
-            //treeViewElements.ContextMenuStrip = contextMenuStripDetails;
-
             treeViewElements.NodeMouseClick += treeViewElements_NodeMouseClick;
         }
 
@@ -124,7 +116,7 @@ namespace DocTech
                 List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Systems", "Sys_Files");
                 if (elements.Count() != 0)
                 {
-                    listBox1.Items.Add("Детали");
+                    listBox1.Items.Add("Документы");
                     foreach (string element in elements)
                     {
                         listBox1.Items.Add(element);
@@ -134,7 +126,7 @@ namespace DocTech
                 elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Systems", "Sys_Dev");
                 if (elements.Count() != 0)
                 {
-                    listBox1.Items.Add("Документы");
+                    listBox1.Items.Add("Устройства");
                     foreach (string element in elements)
                     {
                         listBox1.Items.Add(element);
@@ -186,7 +178,7 @@ namespace DocTech
             filesNode.Text = "Все документы";
             filesNode.Tag = "Documents";
             treeViewElements.Nodes.Add(filesNode);
-            fillNodes("Files");            
+            fillMainNodes("Files");            
 
 
             //Заполнение узла Детали
@@ -195,8 +187,23 @@ namespace DocTech
             detailsNode.Text = "Детали";
             detailsNode.Tag = "Details";
             treeViewElements.Nodes.Add(detailsNode);
-            fillNodes("Details");            
+            fillMainNodes("Details");
 
+            TreeNodeCollection detailCollection = treeViewElements.Nodes[1].Nodes;
+            int count = 0;
+            foreach (TreeNode detail in detailCollection)
+            {
+                List<string> elements = ClassDBRequests.getRelation(detail.Text, "Files", "Details", "Det_Files");
+                foreach (string element in elements)
+                {
+                    TreeNode doc = new TreeNode();
+                    doc.Name = element.Split(' ')[0];
+                    doc.Text = element;
+                    doc.Tag = "File";
+                    treeViewElements.Nodes[1].Nodes[count].Nodes.Add(doc);
+                }
+                count++;
+            }
 
             //Заполнение узла Устройства
             TreeNode devicesNode = new TreeNode();
@@ -204,7 +211,7 @@ namespace DocTech
             devicesNode.Text = "Устройства";
             devicesNode.Tag = "Devices";
             treeViewElements.Nodes.Add(devicesNode);
-            fillNodes("Devices");            
+            fillMainNodes("Devices");
 
 
             //Заполнение узла Системы
@@ -213,7 +220,7 @@ namespace DocTech
             systemsNode.Text = "Системы";
             systemsNode.Tag = "Systems";
             treeViewElements.Nodes.Add(systemsNode);
-            fillNodes("Systems");            
+            fillMainNodes("Systems");            
         }
 
         private void butAddDocToDet_Click(object sender, EventArgs e)
@@ -231,7 +238,7 @@ namespace DocTech
             newFormElement.Tag = "forDetail";
             newFormElement.ShowDialog();
             treeViewElements.Nodes[1].Nodes.Clear();
-            fillNodes("Details");           
+            fillMainNodes("Details");           
         }
 
         //Добавление нового устройства
@@ -241,7 +248,7 @@ namespace DocTech
             newFormElement.Tag = "forDevice";
             newFormElement.ShowDialog();
             treeViewElements.Nodes[2].Nodes.Clear();
-            fillNodes("Devices");            
+            fillMainNodes("Devices");            
         }
 
         //Добавление новой системы
@@ -251,11 +258,11 @@ namespace DocTech
             newFormElement.Tag = "forSystem";
             newFormElement.ShowDialog();
             treeViewElements.Nodes[3].Nodes.Clear();
-            fillNodes("Systems");
+            fillMainNodes("Systems");
         }
 
         //Заполнение дочерних узлов (Файлы, Детали, Устройства, Системы)
-        public void fillNodes(string table)
+        public void fillMainNodes(string table)
         {
             List<string> listElements = ClassDBRequests.getNameElements(table);
             
@@ -264,7 +271,7 @@ namespace DocTech
                 TreeNode node = new TreeNode();
                 node.Name = element.Split(' ')[0];
                 node.Text = element;
-                int nodeNumber;
+                int nodeNumber = new int();
                 switch (table)
                 {
                     case "Files":
@@ -282,14 +289,13 @@ namespace DocTech
                     case "Systems":
                         node.Tag = "System";
                         nodeNumber = 3;
-                        break;
-                    default:
-                        nodeNumber = 100; //чтобы в случае херни не писало никуда
-                        break;
+                        break;                    
                 }                
                 treeViewElements.Nodes[nodeNumber].Nodes.Add(node);
             }
         }
+
+        
 
         private void добавитьДокументToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -299,16 +305,17 @@ namespace DocTech
             }
             string fileName = openFileDialog1.FileName;
             ClassDBRequests.SaveFileToDatabase(fileName);
-            fillNodes("Files");
+            fillMainNodes("Files");
         }
         
         //Добавить документ к детали
         private void документыToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             //string detName = treeViewElements.SelectedNode.Text;
-            Form formDocuments = new FormDocumentList(treeViewElements.SelectedNode.Tag.ToString(), treeViewElements.SelectedNode.Text, "File", "Det_Files");
+            Form formDocuments = new FormEDocumentList(treeViewElements.SelectedNode.Tag.ToString(), treeViewElements.SelectedNode.Text, "File", "Det_Files");
             //formDocuments.Tag = treeViewElements.SelectedNode.Text;
             formDocuments.ShowDialog();
+            listBox1.Items.Clear();
             List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
             if (elements.Count() != 0)
             {
@@ -333,9 +340,10 @@ namespace DocTech
         //Добавить документ к устройству
         private void документыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form formDocuments = new FormDocumentList(treeViewElements.SelectedNode.Tag.ToString(), treeViewElements.SelectedNode.Text, "File", "Dev_Files");
+            Form formDocuments = new FormEDocumentList(treeViewElements.SelectedNode.Tag.ToString(), treeViewElements.SelectedNode.Text, "File", "Dev_Files");
             //formDocuments.Tag = treeViewElements.SelectedNode.Text;
             formDocuments.ShowDialog();
+            listBox1.Items.Clear();
             List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Devices", "Dev_Files");
             if (elements.Count() != 0)
             {
@@ -360,9 +368,93 @@ namespace DocTech
         //Добавить деталь к устройству
         private void детальToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form formDocuments = new FormDocumentList(treeViewElements.SelectedNode.Tag.ToString(), treeViewElements.SelectedNode.Text, "Detail", "Dev_Det");
+            Form formDocuments = new FormEDocumentList(treeViewElements.SelectedNode.Tag.ToString(), treeViewElements.SelectedNode.Text, "Detail", "Dev_Det");
             //formDocuments.Tag = treeViewElements.SelectedNode.Text;
             formDocuments.ShowDialog();
+            listBox1.Items.Clear();
+            List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Devices", "Dev_Files");
+            if (elements.Count() != 0)
+            {
+                listBox1.Items.Add("Документы");
+                foreach (string element in elements)
+                {
+                    listBox1.Items.Add(element);
+                }
+            }
+
+            elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Details", "Devices", "Dev_Det");
+            if (elements.Count() != 0)
+            {
+                listBox1.Items.Add("Детали");
+                foreach (string element in elements)
+                {
+                    listBox1.Items.Add(element);
+                }
+            }
+        }
+
+        //Добавить документ к системе
+        private void документыToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            //string detName = treeViewElements.SelectedNode.Text;
+            Form formDocuments = new FormEDocumentList(treeViewElements.SelectedNode.Tag.ToString(), treeViewElements.SelectedNode.Text, "File", "Sys_Files");
+            //formDocuments.Tag = treeViewElements.SelectedNode.Text;
+            formDocuments.ShowDialog();
+            listBox1.Items.Clear();
+            List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Systems", "Sys_Files");
+            if (elements.Count() != 0)
+            {
+                listBox1.Items.Add("Документы");
+                foreach (string element in elements)
+                {
+                    listBox1.Items.Add(element);
+                }
+            }
+
+            elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Systems", "Sys_Dev");
+            if (elements.Count() != 0)
+            {
+                listBox1.Items.Add("Устройства");                
+                foreach (string element in elements)
+                {
+                    listBox1.Items.Add(element);
+                }
+            }
+        }
+
+        //Добавить устройство к системе
+        private void устройстваToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form formDocuments = new FormEDocumentList(treeViewElements.SelectedNode.Tag.ToString(), treeViewElements.SelectedNode.Text, "Device", "Sys_Dev");
+            //formDocuments.Tag = treeViewElements.SelectedNode.Text;
+            formDocuments.ShowDialog();
+            listBox1.Items.Clear();
+            List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Systems", "Sys_Files");
+            if (elements.Count() != 0)
+            {
+                listBox1.Items.Add("Документы");
+                foreach (string element in elements)
+                {
+                    listBox1.Items.Add(element);
+                }
+            }
+
+            elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Systems", "Sys_Dev");
+            if (elements.Count() != 0)
+            {
+                listBox1.Items.Add("Устройства");
+                foreach (string element in elements)
+                {
+                    listBox1.Items.Add(element);
+                }
+            }
+        }
+
+        private void удалитьДокументыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form removingForm = new FormRemovingElements("Files");
+            removingForm.ShowDialog();
+
         }
     }
 }

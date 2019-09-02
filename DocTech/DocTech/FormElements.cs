@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace DocTech
 {
-    public partial class FormDocumentList : Form
+    public partial class FormEDocumentList : Form
     {
         private string cType;
         private string eType;
         private string cName;
         private string rTable;
 
-        public FormDocumentList(string containerType, string containerName, string elementType, string table)
+        public FormEDocumentList(string containerType, string containerName, string elementType, string table)
         {
             InitializeComponent();
             cType = containerType;
@@ -29,10 +29,10 @@ namespace DocTech
         private void FormDocumentList_Load(object sender, EventArgs e)
         {
             string str = eType + "s";
-            List<string> documents = ClassDBRequests.getNameElements(str);
-            foreach (string doc in documents)
+            List<string> elements = ClassDBRequests.getNameElements(str);
+            foreach (string element in elements)
             {
-                checkedListBoxDocuments.Items.Add(doc);
+                checkedListBoxDocuments.Items.Add(element);
             }
         }
 

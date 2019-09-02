@@ -1,6 +1,6 @@
 ﻿namespace DocTech
 {
-    partial class FormDocumentList
+    partial class FormEDocumentList
     {
         /// <summary>
         /// Required designer variable.
@@ -62,7 +62,7 @@
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
-            // FormDocumentList
+            // FormEDocumentList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -70,7 +70,7 @@
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.checkedListBoxDocuments);
             this.Controls.Add(this.listBoxCheckedFiles);
-            this.Name = "FormDocumentList";
+            this.Name = "FormEDocumentList";
             this.Text = "FormDocumentList";
             this.Load += new System.EventHandler(this.FormDocumentList_Load);
             this.ResumeLayout(false);
