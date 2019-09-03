@@ -72,7 +72,7 @@ namespace GOiCHS
         string[] checkTypeArr = { "Первичная", "Повторная", "Внеочередная" };
 
         //const string fileName = @"D:\forohrana\questionlist.xlsx";
-        const string fileName = "questionlist.xlsx";
+        private string fileName = "";
         string[] qtenQuestions = new string[10];
         string[] atenQuestions = new string[10];
         string[] uatenQuestions = new string[10];
@@ -92,7 +92,8 @@ namespace GOiCHS
         private Excel.Workbook excelappworkbook;
         private Excel.Application excelapp;
         //string docName = @"D:\forohrana\report.xltx";
-        string docName = Environment.CurrentDirectory+ @"\Report.xltx";
+        //string docName = Environment.CurrentDirectory+ @"\Report.xltx";
+        string docName = "";
 
         Stopwatch sw = new Stopwatch();
         string elapsedTime1;
@@ -225,7 +226,7 @@ namespace GOiCHS
         }
 
         private void startBtn_Click(object sender, EventArgs e)
-        {
+        {            
             if ((testTypeCBox.SelectedItem == null) || (surnameTBox.Text == "") || (nameTBox.Text == "") || (patronymicTBox.Text == "") || (depCBox.SelectedItem == null) || (titleCbox.SelectedItem == null) || (checkTypeCBox.SelectedItem == null))
             {
                 MessageBox.Show("Необходимо заполнить все поля", "Внимание!", MessageBoxButtons.OK,MessageBoxIcon.Warning);
@@ -854,6 +855,23 @@ namespace GOiCHS
             }
 
         }
-        
+
+        private void открытьФайлСВопросамиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            fileName = openFileDialog1.FileName;            
+        }
+
+        private void открытьФайлСОтчетомToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            docName = openFileDialog1.FileName;
+        }
     }
 }
