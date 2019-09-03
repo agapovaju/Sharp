@@ -151,49 +151,17 @@ namespace DocTech
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand();
-                //string sqlExpression = "SELECT id FROM " + containerType + "s WHERE Name=" + "'" + containerName + "'";
-                //SqlCommand command = new SqlCommand(sqlExpression, connection);
-                //SqlDataReader reader = command.ExecuteReader();
-                //if (reader.HasRows) // если есть данные
-                //{
-                //    while (reader.Read()) // построчно считываем данные
-                //    {
-                //        //int id = reader.GetValue(0);
-                //        containerId = (int)reader.GetValue(0);
-                //        //string extension = reader.GetValue(2);
-                //        //byte[] file = reader.GetValue(3);
-                //    }
-                //}
-                //reader.Close();
-
-                //sqlExpression = "SELECT id FROM " + elementType + "s WHERE Name=" + "'"+elementName+"'";
-                //command = new SqlCommand(sqlExpression, connection);
-                //reader = command.ExecuteReader();
-                //if (reader.HasRows) // если есть данные
-                //{
-                //    while (reader.Read()) // построчно считываем данные
-                //    {
-                //        //int id = reader.GetValue(0);
-                //        elementId = (int)reader.GetValue(0);
-                //        //string extension = reader.GetValue(2);
-                //        //byte[] file = reader.GetValue(3);
-                //    }
-                //}
-                //reader.Close();
-                                    
-                
-                    
-                    command.Connection = connection;
-                    command.CommandText = @"INSERT INTO " + table + " VALUES (@" + containerType + "s_Id,@" + elementType + "s_Id)";
-                    string containerIdstring = "@" + containerType + "s_Id";
-                    string elementIdstring = "@" + elementType + "s_Id";
-                    command.Parameters.Add(containerIdstring, SqlDbType.Int);
-                    command.Parameters.Add(elementIdstring, SqlDbType.Int);
-                    command.Parameters[containerIdstring].Value = containerId;
-                    command.Parameters[elementIdstring].Value = elementId;
-                    command.ExecuteNonQuery();
-                               
+                SqlCommand command = new SqlCommand();                
+                command.Connection = connection;
+                command.CommandText = @"INSERT INTO " + table + " VALUES (@" + containerType + "s_Id,@" + elementType + "s_Id)";
+                string containerIdstring = "@" + containerType + "s_Id";
+                string elementIdstring = "@" + elementType + "s_Id";
+                command.Parameters.Add(containerIdstring, SqlDbType.Int);
+                command.Parameters.Add(elementIdstring, SqlDbType.Int);
+                command.Parameters[containerIdstring].Value = containerId;
+                command.Parameters[elementIdstring].Value = elementId;
+                command.ExecuteNonQuery();
+                connection.Close();
             }
         }
 
@@ -228,6 +196,7 @@ namespace DocTech
                     }
                 }
                 reader.Close();
+                connection.Close();
             }
             return elementId;
         }
@@ -259,8 +228,40 @@ namespace DocTech
                     }
                 }
                 reader.Close();
+                connection.Close();
             }
             return elements;
+        }
+
+        public static void removeRelation(int containerId, int elementId, string table)
+        {
+            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                connection.Open();
+                command.Connection = connection;
+                switch (table)
+                {
+                    case "Det_Files":
+                        command.CommandText = "DELETE FROM " + table + " WHERE Files_Id=" + elementId + " AND Details_Id=" + containerId;
+                        break;
+                    case "Dev_Files":
+                        command.CommandText = "DELETE FROM " + table + " WHERE Files_Id=" + elementId + " AND Devices_Id=" + containerId;
+                        break;
+                    case "Sys_Files":
+                        command.CommandText = "DELETE FROM " + table + " WHERE Files_Id=" + elementId + " AND Systems_Id=" + containerId;
+                        break;
+                    case "Dev_Det":
+                        command.CommandText = "DELETE FROM " + table + " WHERE Details_Id=" + elementId + " AND Devices_Id=" + containerId;
+                        break;
+                    case "Sys_Dev":
+                        command.CommandText = "DELETE FROM " + table + " WHERE Devices_Id=" + elementId + " AND Systems_Id=" + containerId;
+                        break;
+                }                
+                command.ExecuteNonQuery();
+                connection.Close();
+            }            
         }
 
         public static void removeElement(string elementName, string elementType)
@@ -320,7 +321,8 @@ namespace DocTech
                         command.CommandText = "DELETE FROM Systems WHERE name=" + "'" + elementName + "'";
                         command.ExecuteNonQuery();
                         break;
-                }                
+                }
+                connection.Close();
             }
         }
     }

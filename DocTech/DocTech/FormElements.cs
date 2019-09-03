@@ -28,6 +28,7 @@ namespace DocTech
 
         private void FormDocumentList_Load(object sender, EventArgs e)
         {
+            Variables.needRefresh = false;
             string str = eType + "s";
             List<string> elements = ClassDBRequests.getNameElements(str);
             foreach (string element in elements)
@@ -47,11 +48,17 @@ namespace DocTech
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            foreach (string file in listBoxCheckedFiles.Items)
+            if (listBoxCheckedFiles.Items.Count != 0)
             {
-                ClassDBRequests.newRelation(eType, cType, file, cName, rTable);
+                foreach (string file in listBoxCheckedFiles.Items)
+                {
+                    ClassDBRequests.newRelation(eType, cType, file, cName, rTable);
+                }
+                Variables.needRefresh = true;
+                this.Close();
             }
-            this.Close();
+            else
+                MessageBox.Show("Не выбраны элементы для добавления","Внимание!");
         }
     }
 }

@@ -46,11 +46,19 @@ namespace DocTech
                     elementType = "System";
                     break;
             }
-            foreach (string element in checkedListBox1.CheckedItems)
+            if (checkedListBox1.CheckedItems.Count != 0)
             {
-                ClassDBRequests.removeElement(element, elementType);                
+                foreach (string element in checkedListBox1.CheckedItems)
+                {
+                    ClassDBRequests.removeElement(element, elementType);
+                }
+                this.Close();
             }
-            this.Close();
+            else
+            {
+                MessageBox.Show("Не выбраны элементы для удаления", "Внимание!");
+            }
+            
         }
     }
 }

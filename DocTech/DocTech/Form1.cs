@@ -23,7 +23,9 @@ namespace DocTech
         private void treeViewElements_AfterSelect(object sender, TreeViewEventArgs e)
         {
             listBox1.Items.Clear();
-            if (treeViewElements.SelectedNode.Tag.ToString() == "File")
+            //Заполнение ListBox
+            //Если выбран документ
+            if ((treeViewElements.SelectedNode.Tag.ToString() == "File") || (treeViewElements.SelectedNode.Tag.ToString() == "FileR"))
             {
                 List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Details", "Files", "Det_Files");
                 if (elements.Count() != 0)
@@ -55,7 +57,8 @@ namespace DocTech
                     }
                 }
             }
-            else if (treeViewElements.SelectedNode.Tag.ToString() == "Detail")
+            //Если выбрана деталь
+            else if ((treeViewElements.SelectedNode.Tag.ToString() == "Detail") || (treeViewElements.SelectedNode.Tag.ToString() == "DetailR"))
             {
                 List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
                 if (elements.Count() != 0)
@@ -77,7 +80,8 @@ namespace DocTech
                     }
                 }
             }
-            else if (treeViewElements.SelectedNode.Tag.ToString() == "Device")
+            //Если выбрано устройство
+            else if ((treeViewElements.SelectedNode.Tag.ToString() == "Device") || (treeViewElements.SelectedNode.Tag.ToString() == "DeviceR"))
             {
                 List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Devices", "Dev_Files");
                 if (elements.Count() != 0)
@@ -97,9 +101,7 @@ namespace DocTech
                     {
                         listBox1.Items.Add(element);
                     }
-                }
-
-                
+                }                
 
                 elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Systems", "Devices", "Sys_Dev");
                 if (elements.Count() != 0)
@@ -111,6 +113,7 @@ namespace DocTech
                     }
                 }
             }
+            //Если выбрана система
             else if (treeViewElements.SelectedNode.Tag.ToString() == "System")
             {
                 List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Systems", "Sys_Files");
@@ -173,14 +176,14 @@ namespace DocTech
         {
             this.MaximumSize = new System.Drawing.Size(1100, 900);
             this.MinimumSize = new System.Drawing.Size(1050,600);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             //Заполнение узла Документы
             TreeNode filesNode = new TreeNode();
             filesNode.Name = "allFiles";
             filesNode.Text = "Все документы";
             filesNode.Tag = "Documents";
             treeViewElements.Nodes.Add(filesNode);
-            fillMainNodes("Files");            
-
+            fillNodes("Files");            
 
             //Заполнение узла Детали
             TreeNode detailsNode = new TreeNode();
@@ -188,23 +191,7 @@ namespace DocTech
             detailsNode.Text = "Детали";
             detailsNode.Tag = "Details";
             treeViewElements.Nodes.Add(detailsNode);
-            fillMainNodes("Details");
-
-            TreeNodeCollection detailCollection = treeViewElements.Nodes[1].Nodes;
-            int count = 0;
-            foreach (TreeNode detail in detailCollection)
-            {
-                List<string> elements = ClassDBRequests.getRelation(detail.Text, "Files", "Details", "Det_Files");
-                foreach (string element in elements)
-                {
-                    TreeNode doc = new TreeNode();
-                    doc.Name = element.Split(' ')[0];
-                    doc.Text = element;
-                    doc.Tag = "File";
-                    treeViewElements.Nodes[1].Nodes[count].Nodes.Add(doc);
-                }
-                count++;
-            }
+            fillNodes("Details");
 
             //Заполнение узла Устройства
             TreeNode devicesNode = new TreeNode();
@@ -212,63 +199,7 @@ namespace DocTech
             devicesNode.Text = "Устройства";
             devicesNode.Tag = "Devices";
             treeViewElements.Nodes.Add(devicesNode);
-            fillMainNodes("Devices");
-
-            TreeNodeCollection deviceCollection = treeViewElements.Nodes[2].Nodes;
-            count = 0;
-            foreach (TreeNode device in deviceCollection)
-            {
-                List<string> elements = ClassDBRequests.getRelation(device.Text, "Details", "Devices", "Dev_Det");
-                foreach (string element in elements)
-                {
-                    TreeNode el = new TreeNode();
-                    el.Name = element.Split(' ')[0];
-                    el.Text = element;
-                    el.Tag = "Detail";
-                    treeViewElements.Nodes[2].Nodes[count].Nodes.Add(el);
-                }
-                count++;
-            }
-                        
-            count = 0;
-            foreach (TreeNode device in deviceCollection)
-            {
-                List<string> elements = ClassDBRequests.getRelation(device.Text, "Files", "Devices", "Dev_Files");
-                foreach (string element in elements)
-                {
-                    TreeNode doc = new TreeNode();
-                    doc.Name = element.Split(' ')[0];
-                    doc.Text = element;
-                    doc.Tag = "File";
-                    treeViewElements.Nodes[2].Nodes[count].Nodes.Add(doc);
-                }
-                count++;
-            }
-
-            count = 0;
-            foreach (TreeNode device in deviceCollection)
-            {
-                TreeNodeCollection deviceNodes = treeViewElements.Nodes[2].Nodes[count].Nodes;
-                int countD = 0;
-                foreach (TreeNode node in deviceNodes)
-                {
-                    if (node.Tag.ToString() == "Detail")
-                    {
-                        List<string> elements = ClassDBRequests.getRelation(device.Text, "Files", "Details", "Det_Files");
-                        foreach (string element in elements)
-                        {
-                            TreeNode doc = new TreeNode();
-                            doc.Name = element.Split(' ')[0];
-                            doc.Text = element;
-                            doc.Tag = "File";
-                            treeViewElements.Nodes[2].Nodes[count].Nodes[countD].Nodes.Add(doc);
-                        }                        
-                    }
-                    countD++;
-                }
-                count++;
-            }
-
+            fillNodes("Devices");
 
             //Заполнение узла Системы
             TreeNode systemsNode = new TreeNode();
@@ -276,84 +207,7 @@ namespace DocTech
             systemsNode.Text = "Системы";
             systemsNode.Tag = "Systems";
             treeViewElements.Nodes.Add(systemsNode);
-            fillMainNodes("Systems");
-
-            TreeNodeCollection systemsCollection = treeViewElements.Nodes[3].Nodes;
-            count = 0;
-            foreach (TreeNode system in systemsCollection)
-            {
-                List<string> elements = ClassDBRequests.getRelation(system.Text, "Devices", "Systems", "Sys_Dev");
-                foreach (string element in elements)
-                {
-                    TreeNode el = new TreeNode();
-                    el.Name = element.Split(' ')[0];
-                    el.Text = element;
-                    el.Tag = "Device";
-                    treeViewElements.Nodes[3].Nodes[count].Nodes.Add(el);
-                }
-                count++;
-            }
-
-            count = 0;
-            foreach (TreeNode system in systemsCollection)
-            {
-                List<string> elements = ClassDBRequests.getRelation(system.Text, "Files", "Systems", "Sys_Files");
-                foreach (string element in elements)
-                {
-                    TreeNode doc = new TreeNode();
-                    doc.Name = element.Split(' ')[0];
-                    doc.Text = element;
-                    doc.Tag = "File";
-                    treeViewElements.Nodes[3].Nodes[count].Nodes.Add(doc);
-                }
-                count++;
-            }
-
-            count = 0;
-            foreach (TreeNode system in systemsCollection)
-            {
-                TreeNodeCollection systemNodes = treeViewElements.Nodes[3].Nodes[count].Nodes;
-                int countD = 0;
-                foreach (TreeNode node in systemNodes)
-                {
-                    if (node.Tag.ToString() == "Device")
-                    {
-                        List<string> elements = ClassDBRequests.getRelation(system.Text, "Details", "Devices", "Dev_Det");
-                        int countDet = 0;
-                        foreach (string element in elements)
-                        {
-                            TreeNode el = new TreeNode();
-                            el.Name = element.Split(' ')[0];
-                            el.Text = element;
-                            el.Tag = "Detail";
-                            treeViewElements.Nodes[3].Nodes[count].Nodes[countD].Nodes.Add(el);
-                            List<string> files = ClassDBRequests.getRelation(system.Text, "Files", "Details", "Det_Files");
-                            foreach (string file in files)
-                            {
-                                TreeNode fileNode = new TreeNode();
-                                fileNode.Name = file.Split(' ')[0];
-                                fileNode.Text = file;
-                                fileNode.Tag = "File";
-                                treeViewElements.Nodes[3].Nodes[count].Nodes[countD].Nodes[countDet].Nodes.Add(fileNode);
-                            }
-                            countDet++;
-                        }
-
-                        elements = ClassDBRequests.getRelation(system.Text, "Files", "Devices", "Dev_Files");
-                        foreach (string element in elements)
-                        {
-                            TreeNode doc = new TreeNode();
-                            doc.Name = element.Split(' ')[0];
-                            doc.Text = element;
-                            doc.Tag = "File";
-                            treeViewElements.Nodes[3].Nodes[count].Nodes[countD].Nodes.Add(doc);
-                        }
-                        
-                    }
-                    countD++;
-                }
-                count++;
-            }
+            fillNodes("Systems");                        
         }
 
         private void butAddDocToDet_Click(object sender, EventArgs e)
@@ -371,7 +225,7 @@ namespace DocTech
             newFormElement.Tag = "forDetail";
             newFormElement.ShowDialog();
             treeViewElements.Nodes[1].Nodes.Clear();
-            fillMainNodes("Details");           
+            fillNodes("Details");           
         }
 
         //Добавление нового устройства
@@ -381,7 +235,7 @@ namespace DocTech
             newFormElement.Tag = "forDevice";
             newFormElement.ShowDialog();
             treeViewElements.Nodes[2].Nodes.Clear();
-            fillMainNodes("Devices");            
+            fillNodes("Devices");            
         }
 
         //Добавление новой системы
@@ -391,45 +245,202 @@ namespace DocTech
             newFormElement.Tag = "forSystem";
             newFormElement.ShowDialog();
             treeViewElements.Nodes[3].Nodes.Clear();
-            fillMainNodes("Systems");
+            fillNodes("Systems");
         }
 
         //Заполнение дочерних узлов (Файлы, Детали, Устройства, Системы)
-        public void fillMainNodes(string table)
+        public void fillNodes(string table)
         {
             List<string> listElements = ClassDBRequests.getNameElements(table);
-            
+
+            int nodeNumber = new int();
+            string tag = "";
+            switch (table)
+            {
+                case "Files":
+                    tag = "File";
+                    nodeNumber = 0;
+                    break;
+                case "Details":
+                    tag = "Detail";
+                    nodeNumber = 1;
+                    break;
+                case "Devices":
+                    tag = "Device";
+                    nodeNumber = 2;
+                    break;
+                case "Systems":
+                    tag = "System";
+                    nodeNumber = 3;
+                    break;
+            }
             foreach (string element in listElements)
             {
                 TreeNode node = new TreeNode();
                 node.Name = element.Split(' ')[0];
                 node.Text = element;
-                int nodeNumber = new int();
-                switch (table)
-                {
-                    case "Files":
-                        node.Tag = "File";
-                        nodeNumber = 0;
-                        break;
-                    case "Details":
-                        node.Tag = "Detail";
-                        nodeNumber = 1;
-                        break;
-                    case "Devices":
-                        node.Tag = "Device";
-                        nodeNumber = 2;
-                        break;
-                    case "Systems":
-                        node.Tag = "System";
-                        nodeNumber = 3;
-                        break;                    
-                }                
-                treeViewElements.Nodes[nodeNumber].Nodes.Add(node);
+                node.Tag = tag;
+                treeViewElements.Nodes[nodeNumber].Nodes.Add(node);                
             }
+            int count = 0;
+            switch (table)
+            {
+                case "Details":
+                    TreeNodeCollection detailCollection = treeViewElements.Nodes[1].Nodes;
+                    count =  0;
+                    foreach (TreeNode detail in detailCollection)
+                    {
+                        List<string> elements = ClassDBRequests.getRelation(detail.Text, "Files", "Details", "Det_Files");
+                        foreach (string element in elements)
+                        {
+                            TreeNode doc = new TreeNode();
+                            doc.Name = element.Split(' ')[0];
+                            doc.Text = element;
+                            doc.Tag = "FileR";
+                            treeViewElements.Nodes[1].Nodes[count].Nodes.Add(doc);
+                        }
+                        count++;
+                    }
+                    break;
+                case "Devices":
+                    TreeNodeCollection deviceCollection = treeViewElements.Nodes[2].Nodes;
+                    count = 0;
+                    foreach (TreeNode device in deviceCollection)
+                    {
+                        List<string> elements = ClassDBRequests.getRelation(device.Text, "Details", "Devices", "Dev_Det");
+                        foreach (string element in elements)
+                        {
+                            TreeNode el = new TreeNode();
+                            el.Name = element.Split(' ')[0];
+                            el.Text = element;
+                            el.Tag = "DetailR";
+                            treeViewElements.Nodes[2].Nodes[count].Nodes.Add(el);
+                        }
+                        count++;
+                    }
+
+                    count = 0;
+                    foreach (TreeNode device in deviceCollection)
+                    {
+                        List<string> elements = ClassDBRequests.getRelation(device.Text, "Files", "Devices", "Dev_Files");
+                        foreach (string element in elements)
+                        {
+                            TreeNode doc = new TreeNode();
+                            doc.Name = element.Split(' ')[0];
+                            doc.Text = element;
+                            doc.Tag = "FileR";
+                            treeViewElements.Nodes[2].Nodes[count].Nodes.Add(doc);
+                        }
+                        count++;
+                    }
+
+                    count = 0;
+                    foreach (TreeNode device in deviceCollection)
+                    {
+                        TreeNodeCollection deviceNodes = treeViewElements.Nodes[2].Nodes[count].Nodes;
+                        int countD = 0;
+                        foreach (TreeNode node in deviceNodes)
+                        {
+                            if (node.Tag.ToString() == "DetailR")
+                            {
+                                List<string> elements = ClassDBRequests.getRelation(node.Text, "Files", "Details", "Det_Files");
+                                foreach (string element in elements)
+                                {
+                                    TreeNode doc = new TreeNode();
+                                    doc.Name = element.Split(' ')[0];
+                                    doc.Text = element;
+                                    doc.Tag = "FileR";
+                                    treeViewElements.Nodes[2].Nodes[count].Nodes[countD].Nodes.Add(doc);
+                                }
+                            }
+                            countD++;
+                        }
+                        count++;
+                    }
+                    break;
+                case "Systems":
+                    TreeNodeCollection systemsCollection = treeViewElements.Nodes[3].Nodes;
+                    count = 0;
+                    foreach (TreeNode system in systemsCollection)
+                    {
+                        List<string> elements = ClassDBRequests.getRelation(system.Text, "Devices", "Systems", "Sys_Dev");
+                        foreach (string element in elements)
+                        {
+                            TreeNode el = new TreeNode();
+                            el.Name = element.Split(' ')[0];
+                            el.Text = element;
+                            el.Tag = "DeviceR";
+                            treeViewElements.Nodes[3].Nodes[count].Nodes.Add(el);
+                        }
+                        count++;
+                    }
+
+                    count = 0;
+                    foreach (TreeNode system in systemsCollection)
+                    {
+                        List<string> elements = ClassDBRequests.getRelation(system.Text, "Files", "Systems", "Sys_Files");
+                        foreach (string element in elements)
+                        {
+                            TreeNode doc = new TreeNode();
+                            doc.Name = element.Split(' ')[0];
+                            doc.Text = element;
+                            doc.Tag = "FileR";
+                            treeViewElements.Nodes[3].Nodes[count].Nodes.Add(doc);
+                        }
+                        count++;
+                    }
+
+                    count = 0;
+                    foreach (TreeNode system in systemsCollection)
+                    {
+                        TreeNodeCollection systemNodes = treeViewElements.Nodes[3].Nodes[count].Nodes;
+                        int countD = 0;
+                        foreach (TreeNode node in systemNodes)
+                        {
+                            if (node.Tag.ToString() == "DeviceR")
+                            {
+                                List<string> elements = ClassDBRequests.getRelation(node.Text, "Details", "Devices", "Dev_Det");
+                                int countDet = 0;
+                                foreach (string element in elements)
+                                {
+                                    TreeNode el = new TreeNode();
+                                    el.Name = element.Split(' ')[0];
+                                    el.Text = element;
+                                    el.Tag = "DetailR";
+                                    treeViewElements.Nodes[3].Nodes[count].Nodes[countD].Nodes.Add(el);
+                                    List<string> files = ClassDBRequests.getRelation(element, "Files", "Details", "Det_Files");
+                                    foreach (string file in files)
+                                    {
+                                        TreeNode fileNode = new TreeNode();
+                                        fileNode.Name = file.Split(' ')[0];
+                                        fileNode.Text = file;
+                                        fileNode.Tag = "FileR";
+                                        treeViewElements.Nodes[3].Nodes[count].Nodes[countD].Nodes[countDet].Nodes.Add(fileNode);
+                                    }
+                                    countDet++;
+                                }
+
+                                elements = ClassDBRequests.getRelation(node.Text, "Files", "Devices", "Dev_Files");
+                                foreach (string element in elements)
+                                {
+                                    TreeNode doc = new TreeNode();
+                                    doc.Name = element.Split(' ')[0];
+                                    doc.Text = element;
+                                    doc.Tag = "FileR";
+                                    treeViewElements.Nodes[3].Nodes[count].Nodes[countD].Nodes.Add(doc);
+                                }
+
+                            }
+                            countD++;
+                        }
+                        count++;
+                    }
+                    break;
+            }            
         }
 
         
-
+        //Добавление нового файла в базу
         private void добавитьДокументToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
@@ -438,7 +449,7 @@ namespace DocTech
             }
             string fileName = openFileDialog1.FileName;
             ClassDBRequests.SaveFileToDatabase(fileName);
-            fillMainNodes("Files");
+            fillNodes("Files");
         }
         
         //Добавить документ к детали
@@ -448,26 +459,47 @@ namespace DocTech
             Form formDocuments = new FormElements(treeViewElements.SelectedNode.Tag.ToString(), treeViewElements.SelectedNode.Text, "File", "Det_Files");
             //formDocuments.Tag = treeViewElements.SelectedNode.Text;
             formDocuments.ShowDialog();
-            listBox1.Items.Clear();
-            List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
-            if (elements.Count() != 0)
+            if (Variables.needRefresh)
             {
-                listBox1.Items.Add("Документы");
-                foreach (string element in elements)
+                listBox1.Items.Clear();
+                List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
+                if (elements.Count() != 0)
                 {
-                    listBox1.Items.Add(element);
+                    listBox1.Items.Add("Документы");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);
+                    }
                 }
-            }
 
-            elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Details", "Dev_Det");
-            if (elements.Count() != 0)
-            {
-                listBox1.Items.Add("Устройства");
+                treeViewElements.SelectedNode.Nodes.Clear();
                 foreach (string element in elements)
                 {
-                    listBox1.Items.Add(element);
+                    TreeNode file = new TreeNode();
+                    file.Name = element.Split(' ')[0];
+                    file.Text = element;
+                    file.Tag = "File";
+                    treeViewElements.SelectedNode.Nodes.Add(file);
                 }
-            }
+                //TreeNode selectedNode = treeViewElements.SelectedNode;
+                //treeViewElements.Nodes[1].Nodes.Clear();
+                //fillNodes("Details");
+                treeViewElements.Nodes[2].Nodes.Clear();
+                fillNodes("Devices");
+                treeViewElements.Nodes[3].Nodes.Clear();
+                fillNodes("Systems");
+                //treeViewElements.SelectedNode = selectedNode;
+
+                elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Details", "Dev_Det");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Устройства");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);
+                    }
+                }
+            }            
         }
 
         //Добавить документ к устройству
@@ -486,6 +518,23 @@ namespace DocTech
                     listBox1.Items.Add(element);
                 }
             }
+
+            treeViewElements.SelectedNode.Nodes.Clear();
+            foreach (string element in elements)
+            {
+                TreeNode file = new TreeNode();
+                file.Name = element.Split(' ')[0];
+                file.Text = element;
+                file.Tag = "File";
+                treeViewElements.SelectedNode.Nodes.Add(file);
+            }
+            //TreeNode selectedNode = treeViewElements.SelectedNode;
+            //treeViewElements.Nodes[1].Nodes.Clear();
+            //fillNodes("Details");
+            //treeViewElements.Nodes[2].Nodes.Clear();
+            //fillNodes("Devices");
+            //treeViewElements.Nodes[3].Nodes.Clear();
+            //fillNodes("Systems");
 
             elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Details", "Devices", "Dev_Det");
             if (elements.Count() != 0)
@@ -598,36 +647,40 @@ namespace DocTech
             //fillMainNodes("Files");
         }
 
+        //Удаление документа
         private void документыToolStripMenuItem3_Click(object sender, EventArgs e)
         {
             Form removingForm = new FormRemovingElements("Files");
             removingForm.ShowDialog();
             treeViewElements.Nodes[0].Nodes.Clear();
-            fillMainNodes("Files");
+            fillNodes("Files");
         }
 
+        //Удаление детали
         private void деталиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form removingForm = new FormRemovingElements("Details");
             removingForm.ShowDialog();
             treeViewElements.Nodes[1].Nodes.Clear();
-            fillMainNodes("Details");
+            fillNodes("Details");
         }
 
+        //Удаление устройства
         private void устройстваToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Form removingForm = new FormRemovingElements("Devices");
             removingForm.ShowDialog();
             treeViewElements.Nodes[2].Nodes.Clear();
-            fillMainNodes("Devices");
+            fillNodes("Devices");
         }
 
+        //Удаление системы
         private void системыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form removingForm = new FormRemovingElements("Systems");
             removingForm.ShowDialog();
             treeViewElements.Nodes[3].Nodes.Clear();
-            fillMainNodes("Systems");
+            fillNodes("Systems");
         }
 
         private void удалитьToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -659,7 +712,7 @@ namespace DocTech
             }
             string fileName = openFileDialog1.FileName;
             ClassDBRequests.SaveFileToDatabase(fileName);
-            fillMainNodes("Files");
+            fillNodes("Files");
         }
 
         private void детальToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -668,7 +721,7 @@ namespace DocTech
             newFormElement.Tag = "forDetail";
             newFormElement.ShowDialog();
             treeViewElements.Nodes[1].Nodes.Clear();
-            fillMainNodes("Details");
+            fillNodes("Details");
         }
 
         private void устройствоToolStripMenuItem_Click(object sender, EventArgs e)
@@ -677,7 +730,7 @@ namespace DocTech
             newFormElement.Tag = "forDevice";
             newFormElement.ShowDialog();
             treeViewElements.Nodes[2].Nodes.Clear();
-            fillMainNodes("Devices");
+            fillNodes("Devices");
         }
 
         private void системуToolStripMenuItem_Click(object sender, EventArgs e)
@@ -686,7 +739,54 @@ namespace DocTech
             newFormElement.Tag = "forSystem";
             newFormElement.ShowDialog();
             treeViewElements.Nodes[3].Nodes.Clear();
-            fillMainNodes("Systems");
+            fillNodes("Systems");
+        }
+
+        //Удаление связи Деталь-Документ
+        private void документыToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            Variables.containerType = "Details";
+            Variables.containerName = treeViewElements.SelectedNode.Text;
+            Variables.elementType = "Files";
+            Variables.table = "Det_Files";
+            FormRemoveRelation formRemoveRelation = new FormRemoveRelation();
+            formRemoveRelation.ShowDialog();
+            if (Variables.needRefresh)
+            {
+                //List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
+                //treeViewElements.SelectedNode.Nodes.Clear();
+                //foreach (string element in elements)
+                //{
+                //    TreeNode node = new TreeNode();
+                //    node.Name = element.Split(' ')[0];
+                //    node.Text = element;
+                //    node.Tag =
+                //    treeViewElements.SelectedNode.Nodes.Add();
+                //}
+                treeViewElements.SelectedNode.Nodes.Clear();
+                fillNodes("Details");
+
+                listBox1.Items.Clear();
+                List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Документы");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);
+                    }
+                }
+
+                elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Details", "Dev_Det");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Устройства");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);
+                    }
+                }
+            }
         }
     }
 }

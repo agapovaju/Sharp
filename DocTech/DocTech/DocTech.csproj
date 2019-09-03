@@ -66,6 +66,12 @@
     <Compile Include="FormNewElement.Designer.cs">
       <DependentUpon>FormNewElement.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormRemoveRelation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRemoveRelation.Designer.cs">
+      <DependentUpon>FormRemoveRelation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FormRemovingElements.cs">
@@ -74,6 +80,7 @@
     <Compile Include="FormRemovingElements.Designer.cs">
       <DependentUpon>FormRemovingElements.cs</DependentUpon>
     </Compile>
+    <Compile Include="Variables.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewElement.resx">
       <DependentUpon>FormNewElement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRemoveRelation.resx">
+      <DependentUpon>FormRemoveRelation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
