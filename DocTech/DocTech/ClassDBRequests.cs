@@ -10,11 +10,13 @@ namespace DocTech
 {
     public static class ClassDBRequests
     {
+        private static string connectionString = Variables.connectionString;
+        
         //Получение списка имен элементов из таблицы
         public static List<string> getNameElements(string table)
         {
             List<string> elements = new List<string>();
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            //string connectionString = Variables.connectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string sqlExpression = "SELECT name FROM " + table + " ORDER BY name";
@@ -43,12 +45,11 @@ namespace DocTech
             }
             return elements;
         }
-
        
         //Сохранение файла в базу
         public static void SaveFileToDatabase(string filepath)
         {
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            //string connectionString = Variables.connectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -85,7 +86,7 @@ namespace DocTech
         //Четние файла из базы
         private static void ReadFileFromDatabase()
         {
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            //string connectionString = Variables.connectionString;
             List<File> files = new List<File>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -120,7 +121,7 @@ namespace DocTech
         //Добавление нового элемента (устройство, деталь, система)
         public static void newElement(string type, string number, string name)
         {
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            //string connectionString = Variables.connectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -143,7 +144,7 @@ namespace DocTech
         {
             int containerId = new int();
             int elementId = new int(); ;
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            //string connectionString = Variables.connectionString;
             string tableForGI = containerType + "s";
             containerId = getId(containerName, tableForGI);
             tableForGI = elementType + "s";
@@ -169,7 +170,7 @@ namespace DocTech
         public static int getId(string elementName, string table)
         {
             int elementId = new int();
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            //string connectionString = Variables.connectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 int count = new int();
@@ -206,7 +207,7 @@ namespace DocTech
         {
             int id = getId(elementName,table2);
             List<string> elements = new List<string>();
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";            
+            //string connectionString = Variables.connectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string sqlExpression = @"SELECT " + table1 + ".Name FROM " + table2 + " INNER JOIN " + table3 + " ON " + table2 + ".Id = " + table3 + "." + table2 + "_id INNER JOIN " + table1 + " ON " + table1 + ".Id = " + table3 + "." + table1 + "_id WHERE " + table2 + ".id = " + id;
@@ -235,7 +236,7 @@ namespace DocTech
 
         public static void removeRelation(int containerId, int elementId, string table)
         {
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            //string connectionString = Variables.connectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand();
@@ -266,7 +267,7 @@ namespace DocTech
 
         public static void removeElement(string elementName, string elementType)
         {
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
+            //string connectionString = Variables.connectionString;
             int elementId = new int();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

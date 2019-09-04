@@ -14,5 +14,6 @@ namespace DocTech
         public static string elementName;
         public static string table;
         public static Boolean needRefresh;
+        public static string connectionString = @"Data Source=vkas01-ptr\SQLEXPRESS;Initial Catalog=TechDoc;Integrated Security=True";
     }
 }

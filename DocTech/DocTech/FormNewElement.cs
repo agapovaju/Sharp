@@ -20,44 +20,36 @@ namespace DocTech
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            //if (this.Tag.ToString() == "forDetail")
-            //{
-            //    if ((textBoxNumber.Text != null) & (textBoxName.Text != null))
-            //    {
-            //        ClassDBRequests.newDetail(textBoxNumber.Text, textBoxName.Text);
-            //        this.Close();
-            //    }
-            //}
-            switch (this.Tag.ToString())
+            if ((textBoxNumber.Text != "") & (textBoxName.Text != ""))
             {
-                case "forDetail":
-                    if ((textBoxNumber.Text != null) & (textBoxName.Text != null))
-                    {
+                switch (this.Tag.ToString())
+                {
+                    case "forDetail":
                         ClassDBRequests.newElement("Details", textBoxNumber.Text, textBoxName.Text);
+                        Variables.needRefresh = true;
                         this.Close();
-                    }
-                    break;
-                case "forDevice":
-                    if ((textBoxNumber.Text != null) & (textBoxName.Text != null))
-                    {
+                        break;
+                    case "forDevice":
                         ClassDBRequests.newElement("Devices", textBoxNumber.Text, textBoxName.Text);
+                        Variables.needRefresh = true;
                         this.Close();
-                    }
-                    break;
-                case "forSystem":
-                    if ((textBoxNumber.Text != null) & (textBoxName.Text != null))
-                    {
+                        break;
+                    case "forSystem":
                         ClassDBRequests.newElement("Systems", textBoxNumber.Text, textBoxName.Text);
+                        Variables.needRefresh = true;
                         this.Close();
-                    }
-                    break;
+                        break;
+                }
             }
-            
+            else
+            {
+                MessageBox.Show("Поля не заполнены","Внимание!");
+            }
         }
 
         private void FormNewDetail_Load(object sender, EventArgs e)
         {
-            
+            Variables.needRefresh = false;
         }
     }
 }

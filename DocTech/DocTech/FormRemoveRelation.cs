@@ -25,8 +25,8 @@ namespace DocTech
         }
 
         private void FormRemoveRelation_Load(object sender, EventArgs e)
-        {
-            List<string> elements = ClassDBRequests.getRelation(Variables.containerName, "Files", "Details", "Det_Files");
+        {            
+            List<string> elements = ClassDBRequests.getRelation(Variables.containerName, eType, cType, tbl);
             foreach (string element in elements)
             {
                 checkedListBox1.Items.Add(element);

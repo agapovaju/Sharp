@@ -224,8 +224,11 @@ namespace DocTech
             Form newFormElement = new FormNewElement();
             newFormElement.Tag = "forDetail";
             newFormElement.ShowDialog();
-            treeViewElements.Nodes[1].Nodes.Clear();
-            fillNodes("Details");           
+            if (Variables.needRefresh)
+            {
+                treeViewElements.Nodes[1].Nodes.Clear();
+                fillNodes("Details");
+            }            
         }
 
         //Добавление нового устройства
@@ -234,8 +237,11 @@ namespace DocTech
             Form newFormElement = new FormNewElement();
             newFormElement.Tag = "forDevice";
             newFormElement.ShowDialog();
-            treeViewElements.Nodes[2].Nodes.Clear();
-            fillNodes("Devices");            
+            if (Variables.needRefresh)
+            {
+                treeViewElements.Nodes[2].Nodes.Clear();
+                fillNodes("Devices");
+            }
         }
 
         //Добавление новой системы
@@ -244,8 +250,11 @@ namespace DocTech
             Form newFormElement = new FormNewElement();
             newFormElement.Tag = "forSystem";
             newFormElement.ShowDialog();
-            treeViewElements.Nodes[3].Nodes.Clear();
-            fillNodes("Systems");
+            if (Variables.needRefresh)
+            {
+                treeViewElements.Nodes[3].Nodes.Clear();
+                fillNodes("Systems");
+            }
         }
 
         //Заполнение дочерних узлов (Файлы, Детали, Устройства, Системы)
@@ -509,32 +518,23 @@ namespace DocTech
             //formDocuments.Tag = treeViewElements.SelectedNode.Text;
             formElements.ShowDialog();
             listBox1.Items.Clear();
+            
             List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Devices", "Dev_Files");
             if (elements.Count() != 0)
             {
                 listBox1.Items.Add("Документы");
                 foreach (string element in elements)
                 {
-                    listBox1.Items.Add(element);
+                    listBox1.Items.Add(element);                    
                 }
-            }
-
-            treeViewElements.SelectedNode.Nodes.Clear();
-            foreach (string element in elements)
-            {
-                TreeNode file = new TreeNode();
-                file.Name = element.Split(' ')[0];
-                file.Text = element;
-                file.Tag = "File";
-                treeViewElements.SelectedNode.Nodes.Add(file);
-            }
-            //TreeNode selectedNode = treeViewElements.SelectedNode;
+            }            
+                        
             //treeViewElements.Nodes[1].Nodes.Clear();
             //fillNodes("Details");
-            //treeViewElements.Nodes[2].Nodes.Clear();
-            //fillNodes("Devices");
-            //treeViewElements.Nodes[3].Nodes.Clear();
-            //fillNodes("Systems");
+            treeViewElements.Nodes[2].Nodes.Clear();
+            fillNodes("Devices");
+            treeViewElements.Nodes[3].Nodes.Clear();
+            fillNodes("Systems");
 
             elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Details", "Devices", "Dev_Det");
             if (elements.Count() != 0)
@@ -573,6 +573,11 @@ namespace DocTech
                     listBox1.Items.Add(element);
                 }
             }
+
+            treeViewElements.Nodes[2].Nodes.Clear();
+            fillNodes("Devices");
+            treeViewElements.Nodes[3].Nodes.Clear();
+            fillNodes("Systems");
         }
 
         //Добавить документ к системе
@@ -583,25 +588,34 @@ namespace DocTech
             //formDocuments.Tag = treeViewElements.SelectedNode.Text;
             formElements.ShowDialog();
             listBox1.Items.Clear();
-            List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Systems", "Sys_Files");
+            List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Systems", "Sys_Dev");
             if (elements.Count() != 0)
             {
-                listBox1.Items.Add("Документы");
+                listBox1.Items.Add("Устройства");
                 foreach (string element in elements)
                 {
                     listBox1.Items.Add(element);
                 }
             }
 
-            elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Systems", "Sys_Dev");
+            elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Systems", "Sys_Files");
             if (elements.Count() != 0)
             {
-                listBox1.Items.Add("Устройства");                
+                listBox1.Items.Add("Документы");
                 foreach (string element in elements)
                 {
                     listBox1.Items.Add(element);
+                    //TreeNode node = new TreeNode();
+                    //node.Name = element.Split(' ')[0];
+                    //node.Text = element;
+                    //node.Tag = "FileR";
+                    //treeViewElements.SelectedNode.Nodes.Add(node);
                 }
             }
+
+            treeViewElements.Nodes[3].Nodes.Clear();
+            fillNodes("Systems");
+            
         }
 
         //Добавить устройство к системе
@@ -630,6 +644,9 @@ namespace DocTech
                     listBox1.Items.Add(element);
                 }
             }
+
+            treeViewElements.Nodes[3].Nodes.Clear();
+            fillNodes("Systems");
         }
 
         private void удалитьДокументыToolStripMenuItem_Click(object sender, EventArgs e)
@@ -752,19 +769,8 @@ namespace DocTech
             FormRemoveRelation formRemoveRelation = new FormRemoveRelation();
             formRemoveRelation.ShowDialog();
             if (Variables.needRefresh)
-            {
-                //List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
-                //treeViewElements.SelectedNode.Nodes.Clear();
-                //foreach (string element in elements)
-                //{
-                //    TreeNode node = new TreeNode();
-                //    node.Name = element.Split(' ')[0];
-                //    node.Text = element;
-                //    node.Tag =
-                //    treeViewElements.SelectedNode.Nodes.Add();
-                //}
-                treeViewElements.SelectedNode.Nodes.Clear();
-                fillNodes("Details");
+            {                
+                treeViewElements.SelectedNode.Nodes.Clear();                
 
                 listBox1.Items.Clear();
                 List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
@@ -774,6 +780,11 @@ namespace DocTech
                     foreach (string element in elements)
                     {
                         listBox1.Items.Add(element);
+                        TreeNode node = new TreeNode();
+                        node.Name = element.Split(' ')[0];
+                        node.Text = element;
+                        node.Tag = "FileR";
+                        treeViewElements.SelectedNode.Nodes.Add(node);
                     }
                 }
 
@@ -786,7 +797,201 @@ namespace DocTech
                         listBox1.Items.Add(element);
                     }
                 }
+                
+                treeViewElements.Nodes[2].Nodes.Clear();
+                treeViewElements.Nodes[3].Nodes.Clear();
+                
+                fillNodes("Devices");
+                fillNodes("Systems");
             }
+        }
+
+        //Удаление связи Устройство-Документ
+        private void документыToolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            Variables.containerType = "Devices";
+            Variables.containerName = treeViewElements.SelectedNode.Text;
+            Variables.elementType = "Files";
+            Variables.table = "Dev_Files";
+            FormRemoveRelation formRemoveRelation = new FormRemoveRelation();
+            formRemoveRelation.ShowDialog();
+            if (Variables.needRefresh)
+            {
+                
+
+                listBox1.Items.Clear();
+                List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Devices", "Dev_Files");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Документы");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);                        
+                    }
+                }
+
+                elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Details", "Devices", "Dev_Det");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Устройства");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);
+                    }
+                }
+
+                treeViewElements.Nodes[2].Nodes.Clear();
+                treeViewElements.Nodes[3].Nodes.Clear();
+
+                fillNodes("Devices");
+                fillNodes("Systems");
+            }
+        }
+
+        //Удаление связи Устройство-Деталь
+        private void деталиToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Variables.containerType = "Devices";
+            Variables.containerName = treeViewElements.SelectedNode.Text;
+            Variables.elementType = "Details";
+            Variables.table = "Dev_Det";
+            FormRemoveRelation formRemoveRelation = new FormRemoveRelation();
+            formRemoveRelation.ShowDialog();
+            if (Variables.needRefresh)
+            {
+                treeViewElements.SelectedNode.Nodes.Clear();
+
+                listBox1.Items.Clear();
+
+                List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Details", "Devices", "Dev_Det");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Детали");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);
+                        TreeNode node = new TreeNode();
+                        node.Name = element.Split(' ')[0];
+                        node.Text = element;
+                        node.Tag = "DetailR";
+                        treeViewElements.SelectedNode.Nodes.Add(node);
+                    }
+                }
+
+                elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Systems", "Devices", "Sys_Dev");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Системы");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);
+                    }
+                }
+
+                elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Devices", "Dev_Files");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Документы");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);
+                        TreeNode node = new TreeNode();
+                        node.Name = element.Split(' ')[0];
+                        node.Text = element;
+                        node.Tag = "FileR";
+                        treeViewElements.SelectedNode.Nodes.Add(node);
+                    }
+                }
+
+                
+                treeViewElements.Nodes[3].Nodes.Clear();
+
+                
+                fillNodes("Systems");
+            }
+        }
+
+        //Удаление связи система-документ
+        private void документыToolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            Variables.containerType = "Systems";
+            Variables.containerName = treeViewElements.SelectedNode.Text;
+            Variables.elementType = "Files";
+            Variables.table = "Sys_Files";
+            FormRemoveRelation formRemoveRelation = new FormRemoveRelation();
+            formRemoveRelation.ShowDialog();
+            if (Variables.needRefresh)
+            {
+                treeViewElements.SelectedNode.Nodes.Clear();
+
+                listBox1.Items.Clear();
+                List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Systems", "Sys_Dev");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Устройства");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);                        
+                    }
+                }
+
+                elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Systems", "Sys_Files");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Документы");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);                        
+                    }
+                }
+
+                treeViewElements.Nodes[3].Nodes.Clear();
+                fillNodes("Systems");                                
+            }
+        }
+
+        //Удаление связи система-устройство
+        private void устройстваToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Variables.containerType = "Systems";
+            Variables.containerName = treeViewElements.SelectedNode.Text;
+            Variables.elementType = "Devices";
+            Variables.table = "Sys_Dev";
+            FormRemoveRelation formRemoveRelation = new FormRemoveRelation();
+            formRemoveRelation.ShowDialog();
+            if (Variables.needRefresh)
+            {
+                treeViewElements.SelectedNode.Nodes.Clear();
+
+                listBox1.Items.Clear();
+                List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Systems", "Sys_Dev");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Устройства");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);                        
+                    }
+                }
+
+                elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Systems", "Sys_Files");
+                if (elements.Count() != 0)
+                {
+                    listBox1.Items.Add("Документы");
+                    foreach (string element in elements)
+                    {
+                        listBox1.Items.Add(element);                        
+                    }
+                }
+
+                treeViewElements.Nodes[3].Nodes.Clear();
+                fillNodes("Systems");
+            }
+        }
+
+        private void пакетДокументацииToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.ShowDialog();
         }
     }
 }
