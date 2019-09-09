@@ -84,14 +84,14 @@ namespace DocTech
         }
 
         //Четние файла из базы
-        private static void ReadFileFromDatabase()
+        public static void ReadFileFromDatabase(string savingPath, int fileId)
         {
             //string connectionString = Variables.connectionString;
             List<File> files = new List<File>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string sql = "SELECT * FROM Files WHERE id=4";
+                string sql = "SELECT * FROM Files WHERE id="+fileId;
                 SqlCommand command = new SqlCommand(sql, connection);
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -110,7 +110,7 @@ namespace DocTech
             // сохраним первый файл из списка
             if (files.Count > 0)
             {
-                string path = @"C:\utils\" + files[0].FileName;
+                string path = savingPath + @"\" + files[0].FileName;
                 using (System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.OpenOrCreate))
                 {
                     fs.Write(files[0].Data, 0, files[0].Data.Length);
@@ -234,6 +234,7 @@ namespace DocTech
             return elements;
         }
 
+        //Удаление связей
         public static void removeRelation(int containerId, int elementId, string table)
         {
             //string connectionString = Variables.connectionString;
@@ -265,6 +266,7 @@ namespace DocTech
             }            
         }
 
+        //Удаление элемента из базы
         public static void removeElement(string elementName, string elementType)
         {
             //string connectionString = Variables.connectionString;

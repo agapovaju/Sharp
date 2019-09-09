@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.IO;
 
 
 namespace DocTech
@@ -860,9 +861,7 @@ namespace DocTech
             if (Variables.needRefresh)
             {
                 treeViewElements.SelectedNode.Nodes.Clear();
-
                 listBox1.Items.Clear();
-
                 List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Details", "Devices", "Dev_Det");
                 if (elements.Count() != 0)
                 {
@@ -901,12 +900,8 @@ namespace DocTech
                         node.Tag = "FileR";
                         treeViewElements.SelectedNode.Nodes.Add(node);
                     }
-                }
-
-                
-                treeViewElements.Nodes[3].Nodes.Clear();
-
-                
+                }                
+                treeViewElements.Nodes[3].Nodes.Clear();                
                 fillNodes("Systems");
             }
         }
@@ -962,7 +957,6 @@ namespace DocTech
             if (Variables.needRefresh)
             {
                 treeViewElements.SelectedNode.Nodes.Clear();
-
                 listBox1.Items.Clear();
                 List<string> elements = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Systems", "Sys_Dev");
                 if (elements.Count() != 0)
@@ -989,9 +983,136 @@ namespace DocTech
             }
         }
 
+        //Скачивание пакета документации детали
         private void пакетДокументацииToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog1.ShowDialog();
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            string folderPath = folderBrowserDialog1.SelectedPath + @"\" + treeViewElements.SelectedNode.Text;
+            Directory.CreateDirectory(folderPath);
+            foreach (TreeNode node in treeViewElements.SelectedNode.Nodes)
+            {
+                int fileId = ClassDBRequests.getId(node.Text,"Files");
+                ClassDBRequests.ReadFileFromDatabase(folderPath,fileId);
+            }
+        }
+
+        //Скачивание файла
+        private void скачатьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            string folderPath = folderBrowserDialog1.SelectedPath;
+            int fileId = ClassDBRequests.getId(treeViewElements.SelectedNode.Text,"Files");
+            ClassDBRequests.ReadFileFromDatabase(folderPath,fileId);
+        }
+
+        //Скачивание пакета документации устройства
+        private void пакетДокументацииToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            string folderPath = folderBrowserDialog1.SelectedPath + @"\" + treeViewElements.SelectedNode.Text;
+            Directory.CreateDirectory(folderPath);
+            //списки документов и деталей
+            List<string> files = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Devices", "Dev_Files");
+            List<string> details = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Details", "Devices", "Dev_Det");
+            if ((files.Count != 0) || (details.Count != 0))
+            {
+                //скачивание файлов
+                if (files.Count != 0)
+                {
+                    foreach (string file in files)
+                    {
+                        int fileId = ClassDBRequests.getId(file, "Files");
+                        ClassDBRequests.ReadFileFromDatabase(folderPath, fileId);
+                    }
+                }
+                //скачивание деталей            
+                if (details.Count != 0)
+                {
+                    foreach (string detail in details)
+                    {
+                        string detailPath = folderPath + @"\" + detail;
+                        Directory.CreateDirectory(detailPath);
+                        files = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
+                        foreach (string file in files)
+                        {
+                            int fileId = ClassDBRequests.getId(file,"Files");
+                            ClassDBRequests.ReadFileFromDatabase(detailPath, fileId);
+                        }
+                    }
+                }
+            }            
+        }
+
+        //Скачивание пакета документации системы
+        private void пакетДокументацииToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+            string folderPath = folderBrowserDialog1.SelectedPath + @"\" + treeViewElements.SelectedNode.Text;
+            Directory.CreateDirectory(folderPath);
+            List<string> files = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Systems", "Sys_Files");
+            List<string> devices = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Devices", "Systems", "Sys_Dev");
+            if ((files.Count != 0) || (devices.Count != 0))
+            {
+                if (files.Count != 0)
+                {
+                    foreach (string file in files)
+                    {
+                        int fileId = ClassDBRequests.getId(file, "Files");
+                        ClassDBRequests.ReadFileFromDatabase(folderPath, fileId);
+                    }
+                }
+                //скачивание деталей            
+                if (devices.Count != 0)
+                {
+                    foreach (string device in devices)
+                    {
+                        string devicePath = folderPath + @"\" + device;
+                        Directory.CreateDirectory(devicePath);
+                        files = ClassDBRequests.getRelation(device, "Files", "Devices", "Dev_Files");
+                        foreach (string file in files)
+                        {
+                            int fileId = ClassDBRequests.getId(file, "Files");
+                            ClassDBRequests.ReadFileFromDatabase(devicePath, fileId);
+                        }
+
+                        List<string> details = ClassDBRequests.getRelation(device, "Details", "Devices", "Dev_Det");
+                        if (details.Count != 0)
+                        {
+                            foreach (string detail in details)
+                            {
+                                string path = devicePath + @"\" + detail;
+                                Directory.CreateDirectory(path);
+                                files = ClassDBRequests.getRelation(treeViewElements.SelectedNode.Text, "Files", "Details", "Det_Files");
+                                if (files.Count != 0)
+                                {
+                                    foreach (string file in files)
+                                    {
+                                        int fileId = ClassDBRequests.getId(file,"Files");
+                                        ClassDBRequests.ReadFileFromDatabase(path,fileId);
+                                    }
+                                }
+                            }                            
+                        }
+                    }
+                }
+            }
+        }
+
+        private void заменитьВToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
